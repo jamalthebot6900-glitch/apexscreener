@@ -46,6 +46,12 @@ const FireIcon = () => (
   </svg>
 );
 
+const GraduatedIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+  </svg>
+);
+
 const FilterIcon = () => (
   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
@@ -67,7 +73,33 @@ interface PillButtonProps {
   className?: string;
 }
 
-function PillButton({ children, active, onClick, icon, dropdown, className }: PillButtonProps) {
+function PillButton({ children, active, onClick, icon, dropdown, className, color }: PillButtonProps & { color?: 'white' | 'green' | 'orange' | 'purple' }) {
+  const colorStyles = {
+    white: {
+      active: "bg-white/15 border-white/30 text-white",
+      glow: "0 0 20px -5px rgba(255, 255, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+      icon: "text-white"
+    },
+    green: {
+      active: "bg-emerald-500/20 border-emerald-400/40 text-emerald-300",
+      glow: "0 0 20px -5px rgba(52, 211, 153, 0.35), inset 0 1px 0 rgba(52, 211, 153, 0.1)",
+      icon: "text-emerald-400"
+    },
+    orange: {
+      active: "bg-orange-500/20 border-orange-400/40 text-orange-300",
+      glow: "0 0 20px -5px rgba(251, 146, 60, 0.35), inset 0 1px 0 rgba(251, 146, 60, 0.1)",
+      icon: "text-orange-400"
+    },
+    purple: {
+      active: "bg-purple-500/20 border-purple-400/40 text-purple-300",
+      glow: "0 0 20px -5px rgba(168, 85, 247, 0.35), inset 0 1px 0 rgba(168, 85, 247, 0.1)",
+      icon: "text-purple-400"
+    }
+  };
+
+  const c = color || 'white';
+  const styles = colorStyles[c];
+
   return (
     <button
       onClick={onClick}
@@ -75,15 +107,13 @@ function PillButton({ children, active, onClick, icon, dropdown, className }: Pi
         "flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-medium transition-all",
         "border",
         active 
-          ? "bg-white/10 border-white/20 text-white shadow-[0_0_15px_-3px_rgba(255,255,255,0.15)]" 
+          ? styles.active
           : "bg-white/[0.03] border-white/[0.08] text-white/60 hover:bg-white/[0.06] hover:border-white/[0.12] hover:text-white/80",
         className
       )}
-      style={active ? {
-        boxShadow: '0 0 20px -5px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
-      } : undefined}
+      style={active ? { boxShadow: styles.glow } : undefined}
     >
-      {icon && <span className={active ? "text-white" : "text-white/50"}>{icon}</span>}
+      {icon && <span className={active ? styles.icon : "text-white/50"}>{icon}</span>}
       {children}
       {dropdown && <ChevronDownIcon />}
     </button>
@@ -144,6 +174,7 @@ export default function QuickFilters() {
         icon={<ChartIcon />}
         active={activeFilter === 'top'}
         onClick={() => setActiveFilter(activeFilter === 'top' ? null : 'top')}
+        color="white"
       >
         Top
       </PillButton>
@@ -152,6 +183,7 @@ export default function QuickFilters() {
         icon={<ArrowUpIcon />}
         active={activeFilter === 'gainers'}
         onClick={() => setActiveFilter(activeFilter === 'gainers' ? null : 'gainers')}
+        color="green"
       >
         Gainers
       </PillButton>
@@ -160,8 +192,18 @@ export default function QuickFilters() {
         icon={<SparkleIcon />}
         active={activeFilter === 'new'}
         onClick={() => setActiveFilter(activeFilter === 'new' ? null : 'new')}
+        color="orange"
       >
         New Pairs
+      </PillButton>
+
+      <PillButton 
+        icon={<GraduatedIcon />}
+        active={activeFilter === 'graduated'}
+        onClick={() => setActiveFilter(activeFilter === 'graduated' ? null : 'graduated')}
+        color="purple"
+      >
+        Recently Graduated
       </PillButton>
 
       {/* Divider */}
