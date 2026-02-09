@@ -43,6 +43,15 @@ const ArrowDownIcon = () => (
   </svg>
 );
 
+// Graduated icon - rocket launching upward representing tokens that graduated from launchpad
+const GraduatedIcon = () => (
+  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
+    <circle cx="12" cy="8" r="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 14l-2 7M15 14l2 7" />
+  </svg>
+);
+
 const GridIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
@@ -68,6 +77,7 @@ export default function Sidebar() {
     { id: 'all', label: 'All Tokens', icon: <TrendingIcon /> },
     { id: 'watchlist', label: 'Watchlist', icon: <StarIcon />, badge: watchlistCount },
     { id: 'new', label: 'New Pairs', icon: <SparklesIcon /> },
+    { id: 'graduated', label: 'Recently Graduated', icon: <GraduatedIcon /> },
     { id: 'gainers', label: 'Gainers', icon: <ArrowUpIcon /> },
     { id: 'losers', label: 'Losers', icon: <ArrowDownIcon /> },
   ];
