@@ -1,6 +1,74 @@
 'use client';
 
-// Platform badge icons for DEX identification
+import { cn } from '@/lib/utils';
+
+// DEX name mapping for clean display
+const DEX_NAMES: Record<string, string> = {
+  'raydium': 'Raydium',
+  'raydium_cp': 'Raydium',
+  'raydium_clmm': 'Raydium',
+  'raydium_cpmm': 'Raydium',
+  'orca': 'Orca',
+  'orca_whirlpool': 'Orca',
+  'whirlpool': 'Orca',
+  'meteora': 'Meteora',
+  'meteora_dlmm': 'Meteora',
+  'pumpfun': 'Pump.fun',
+  'pump': 'Pump.fun',
+  'jupiter': 'Jupiter',
+  'lifinity': 'Lifinity',
+  'phoenix': 'Phoenix',
+  'openbook': 'OpenBook',
+};
+
+// DEX colors
+const DEX_COLORS: Record<string, { bg: string; text: string }> = {
+  'raydium': { bg: 'bg-[#5AC4BE]/15', text: 'text-[#5AC4BE]' },
+  'orca': { bg: 'bg-[#FFD15C]/15', text: 'text-[#FFD15C]' },
+  'meteora': { bg: 'bg-[#FF6B35]/15', text: 'text-[#FF6B35]' },
+  'pumpfun': { bg: 'bg-[#00D18C]/15', text: 'text-[#00D18C]' },
+  'pump': { bg: 'bg-[#00D18C]/15', text: 'text-[#00D18C]' },
+  'jupiter': { bg: 'bg-[#19FB9B]/15', text: 'text-[#19FB9B]' },
+  'lifinity': { bg: 'bg-purple-500/15', text: 'text-purple-400' },
+  'phoenix': { bg: 'bg-orange-500/15', text: 'text-orange-400' },
+  'openbook': { bg: 'bg-blue-500/15', text: 'text-blue-400' },
+};
+
+// DEX Badge - text-based badge showing DEX name
+export function DexBadge({ dexId }: { dexId: string }) {
+  if (!dexId) return null;
+  
+  const dexLower = dexId.toLowerCase();
+  
+  // Find matching DEX name
+  let displayName = 'DEX';
+  let colorKey = 'default';
+  
+  for (const [key, name] of Object.entries(DEX_NAMES)) {
+    if (dexLower.includes(key)) {
+      displayName = name;
+      colorKey = key.includes('raydium') ? 'raydium' 
+        : key.includes('orca') || key.includes('whirl') ? 'orca'
+        : key.includes('meteora') ? 'meteora'
+        : key.includes('pump') ? 'pump'
+        : key.includes('jupiter') ? 'jupiter'
+        : key;
+      break;
+    }
+  }
+  
+  const colors = DEX_COLORS[colorKey] || { bg: 'bg-white/10', text: 'text-text-muted' };
+  
+  return (
+    <span className={cn(
+      'inline-flex px-1 py-0 rounded text-[8px] font-medium uppercase tracking-wide',
+      colors.bg,
+      colors.text
+    )}>
+      {displayName}
+    </span>
+  );
+}
 
 export function PumpFunIcon({ size = 14 }: { size?: number }) {
   return (
@@ -68,7 +136,7 @@ export function OrcaIcon({ size = 14 }: { size?: number }) {
   );
 }
 
-// Solana chain badge - Crisp official logo
+// Solana chain badge
 export function SolanaBadge({ size = 14 }: { size?: number }) {
   const uniqueId = `solana-gradient-${Math.random().toString(36).substr(2, 9)}`;
   
@@ -80,7 +148,6 @@ export function SolanaBadge({ size = 14 }: { size?: number }) {
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
       className="flex-shrink-0"
-      style={{ imageRendering: 'crisp-edges' }}
     >
       <defs>
         <linearGradient id={uniqueId} x1="0%" y1="0%" x2="100%" y2="100%">
@@ -89,27 +156,11 @@ export function SolanaBadge({ size = 14 }: { size?: number }) {
           <stop offset="100%" stopColor="#DC1FFF" />
         </linearGradient>
       </defs>
-      
-      {/* Circular background for better visibility */}
-      <circle cx="16" cy="16" r="15" fill="#111111" stroke={`url(#${uniqueId})`} strokeWidth="1"/>
-      
-      {/* Solana S logo - simplified and crisp */}
+      <circle cx="16" cy="16" r="15" fill="#111" stroke={`url(#${uniqueId})`} strokeWidth="1"/>
       <g transform="translate(7, 8)">
-        {/* Top bar */}
-        <path 
-          d="M0.5 12.5L2.5 14.5C2.8 14.8 3.2 15 3.6 15H17C17.8 15 18.2 14 17.6 13.4L15.6 11.4C15.3 11.1 14.9 11 14.5 11H1C0.2 11 -0.2 12 0.5 12.5Z" 
-          fill={`url(#${uniqueId})`}
-        />
-        {/* Middle bar */}
-        <path 
-          d="M0.5 6.5L2.5 4.5C2.8 4.2 3.2 4 3.6 4H17C17.8 4 18.2 5 17.6 5.6L15.6 7.6C15.3 7.9 14.9 8 14.5 8H1C0.2 8 -0.2 7 0.5 6.5Z" 
-          fill={`url(#${uniqueId})`}
-        />
-        {/* Bottom bar */}
-        <path 
-          d="M15.6 0.6L17.6 2.6C18.2 3.2 17.8 4 17 4H3.6C3.2 4 2.8 3.8 2.5 3.5L0.5 1.5C-0.2 0.9 0.2 0 1 0H14.5C14.9 0 15.3 0.2 15.6 0.6Z" 
-          fill={`url(#${uniqueId})`}
-        />
+        <path d="M0.5 12.5L2.5 14.5C2.8 14.8 3.2 15 3.6 15H17C17.8 15 18.2 14 17.6 13.4L15.6 11.4C15.3 11.1 14.9 11 14.5 11H1C0.2 11 -0.2 12 0.5 12.5Z" fill={`url(#${uniqueId})`}/>
+        <path d="M0.5 6.5L2.5 4.5C2.8 4.2 3.2 4 3.6 4H17C17.8 4 18.2 5 17.6 5.6L15.6 7.6C15.3 7.9 14.9 8 14.5 8H1C0.2 8 -0.2 7 0.5 6.5Z" fill={`url(#${uniqueId})`}/>
+        <path d="M15.6 0.6L17.6 2.6C18.2 3.2 17.8 4 17 4H3.6C3.2 4 2.8 3.8 2.5 3.5L0.5 1.5C-0.2 0.9 0.2 0 1 0H14.5C14.9 0 15.3 0.2 15.6 0.6Z" fill={`url(#${uniqueId})`}/>
       </g>
     </svg>
   );
@@ -117,26 +168,16 @@ export function SolanaBadge({ size = 14 }: { size?: number }) {
 
 // Get platform icon by dexId or address
 export function getPlatformBadge(dexId: string, address: string): React.ReactNode {
-  // Check if pump.fun token (address ends in "pump")
   if (address?.toLowerCase().endsWith('pump')) {
     return <PumpFunIcon size={14} />;
   }
   
-  // Check by DEX ID
   const dexLower = dexId?.toLowerCase() || '';
   
-  if (dexLower.includes('raydium')) {
-    return <RaydiumIcon size={14} />;
-  }
-  if (dexLower.includes('jupiter') || dexLower === 'jup') {
-    return <JupiterIcon size={14} />;
-  }
-  if (dexLower.includes('meteora')) {
-    return <MeteoraIcon size={14} />;
-  }
-  if (dexLower.includes('orca')) {
-    return <OrcaIcon size={14} />;
-  }
+  if (dexLower.includes('raydium')) return <RaydiumIcon size={14} />;
+  if (dexLower.includes('jupiter') || dexLower === 'jup') return <JupiterIcon size={14} />;
+  if (dexLower.includes('meteora')) return <MeteoraIcon size={14} />;
+  if (dexLower.includes('orca')) return <OrcaIcon size={14} />;
   
   return null;
 }

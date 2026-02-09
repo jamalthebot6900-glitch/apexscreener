@@ -9,42 +9,42 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Core backgrounds - deep, rich blacks
-        background: '#09090b',
-        surface: '#0c0c0e',
-        'surface-light': '#111114',
-        'surface-hover': '#16161a',
-        'surface-elevated': '#1a1a1f',
+        // Core backgrounds - DexScreener-like dark theme
+        background: '#0a0a0a',
+        surface: '#0f0f0f',
+        'surface-light': '#141414',
+        'surface-hover': '#1a1a1a',
+        'surface-elevated': '#1f1f1f',
         
-        // Borders - subtle and refined
-        border: '#1c1c21',
-        'border-light': '#27272e',
-        'border-subtle': '#18181c',
+        // Borders
+        border: '#1a1a1a',
+        'border-light': '#262626',
+        'border-subtle': '#151515',
         
         // Text hierarchy
-        'text-primary': '#fafafa',
-        'text-secondary': '#a1a1aa',
-        'text-muted': '#63636e',
-        'text-dimmed': '#4a4a54',
+        'text-primary': '#f5f5f5',
+        'text-secondary': '#a1a1a1',
+        'text-muted': '#6b6b6b',
+        'text-dimmed': '#4a4a4a',
         
-        // Accent colors (Solana-inspired teal)
+        // Accent - Solana-inspired
         accent: '#14F195',
         'accent-hover': '#10d884',
         'accent-muted': '#0ea570',
         
-        // Semantic colors - refined, not too bright
-        positive: '#10b981',
-        'positive-muted': '#059669',
-        'positive-bg': 'rgba(16, 185, 129, 0.08)',
+        // Semantic colors
+        positive: '#00c853',
+        'positive-muted': '#00a844',
+        'positive-bg': 'rgba(0, 200, 83, 0.08)',
         
-        negative: '#ef4444',
-        'negative-muted': '#dc2626',
-        'negative-bg': 'rgba(239, 68, 68, 0.08)',
+        negative: '#ff3b3b',
+        'negative-muted': '#e53535',
+        'negative-bg': 'rgba(255, 59, 59, 0.08)',
         
-        warning: '#f59e0b',
-        'warning-muted': '#d97706',
+        warning: '#ffb300',
+        'warning-muted': '#e6a200',
         
-        // Brand accent (Solana-inspired)
+        // Brand
         brand: {
           purple: '#9945FF',
           teal: '#14F195',
@@ -69,8 +69,6 @@ const config: Config = {
         'fade-in-up': 'fadeInUp 0.3s ease-out',
         'slide-in': 'slideIn 0.2s ease-out',
         'shimmer': 'shimmer 2s infinite linear',
-        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
-        'number-pop': 'numberPop 0.3s ease-out',
       },
       keyframes: {
         fadeIn: {
@@ -89,37 +87,19 @@ const config: Config = {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
         },
-        glowPulse: {
-          '0%, 100%': { opacity: '0.4' },
-          '50%': { opacity: '0.8' },
-        },
-        numberPop: {
-          '0%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.05)' },
-          '100%': { transform: 'scale(1)' },
-        },
       },
       boxShadow: {
-        'glow-green': '0 0 20px -5px rgba(16, 185, 129, 0.3)',
-        'glow-red': '0 0 20px -5px rgba(239, 68, 68, 0.3)',
+        'glow-green': '0 0 16px -4px rgba(0, 200, 83, 0.3)',
+        'glow-red': '0 0 16px -4px rgba(255, 59, 59, 0.3)',
         'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.3)',
-        'elevated': '0 4px 12px -2px rgba(0, 0, 0, 0.4)',
-        'inner-glow': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.03)',
+        'elevated': '0 4px 12px -2px rgba(0, 0, 0, 0.5)',
       },
       borderRadius: {
-        'sm': '4px',
-        'DEFAULT': '6px',
-        'md': '8px',
-        'lg': '12px',
-        'xl': '16px',
-      },
-      backdropBlur: {
-        'xs': '2px',
-      },
-      transitionDuration: {
-        '150': '150ms',
-        '200': '200ms',
-        '250': '250ms',
+        'sm': '3px',
+        'DEFAULT': '4px',
+        'md': '6px',
+        'lg': '8px',
+        'xl': '12px',
       },
     },
   },

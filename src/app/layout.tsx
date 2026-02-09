@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
+import Footer from '@/components/Footer';
 import { Suspense } from 'react';
 import { AppProvider } from '@/context/AppContext';
 
@@ -21,15 +22,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-background text-text-primary min-h-screen`}>
+      <body className={`${inter.className} bg-background text-text-primary min-h-screen flex flex-col`}>
         <AppProvider>
           <Header />
-          <div className="flex">
-            <Suspense fallback={<div className="w-[220px] shrink-0 hidden lg:block" />}>
+          <div className="flex flex-1">
+            <Suspense fallback={<div className="w-[200px] shrink-0 hidden lg:block" />}>
               <Sidebar />
             </Suspense>
-            <main className="flex-1 min-h-[calc(100vh-56px)] overflow-x-hidden w-full lg:w-auto">
-              {children}
+            <main className="flex-1 min-h-[calc(100vh-56px)] overflow-x-hidden w-full lg:w-auto flex flex-col">
+              <div className="flex-1">
+                {children}
+              </div>
+              <Footer />
             </main>
           </div>
         </AppProvider>

@@ -11,103 +11,86 @@ function HamburgerButton() {
   return (
     <button
       onClick={toggleSidebar}
-      className="lg:hidden p-2 -ml-2 text-text-secondary hover:text-text-primary hover:bg-surface-light rounded-lg transition-colors"
+      className="lg:hidden p-2 -ml-2 text-text-muted hover:text-text-primary hover:bg-surface-light rounded-md transition-colors"
       aria-label="Toggle menu"
     >
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         {sidebarOpen ? (
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
         ) : (
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
         )}
       </svg>
     </button>
   );
 }
 
-// Live indicator with smooth pulsing animation
+// Minimal live indicator
 function LiveIndicator() {
   return (
-    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-positive/10 to-positive/5 border border-positive/20">
-      <span className="relative flex h-2 w-2">
+    <div className="flex items-center gap-1.5">
+      <span className="relative flex h-1.5 w-1.5">
         <span className="live-pulse-ring absolute inline-flex h-full w-full rounded-full bg-positive opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-2 w-2 bg-positive shadow-glow-green"></span>
+        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-positive"></span>
       </span>
-      <span className="text-[10px] font-bold text-positive uppercase tracking-wider">Live</span>
+      <span className="text-[10px] font-medium text-text-muted uppercase tracking-wide">Live</span>
     </div>
   );
 }
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 header-glass h-16">
-      <div className="h-full max-w-[1800px] mx-auto px-4 lg:px-6 flex items-center gap-4 lg:gap-6">
+    <header className="sticky top-0 z-50 h-14 bg-background border-b border-border">
+      <div className="h-full max-w-[1800px] mx-auto px-3 lg:px-4 flex items-center gap-3">
         {/* Hamburger for mobile */}
         <HamburgerButton />
 
-        {/* Logo & Brand - Enhanced */}
-        <Link href="/" className="flex items-center gap-3 shrink-0 group">
-          {/* Logo with glow effect on hover */}
-          <div className="relative transition-transform duration-300 group-hover:scale-105">
-            <div className="absolute inset-0 bg-white/20 rounded-lg blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
-            <img src="/apex-logo.png" alt="Apexscreener" className="h-8 w-auto relative" />
-          </div>
-          
-          {/* Brand text with tagline */}
-          <div className="hidden sm:flex flex-col">
-            <div className="flex items-center gap-2">
-              <span className="text-base font-bold text-text-primary tracking-tight leading-none bg-gradient-to-r from-white to-white/80 bg-clip-text">
-                Apexscreener
-              </span>
-              {/* Premium badge */}
-              <span className="px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider rounded bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border border-amber-500/20">
-                Pro
-              </span>
-            </div>
-            <span className="text-[9px] text-text-dimmed font-medium tracking-[0.08em] mt-0.5 italic">
-              The Apex of Token Screening
-            </span>
-          </div>
+        {/* Logo & Brand - Minimal */}
+        <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
+          <img src="/apex-logo.png" alt="Apexscreener" className="h-7 w-auto" />
+          <span className="hidden sm:block text-sm font-semibold text-text-primary tracking-tight">
+            Apexscreener
+          </span>
         </Link>
 
         {/* Divider */}
-        <div className="hidden md:block w-px h-8 bg-gradient-to-b from-transparent via-border to-transparent" />
+        <div className="hidden md:block w-px h-5 bg-border" />
 
         {/* Live indicator */}
         <div className="hidden md:block">
           <LiveIndicator />
         </div>
 
-        {/* Search Bar - PROMINENT */}
-        <div className="flex-1 max-w-xl hidden sm:block">
+        {/* Search Bar */}
+        <div className="flex-1 max-w-md mx-4 hidden sm:block">
           <SearchBar />
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-3 ml-auto">
+        <div className="flex items-center gap-2 ml-auto">
           {/* Mobile live indicator */}
           <div className="md:hidden">
             <LiveIndicator />
           </div>
 
-          {/* Network Status */}
-          <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-light/50 border border-border/50">
-            <div className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-            <span className="text-[10px] font-medium text-text-muted uppercase tracking-wider">Solana</span>
+          {/* Network Badge - Minimal */}
+          <div className="hidden lg:flex items-center gap-1.5 px-2 py-1 rounded bg-surface-light/50">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#9945FF]" />
+            <span className="text-[10px] font-medium text-text-muted">Solana</span>
           </div>
 
-          {/* CTA Button */}
-          <button className="btn-primary hidden sm:flex items-center gap-2 bg-gradient-to-r from-white to-gray-100 hover:from-gray-100 hover:to-white">
+          {/* Connect Wallet */}
+          <button className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-text-primary bg-surface-light hover:bg-surface-hover border border-border hover:border-border-light rounded-md transition-colors">
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
             </svg>
-            Get App
+            Connect
           </button>
         </div>
       </div>
 
       {/* Mobile Search Bar */}
-      <div className="sm:hidden px-4 pb-3">
+      <div className="sm:hidden px-3 pb-2 bg-background border-b border-border">
         <SearchBar />
       </div>
     </header>
