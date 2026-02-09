@@ -36,13 +36,22 @@ function AnimatedNumber({ value, formatter }: { value: number; formatter: (v: nu
 
 function StatCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-1 px-6 py-3 bg-white/[0.02] border border-white/[0.06] rounded-xl min-w-[140px]"
+    <div 
+      className="flex-1 flex flex-col items-center justify-center gap-2 py-5 bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] rounded-2xl relative overflow-hidden"
       style={{
-        boxShadow: '0 0 20px -5px rgba(255, 255, 255, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.02)'
+        boxShadow: `
+          0 0 40px -10px rgba(255, 255, 255, 0.07),
+          0 10px 30px -10px rgba(0, 0, 0, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.2)
+        `
       }}
     >
-      <span className="text-[11px] font-medium text-white/40 uppercase tracking-wider">{label}</span>
-      <span className="text-xl font-semibold text-white tabular-nums tracking-tight">
+      {/* Subtle top highlight for 3D effect */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      
+      <span className="text-xs font-medium text-white/40 uppercase tracking-widest">{label}</span>
+      <span className="text-2xl font-semibold text-white tabular-nums tracking-tight">
         {children}
       </span>
     </div>
@@ -64,7 +73,7 @@ export default function StatsBar({ volume24h = 0, txns24h = 0 }: StatsBarProps) 
   };
 
   return (
-    <div className="flex justify-center items-center gap-4 px-4 py-5 border-b border-white/[0.04] bg-black">
+    <div className="flex gap-4 px-4 py-4 bg-black">
       {/* 24hr Volume */}
       <StatCard label="24hr Volume">
         <AnimatedNumber value={volume24h} formatter={formatVolume} />
