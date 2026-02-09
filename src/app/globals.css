@@ -1,0 +1,391 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Monaco, Consolas, monospace;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-feature-settings: 'ss01' 1, 'cv01' 1;
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272e;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Thin scrollbar variant for tables */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #1f1f24;
+  border-radius: 3px;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== BASE TRANSITIONS ===== */
+button, a, [role="button"] {
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, transform 100ms ease, opacity 150ms ease, box-shadow 150ms ease;
+}
+
+tr {
+  transition: background-color 200ms ease;
+}
+
+/* ===== TYPOGRAPHY ===== */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
+}
+
+/* ===== DATA CELL STYLES ===== */
+.data-cell {
+  @apply text-xs tabular-nums font-medium;
+  font-family: var(--font-mono);
+}
+
+.data-positive {
+  @apply text-positive;
+}
+
+.data-negative {
+  @apply text-negative;
+}
+
+/* ===== TABLE STYLES ===== */
+.table-header-cell {
+  @apply px-3 py-2.5 text-[10px] font-semibold text-text-muted uppercase tracking-wider whitespace-nowrap select-none;
+  letter-spacing: 0.05em;
+}
+
+.table-body-cell {
+  @apply px-3 py-3;
+}
+
+.table-row {
+  @apply transition-all duration-150;
+}
+
+.table-row:hover {
+  @apply bg-surface-hover;
+}
+
+/* ===== SKELETON LOADING ===== */
+.skeleton {
+  background: linear-gradient(
+    90deg, 
+    #111114 0%, 
+    #1a1a1f 25%, 
+    #111114 50%, 
+    #1a1a1f 75%,
+    #111114 100%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* ===== DATA UPDATE ANIMATIONS ===== */
+.animate-flash-positive {
+  animation: flashPositive 0.6s ease-out;
+}
+
+.animate-flash-negative {
+  animation: flashNegative 0.6s ease-out;
+}
+
+@keyframes flashPositive {
+  0% { 
+    background-color: rgba(16, 185, 129, 0.4); 
+    transform: scale(1.02);
+  }
+  100% { 
+    background-color: transparent; 
+    transform: scale(1);
+  }
+}
+
+@keyframes flashNegative {
+  0% { 
+    background-color: rgba(239, 68, 68, 0.4); 
+    transform: scale(1.02);
+  }
+  100% { 
+    background-color: transparent; 
+    transform: scale(1);
+  }
+}
+
+/* ===== SLIDE & FADE ANIMATIONS ===== */
+.animate-slide-down {
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Subtle pulse for hot badges */
+.animate-pulse-subtle {
+  animation: pulseSutble 2s ease-in-out infinite;
+}
+
+@keyframes pulseSutble {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ===== LIVE INDICATOR PULSE - Smooth! ===== */
+.live-pulse-ring {
+  animation: livePulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes livePulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.shadow-glow-green {
+  box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
+}
+
+/* ===== GLOW EFFECTS ===== */
+.glow-green {
+  box-shadow: 0 0 24px -8px rgba(16, 185, 129, 0.4);
+}
+
+.glow-red {
+  box-shadow: 0 0 24px -8px rgba(239, 68, 68, 0.4);
+}
+
+/* ===== BUTTON STYLES ===== */
+.btn-primary {
+  @apply px-4 py-2 bg-white text-black rounded-md text-xs font-semibold;
+  @apply hover:bg-gray-100 active:scale-[0.98];
+  @apply transition-all duration-150;
+}
+
+.btn-secondary {
+  @apply px-3 py-1.5 bg-surface-light text-text-secondary rounded-md text-xs font-medium;
+  @apply border border-border hover:border-border-light hover:bg-surface-hover hover:text-text-primary;
+  @apply transition-all duration-150;
+}
+
+.btn-ghost {
+  @apply px-3 py-1.5 text-text-muted rounded-md text-xs font-medium;
+  @apply hover:bg-surface-light hover:text-text-primary;
+  @apply transition-all duration-150;
+}
+
+/* ===== CARD STYLES ===== */
+.card {
+  @apply bg-surface border border-border rounded-lg;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.02);
+}
+
+.card-elevated {
+  @apply bg-surface-light border border-border rounded-lg;
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.03),
+    0 4px 12px -4px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== BADGE STYLES ===== */
+.badge {
+  @apply inline-flex items-center px-1.5 py-0.5 rounded text-2xs font-medium;
+}
+
+.badge-positive {
+  @apply bg-positive-bg text-positive;
+}
+
+.badge-negative {
+  @apply bg-negative-bg text-negative;
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+  @apply w-px h-4 bg-border;
+}
+
+/* ===== FOCUS STATES ===== */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.2);
+  outline-offset: 2px;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  @apply flex flex-col items-center justify-center py-16 text-center;
+}
+
+.empty-state-icon {
+  @apply w-12 h-12 text-text-dimmed mb-4;
+}
+
+.empty-state-title {
+  @apply text-sm font-medium text-text-secondary mb-1;
+}
+
+.empty-state-description {
+  @apply text-xs text-text-muted;
+}
+
+/* ===== HEADER GLASS ===== */
+.header-glass {
+  @apply bg-background/80 backdrop-blur-md;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ===== GRADIENT TEXT ===== */
+.text-gradient {
+  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .mobile-compact {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* ===== TOUCH FRIENDLY ===== */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure minimum tap targets on mobile */
+@media (max-width: 768px) {
+  button, a[role="button"], .btn-primary, .btn-secondary, .btn-ghost {
+    min-height: 44px;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  :root {
+    --border: #3f3f46;
+  }
+}
+
+/* ===== CHART CONTAINER ===== */
+.tv-lightweight-charts {
+  border-radius: 0 0 8px 8px;
+}
+
+/* ===== PRINT ===== */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
