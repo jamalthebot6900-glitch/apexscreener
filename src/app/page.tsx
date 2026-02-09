@@ -13,6 +13,7 @@ const viewConfig: Record<ViewType, { title: string; description: string }> = {
   all: { title: 'All Tokens', description: 'Complete token list' },
   watchlist: { title: 'Watchlist', description: 'Your saved tokens' },
   new: { title: 'New Pairs', description: 'Created in the last 24h' },
+  graduated: { title: 'Recently Graduated', description: 'Tokens that recently graduated from launchpad' },
   gainers: { title: 'Top Gainers', description: 'Best 24h performance' },
   losers: { title: 'Top Losers', description: 'Worst 24h performance' },
 };
