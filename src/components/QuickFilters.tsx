@@ -34,18 +34,6 @@ const SparkleIcon = () => (
   </svg>
 );
 
-const BoltIcon = () => (
-  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
-  </svg>
-);
-
-const FireIcon = () => (
-  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.048 8.287 8.287 0 0 0 9 9.6a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
-  </svg>
-);
-
 const GraduatedIcon = () => (
   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
@@ -64,6 +52,31 @@ const ChevronDownIcon = () => (
   </svg>
 );
 
+const UserIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+  </svg>
+);
+
+const BoltIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+  </svg>
+);
+
+const FireIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.048 8.287 8.287 0 0 0 9 9.6a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
+  </svg>
+);
+
+const SettingsIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+  </svg>
+);
+
 interface PillButtonProps {
   children: React.ReactNode;
   active?: boolean;
@@ -73,62 +86,55 @@ interface PillButtonProps {
   className?: string;
 }
 
-function PillButton({ children, active, onClick, icon, dropdown, className, color }: PillButtonProps & { color?: 'white' | 'green' | 'orange' | 'purple' }) {
-  const colorStyles = {
-    white: {
-      active: "bg-white/15 border-white/30 text-white",
-      glow: "0 0 20px -5px rgba(255, 255, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-      icon: "text-white"
-    },
-    green: {
-      active: "bg-emerald-500/20 border-emerald-400/40 text-emerald-300",
-      glow: "0 0 20px -5px rgba(52, 211, 153, 0.35), inset 0 1px 0 rgba(52, 211, 153, 0.1)",
-      icon: "text-emerald-400"
-    },
-    orange: {
-      active: "bg-orange-500/20 border-orange-400/40 text-orange-300",
-      glow: "0 0 20px -5px rgba(251, 146, 60, 0.35), inset 0 1px 0 rgba(251, 146, 60, 0.1)",
-      icon: "text-orange-400"
-    },
-    purple: {
-      active: "bg-purple-500/20 border-purple-400/40 text-purple-300",
-      glow: "0 0 20px -5px rgba(168, 85, 247, 0.35), inset 0 1px 0 rgba(168, 85, 247, 0.1)",
-      icon: "text-purple-400"
-    }
-  };
-
-  const c = color || 'white';
-  const styles = colorStyles[c];
-
+// Uniform height pill button - white accent when active
+function PillButton({ children, active, onClick, icon, dropdown, className }: PillButtonProps) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-medium transition-all",
+        "h-9 flex items-center gap-1.5 px-4 rounded-full text-xs font-medium transition-all whitespace-nowrap",
         "border",
         active 
-          ? styles.active
-          : "bg-white/[0.03] border-white/[0.08] text-white/60 hover:bg-white/[0.06] hover:border-white/[0.12] hover:text-white/80",
+          ? "bg-white text-black border-white" 
+          : "bg-white/[0.05] border-white/[0.1] text-white/70 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white",
         className
       )}
-      style={active ? { boxShadow: styles.glow } : undefined}
     >
-      {icon && <span className={active ? styles.icon : "text-white/50"}>{icon}</span>}
+      {icon && <span className={active ? "text-black" : "text-white/60"}>{icon}</span>}
       {children}
       {dropdown && <ChevronDownIcon />}
     </button>
   );
 }
 
+// Small icon-only button
+function IconButton({ children, active, onClick }: { children: React.ReactNode; active?: boolean; onClick?: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        "h-9 w-9 flex items-center justify-center rounded-full transition-all",
+        "border",
+        active 
+          ? "bg-white text-black border-white" 
+          : "bg-white/[0.05] border-white/[0.1] text-white/60 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white"
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+// Time toggle button inside trending group
 function TimeButton({ label, active, onClick }: { label: string; active?: boolean; onClick?: () => void }) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "px-2.5 py-1.5 rounded-lg text-[11px] font-semibold transition-all",
+        "h-7 px-2.5 rounded-md text-[11px] font-semibold transition-all",
         active 
-          ? "bg-white/15 text-white" 
-          : "text-white/40 hover:text-white/70 hover:bg-white/5"
+          ? "bg-white text-black" 
+          : "text-white/50 hover:text-white hover:bg-white/10"
       )}
     >
       {label}
@@ -137,24 +143,23 @@ function TimeButton({ label, active, onClick }: { label: string; active?: boolea
 }
 
 export default function QuickFilters() {
-  const [timeframe, setTimeframe] = useState('24h');
   const [trendingTime, setTrendingTime] = useState('6h');
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   return (
-    <div className="flex items-center gap-2 px-4 py-3 bg-black border-b border-white/[0.04] overflow-x-auto scrollbar-hide">
+    <div className="flex items-center gap-2 px-4 py-3 bg-black border-b border-white/[0.06] overflow-x-auto scrollbar-hide">
       {/* Time Range Dropdown */}
       <PillButton icon={<ClockIcon />} dropdown active>
         Last 24 hours
       </PillButton>
 
       {/* Trending with Time Options */}
-      <div className="flex items-center bg-white/[0.03] border border-white/[0.08] rounded-full overflow-hidden">
-        <button className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-white/80 border-r border-white/[0.08]">
+      <div className="h-9 flex items-center bg-white/[0.05] border border-white/[0.1] rounded-full overflow-hidden">
+        <div className="flex items-center gap-1.5 px-4 text-xs font-medium text-white/70 border-r border-white/[0.1]">
           <TrendingIcon />
-          Trending
-        </button>
-        <div className="flex items-center gap-0.5 px-1.5">
+          <span>Trending</span>
+        </div>
+        <div className="flex items-center gap-0.5 px-2">
           {['5M', '1H', '6H', '24H'].map((t) => (
             <TimeButton 
               key={t} 
@@ -166,15 +171,11 @@ export default function QuickFilters() {
         </div>
       </div>
 
-      {/* Divider */}
-      <div className="w-px h-6 bg-white/[0.08] mx-1" />
-
       {/* Quick Filters */}
       <PillButton 
         icon={<ChartIcon />}
         active={activeFilter === 'top'}
         onClick={() => setActiveFilter(activeFilter === 'top' ? null : 'top')}
-        color="white"
       >
         Top
       </PillButton>
@@ -183,7 +184,6 @@ export default function QuickFilters() {
         icon={<ArrowUpIcon />}
         active={activeFilter === 'gainers'}
         onClick={() => setActiveFilter(activeFilter === 'gainers' ? null : 'gainers')}
-        color="green"
       >
         Gainers
       </PillButton>
@@ -192,7 +192,6 @@ export default function QuickFilters() {
         icon={<SparkleIcon />}
         active={activeFilter === 'new'}
         onClick={() => setActiveFilter(activeFilter === 'new' ? null : 'new')}
-        color="orange"
       >
         New Pairs
       </PillButton>
@@ -201,23 +200,20 @@ export default function QuickFilters() {
         icon={<GraduatedIcon />}
         active={activeFilter === 'graduated'}
         onClick={() => setActiveFilter(activeFilter === 'graduated' ? null : 'graduated')}
-        color="purple"
       >
         Recently Graduated
       </PillButton>
 
-      {/* Divider */}
-      <div className="w-px h-6 bg-white/[0.08] mx-1" />
-
       {/* Icon Buttons */}
-      <div className="flex items-center gap-1">
-        <button className="p-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-white/50 hover:bg-white/[0.06] hover:text-white/80 transition-all">
-          <BoltIcon />
-        </button>
-        <button className="p-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-white/50 hover:bg-white/[0.06] hover:text-white/80 transition-all">
-          <FireIcon />
-        </button>
-      </div>
+      <IconButton>
+        <UserIcon />
+      </IconButton>
+      <IconButton>
+        <BoltIcon />
+      </IconButton>
+      <IconButton>
+        <FireIcon />
+      </IconButton>
 
       {/* Spacer */}
       <div className="flex-1" />
@@ -230,6 +226,10 @@ export default function QuickFilters() {
       <PillButton icon={<FilterIcon />}>
         Filters
       </PillButton>
+
+      <IconButton>
+        <SettingsIcon />
+      </IconButton>
     </div>
   );
 }
