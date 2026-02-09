@@ -72,10 +72,10 @@ function TokenPlaceholder({ symbol }: { symbol: string }) {
   
   return (
     <div 
-      className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold"
+      className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold"
       style={{ 
-        background: `linear-gradient(135deg, hsl(${hue}, 50%, 25%), hsl(${hue}, 60%, 15%))`,
-        color: `hsl(${hue}, 70%, 65%)`
+        background: `linear-gradient(135deg, hsl(${hue}, 40%, 20%), hsl(${hue}, 50%, 10%))`,
+        color: `hsl(${hue}, 60%, 60%)`
       }}
     >
       {symbol.charAt(0).toUpperCase()}
@@ -93,15 +93,15 @@ const TokenIcon = memo(function TokenIcon({ token }: { token: Token }) {
         <img
           src={token.logo}
           alt={token.symbol}
-          className="w-7 h-7 rounded-full bg-surface-light"
+          className="w-8 h-8 rounded-full bg-surface-light border border-white/[0.05]"
           onError={() => setImgError(true)}
           loading="lazy"
         />
       ) : (
         <TokenPlaceholder symbol={token.symbol} />
       )}
-      <div className="absolute -bottom-0.5 -right-0.5 bg-background rounded-full p-[1px]">
-        <SolanaBadge size={10} />
+      <div className="absolute -bottom-0.5 -right-0.5 bg-background rounded-full p-[2px]">
+        <SolanaBadge size={11} />
       </div>
     </div>
   );
@@ -120,14 +120,14 @@ const WatchlistButton = memo(function WatchlistButton({ address }: { address: st
         toggleWatchlist(address);
       }}
       className={cn(
-        'p-1 rounded transition-colors',
+        'p-1.5 rounded-md transition-all',
         isWatched
           ? 'text-amber-400 hover:text-amber-300'
-          : 'text-text-dimmed hover:text-amber-400'
+          : 'text-text-dimmed hover:text-amber-400 hover:bg-white/[0.03]'
       )}
     >
       <svg
-        className="w-3.5 h-3.5"
+        className="w-4 h-4"
         fill={isWatched ? 'currentColor' : 'none'}
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -204,16 +204,16 @@ const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: n
 
   return (
     <tr className={cn(
-      "border-b border-border/50 hover:bg-white/[0.02] transition-colors",
-      isHot && "bg-orange-500/[0.03]"
+      "border-b border-white/[0.03] hover:bg-white/[0.02] transition-all group/row",
+      isHot && "bg-accent/[0.02]"
     )}>
       {/* Star */}
-      <td className="px-2 py-1.5 w-8 sticky left-0 bg-background z-10">
+      <td className="px-2 py-2.5 w-10 sticky left-0 bg-background z-10">
         <WatchlistButton address={token.address} />
       </td>
 
       {/* Rank */}
-      <td className="px-2 py-1.5 w-10">
+      <td className="px-2 py-2.5 w-12">
         <span className={cn(
           "text-[11px] tabular-nums font-mono",
           rank <= 3 ? "text-text-primary font-semibold" : "text-text-dimmed"
@@ -223,21 +223,21 @@ const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: n
       </td>
       
       {/* Token Info */}
-      <td className="px-2 py-1.5 min-w-[180px]">
-        <Link href={`/token/${token.address}`} className="flex items-center gap-2.5 group/link">
+      <td className="px-2 py-2.5 min-w-[200px]">
+        <Link href={`/token/${token.address}`} className="flex items-center gap-3 group/link">
           <TokenIcon token={token} />
-          <div className="flex flex-col min-w-0 gap-0">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[12px] font-semibold text-text-primary group-hover/link:text-white truncate max-w-[90px]">
+          <div className="flex flex-col min-w-0 gap-0.5">
+            <div className="flex items-center gap-2">
+              <span className="text-[13px] font-semibold text-text-primary group-hover/link:text-white truncate max-w-[100px]">
                 {token.symbol}
               </span>
-              <span className="text-[11px] text-text-dimmed">/SOL</span>
+              <span className="text-[11px] text-text-dimmed font-medium">/SOL</span>
               {isHot && (
-                <span className="text-[9px] px-1 py-0 rounded bg-orange-500/20 text-orange-400 font-medium">🔥</span>
+                <span className="text-[9px] px-1.5 py-0.5 rounded bg-accent/10 text-accent font-semibold">🔥</span>
               )}
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] text-text-muted truncate max-w-[70px]">{token.name}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] text-text-muted truncate max-w-[80px]">{token.name}</span>
               <DexBadge dexId={token.dexId} />
             </div>
           </div>
@@ -245,69 +245,69 @@ const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: n
       </td>
       
       {/* Price */}
-      <td className="px-2 py-1.5 text-right">
+      <td className="px-3 py-2.5 text-right">
         <span className="text-[12px] text-text-primary font-medium tabular-nums font-mono">
           {formatPriceDisplay(token.priceUsd)}
         </span>
       </td>
       
       {/* Sparkline */}
-      <td className="px-2 py-1.5 hidden xl:table-cell">
+      <td className="px-2 py-2.5 hidden xl:table-cell">
         <div className="flex justify-end">
-          <Sparkline data={sparklineData} width={60} height={20} />
+          <Sparkline data={sparklineData} width={64} height={22} />
         </div>
       </td>
       
       {/* Age */}
-      <td className="px-2 py-1.5 text-right hidden sm:table-cell">
+      <td className="px-2 py-2.5 text-right hidden sm:table-cell">
         <span className="text-[11px] text-text-muted tabular-nums font-mono">
           {formatAge(token.pairCreatedAt)}
         </span>
       </td>
       
       {/* Txns */}
-      <td className="px-2 py-1.5 text-right hidden md:table-cell">
+      <td className="px-2 py-2.5 text-right hidden md:table-cell">
         <span className="text-[11px] text-text-muted tabular-nums font-mono">
           {formatCompact(token.txns24h.total, 0)}
         </span>
       </td>
       
       {/* Volume */}
-      <td className="px-2 py-1.5 text-right">
+      <td className="px-3 py-2.5 text-right">
         <span className="text-[12px] text-text-primary font-medium tabular-nums font-mono">
           ${formatCompact(token.volume24h)}
         </span>
       </td>
       
       {/* 5M */}
-      <td className="px-2 py-1.5 text-right hidden lg:table-cell">
+      <td className="px-2 py-2.5 text-right hidden lg:table-cell">
         <PercentCell value={token.priceChange5m} />
       </td>
       
       {/* 1H */}
-      <td className="px-2 py-1.5 text-right hidden md:table-cell">
+      <td className="px-2 py-2.5 text-right hidden md:table-cell">
         <PercentCell value={token.priceChange1h} />
       </td>
       
       {/* 6H */}
-      <td className="px-2 py-1.5 text-right hidden lg:table-cell">
+      <td className="px-2 py-2.5 text-right hidden lg:table-cell">
         <PercentCell value={token.priceChange6h} />
       </td>
       
       {/* 24H */}
-      <td className="px-2 py-1.5 text-right">
+      <td className="px-2 py-2.5 text-right">
         <PercentCell value={token.priceChange24h} bold />
       </td>
       
       {/* Liquidity */}
-      <td className="px-2 py-1.5 text-right hidden md:table-cell">
+      <td className="px-2 py-2.5 text-right hidden md:table-cell">
         <span className="text-[11px] text-text-muted tabular-nums font-mono">
           ${formatCompact(token.liquidity)}
         </span>
       </td>
       
       {/* Market Cap */}
-      <td className="px-2 py-1.5 text-right hidden lg:table-cell">
+      <td className="px-3 py-2.5 text-right hidden lg:table-cell">
         <span className="text-[12px] text-text-primary font-medium tabular-nums font-mono">
           ${formatCompact(token.marketCap)}
         </span>
@@ -369,8 +369,8 @@ export default function TokenTable({ tokens }: TokenTableProps) {
     return (
       <th
         className={cn(
-          "px-2 py-2 text-[10px] font-semibold text-text-muted uppercase tracking-wider whitespace-nowrap text-right",
-          sortable && "cursor-pointer group/header select-none hover:text-text-secondary",
+          "px-2 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-wider whitespace-nowrap text-right",
+          sortable && "cursor-pointer group/header select-none hover:text-text-secondary transition-colors",
           className
         )}
         onClick={sortable ? () => handleSort(field) : undefined}
@@ -387,13 +387,13 @@ export default function TokenTable({ tokens }: TokenTableProps) {
     <div className="overflow-x-auto scrollbar-thin">
       <table className="w-full min-w-[900px]">
         <thead>
-          <tr className="border-b border-border bg-surface-light/30">
-            <th className="px-2 py-2 w-8 sticky left-0 bg-surface-light/95 backdrop-blur-sm z-20"></th>
-            <th className="px-2 py-2 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-left w-10">#</th>
-            <th className="px-2 py-2 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-left min-w-[180px]">Token</th>
+          <tr className="border-b border-white/[0.06] bg-surface/50">
+            <th className="px-2 py-3 w-10 sticky left-0 bg-surface/95 backdrop-blur-sm z-20"></th>
+            <th className="px-2 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-left w-12">#</th>
+            <th className="px-2 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-left min-w-[200px]">Token</th>
             <HeaderCell label="Price" className="text-right" />
-            <th className="px-2 py-2 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-right hidden xl:table-cell w-20">Chart</th>
-            <th className="px-2 py-2 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-right hidden sm:table-cell">Age</th>
+            <th className="px-2 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-right hidden xl:table-cell w-20">Chart</th>
+            <th className="px-2 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-right hidden sm:table-cell">Age</th>
             <HeaderCell field="txns24h" label="Txns" className="hidden md:table-cell" />
             <HeaderCell field="volume24h" label="Vol" />
             <HeaderCell field="priceChange5m" label="5m" className="hidden lg:table-cell" />
@@ -416,11 +416,12 @@ export default function TokenTable({ tokens }: TokenTableProps) {
       </table>
       
       {sortedTokens.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-16 text-center">
-          <svg className="w-10 h-10 text-text-dimmed mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <div className="empty-state">
+          <svg className="empty-state-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
           </svg>
-          <p className="text-sm text-text-secondary">No tokens found</p>
+          <p className="empty-state-title">No tokens found</p>
+          <p className="empty-state-description">Try adjusting your filters</p>
         </div>
       )}
     </div>

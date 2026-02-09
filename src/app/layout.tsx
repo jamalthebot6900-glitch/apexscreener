@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
@@ -8,7 +8,18 @@ import { Suspense } from 'react';
 import { AppProvider } from '@/context/AppContext';
 import AuthSessionProvider from '@/providers/SessionProvider';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
 
 export const metadata: Metadata = {
   title: 'Apexscreener - Solana Token Screener',
@@ -22,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-background text-text-primary min-h-screen flex flex-col`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+      <body className="font-sans bg-background text-text-primary min-h-screen flex flex-col antialiased">
         <AuthSessionProvider>
           <AppProvider>
             <Header />

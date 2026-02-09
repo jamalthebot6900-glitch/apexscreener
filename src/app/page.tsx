@@ -2,13 +2,12 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Token } from '@/types';
-import { fetchTokensByAddresses } from '@/lib/api';
+import { MOCK_TOKENS, getMockStats } from '@/lib/mockData';
 import TokenTable from '@/components/TokenTable';
 import LoadingSpinner, { InlineLoader } from '@/components/LoadingSpinner';
 import StatsBar from '@/components/StatsBar';
 import FilterDropdowns from '@/components/FilterDropdowns';
 import { useApp, ViewType } from '@/context/AppContext';
-import tokenConfig from '@/config/tokens.json';
 
 const viewConfig: Record<ViewType, { title: string; description: string }> = {
   all: { title: 'All Tokens', description: 'Complete token list' },
@@ -32,17 +31,16 @@ export default function HomePage() {
   const fetchData = useCallback(async (isRefresh = false) => {
     try {
       if (isRefresh) setRefreshing(true);
-      const data = await fetchTokensByAddresses(tokenConfig.tokens);
+      
+      // Use mock data for reliable demo
+      const data = MOCK_TOKENS;
+      const stats = getMockStats();
+      
       setTokens(data);
       setLastUpdated(new Date());
-      
-      const volume = data.reduce((acc, token) => acc + (token.volume24h || 0), 0);
-      const txns = data.reduce((acc, token) => acc + (token.txns24h?.total || 0), 0);
-      const mcap = data.reduce((acc, token) => acc + (token.marketCap || 0), 0);
-      
-      setTotalVolume(volume);
-      setTotalTxns(txns);
-      setTotalMarketCap(mcap);
+      setTotalVolume(stats.volume24h);
+      setTotalTxns(stats.txns24h);
+      setTotalMarketCap(stats.marketCap);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {

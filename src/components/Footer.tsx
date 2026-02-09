@@ -37,52 +37,52 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="border-t border-border bg-background">
-      <div className="max-w-[1800px] mx-auto px-4 lg:px-6 py-4">
+    <footer className="border-t border-white/[0.04] bg-background">
+      <div className="max-w-[1800px] mx-auto px-4 lg:px-6 py-5">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Left - Branding */}
           <div className="flex items-center gap-3">
-            <img src="/apex-logo.png" alt="Apexscreener" className="h-5 w-auto opacity-60" />
-            <span className="text-[11px] text-text-dimmed">
-              © {currentYear} Apexscreener. All rights reserved.
+            <img src="/apex-logo.png" alt="Apexscreener" className="h-5 w-auto opacity-50" />
+            <span className="text-[11px] text-text-dimmed font-medium">
+              © {currentYear} Apexscreener
             </span>
           </div>
           
           {/* Center - Links */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <a 
               href="#" 
-              className="text-[11px] text-text-muted hover:text-text-secondary transition-colors"
+              className="text-[11px] text-text-muted hover:text-text-primary transition-colors"
             >
               Terms
             </a>
             <a 
               href="#" 
-              className="text-[11px] text-text-muted hover:text-text-secondary transition-colors"
+              className="text-[11px] text-text-muted hover:text-text-primary transition-colors"
             >
               Privacy
             </a>
             <a 
               href="#" 
-              className="text-[11px] text-text-muted hover:text-text-secondary transition-colors"
+              className="text-[11px] text-text-muted hover:text-text-primary transition-colors"
             >
               API
             </a>
             <a 
               href="#" 
-              className="text-[11px] text-text-muted hover:text-text-secondary transition-colors"
+              className="text-[11px] text-text-muted hover:text-text-primary transition-colors"
             >
               Docs
             </a>
           </div>
           
           {/* Right - Social */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <a 
               href="https://twitter.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-1.5 text-text-dimmed hover:text-text-secondary hover:bg-white/[0.04] rounded transition-colors"
+              className="p-2 text-text-dimmed hover:text-text-primary hover:bg-white/[0.04] rounded-md transition-all"
               title="Twitter"
             >
               <TwitterIcon />
@@ -91,7 +91,7 @@ export default function Footer() {
               href="https://t.me" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-1.5 text-text-dimmed hover:text-text-secondary hover:bg-white/[0.04] rounded transition-colors"
+              className="p-2 text-text-dimmed hover:text-text-primary hover:bg-white/[0.04] rounded-md transition-all"
               title="Telegram"
             >
               <TelegramIcon />
@@ -100,7 +100,7 @@ export default function Footer() {
               href="https://discord.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-1.5 text-text-dimmed hover:text-text-secondary hover:bg-white/[0.04] rounded transition-colors"
+              className="p-2 text-text-dimmed hover:text-text-primary hover:bg-white/[0.04] rounded-md transition-all"
               title="Discord"
             >
               <DiscordIcon />
@@ -109,7 +109,7 @@ export default function Footer() {
               href="https://github.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-1.5 text-text-dimmed hover:text-text-secondary hover:bg-white/[0.04] rounded transition-colors"
+              className="p-2 text-text-dimmed hover:text-text-primary hover:bg-white/[0.04] rounded-md transition-all"
               title="GitHub"
             >
               <GithubIcon />
