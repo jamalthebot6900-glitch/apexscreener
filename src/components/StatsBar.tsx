@@ -26,7 +26,7 @@ function AnimatedNumber({ value, formatter }: { value: number; formatter: (v: nu
   }, [value]);
 
   return (
-    <span className={`text-[12px] font-semibold text-text-primary tabular-nums font-mono transition-colors ${
+    <span className={`transition-colors ${
       flash === 'up' ? 'text-positive' : flash === 'down' ? 'text-negative' : ''
     }`}>
       {formatter(displayValue)}
@@ -34,7 +34,22 @@ function AnimatedNumber({ value, formatter }: { value: number; formatter: (v: nu
   );
 }
 
-export default function StatsBar({ volume24h = 0, txns24h = 0, marketCap = 0 }: StatsBarProps) {
+function StatCard({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col items-center gap-1 px-6 py-3 bg-white/[0.02] border border-white/[0.06] rounded-xl min-w-[140px]"
+      style={{
+        boxShadow: '0 0 20px -5px rgba(255, 255, 255, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.02)'
+      }}
+    >
+      <span className="text-[11px] font-medium text-white/40 uppercase tracking-wider">{label}</span>
+      <span className="text-xl font-semibold text-white tabular-nums tracking-tight">
+        {children}
+      </span>
+    </div>
+  );
+}
+
+export default function StatsBar({ volume24h = 0, txns24h = 0 }: StatsBarProps) {
   const formatVolume = (value: number) => {
     if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(2)}B`;
     if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(2)}M`;
@@ -48,49 +63,22 @@ export default function StatsBar({ volume24h = 0, txns24h = 0, marketCap = 0 }: 
     return value.toLocaleString();
   };
 
-  const formatMcap = (value: number) => {
-    if (value >= 1_000_000_000_000) return `$${(value / 1_000_000_000_000).toFixed(2)}T`;
-    if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(2)}B`;
-    if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(2)}M`;
-    if (value >= 1_000) return `$${(value / 1_000).toFixed(1)}K`;
-    return `$${value.toLocaleString()}`;
-  };
-
   return (
-    <div className="flex items-center gap-4 lg:gap-6 px-3 lg:px-4 py-2 border-b border-border bg-surface/50 text-[11px] overflow-x-auto scrollbar-hide">
-      {/* Volume */}
-      <div className="flex items-center gap-1.5 shrink-0">
-        <span className="text-text-dimmed">Vol 24h:</span>
+    <div className="flex justify-center items-center gap-4 px-4 py-5 border-b border-white/[0.04] bg-black">
+      {/* 24hr Volume */}
+      <StatCard label="24hr Volume">
         <AnimatedNumber value={volume24h} formatter={formatVolume} />
-      </div>
+      </StatCard>
 
-      <div className="w-px h-3.5 bg-border shrink-0" />
-
-      {/* Txns */}
-      <div className="flex items-center gap-1.5 shrink-0">
-        <span className="text-text-dimmed">Txns:</span>
+      {/* 24hr Txns */}
+      <StatCard label="24hr Txns">
         <AnimatedNumber value={txns24h} formatter={formatTxns} />
-      </div>
+      </StatCard>
 
-      <div className="w-px h-3.5 bg-border shrink-0 hidden sm:block" />
-
-      {/* Market Cap */}
-      <div className="hidden sm:flex items-center gap-1.5 shrink-0">
-        <span className="text-text-dimmed">MCap:</span>
-        <AnimatedNumber value={marketCap} formatter={formatMcap} />
-      </div>
-
-      {/* Spacer */}
-      <div className="flex-1 min-w-0" />
-
-      {/* Live indicator */}
-      <div className="hidden md:flex items-center gap-1.5 shrink-0">
-        <span className="relative flex h-1.5 w-1.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-positive opacity-75" />
-          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-positive" />
-        </span>
-        <span className="text-text-dimmed">Live</span>
-      </div>
+      {/* $APEX Market Cap */}
+      <StatCard label="$APEX Market Cap">
+        <span className="text-white/50">TBA</span>
+      </StatCard>
     </div>
   );
 }
