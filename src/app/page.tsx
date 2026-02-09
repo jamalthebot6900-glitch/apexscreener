@@ -6,6 +6,7 @@ import { MOCK_TOKENS, getMockStats } from '@/lib/mockData';
 import TokenTable from '@/components/TokenTable';
 import LoadingSpinner, { InlineLoader } from '@/components/LoadingSpinner';
 import StatsBar from '@/components/StatsBar';
+import QuickFilters from '@/components/QuickFilters';
 import FilterDropdowns from '@/components/FilterDropdowns';
 import { useApp, ViewType } from '@/context/AppContext';
 
@@ -102,6 +103,9 @@ export default function HomePage() {
         txns24h={totalTxns} 
         marketCap={totalMarketCap}
       />
+
+      {/* Quick Filters */}
+      <QuickFilters />
       
       {/* Main Content */}
       <div className="px-3 lg:px-4 py-3 lg:py-4 flex-1 max-w-[1800px] mx-auto w-full">
