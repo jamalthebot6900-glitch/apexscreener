@@ -1,8 +1,71 @@
 'use client';
 
 import Link from 'next/link';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import SearchBar from './SearchBar';
 import { useApp } from '@/context/AppContext';
+
+// Auth button component
+function AuthButton() {
+  const { data: session, status } = useSession();
+
+  if (status === 'loading') {
+    return (
+      <div className="w-8 h-8 rounded-full bg-surface-light animate-pulse" />
+    );
+  }
+
+  if (session?.user) {
+    return (
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => signOut()}
+          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-text-muted hover:text-text-primary transition-colors"
+        >
+          Sign Out
+        </button>
+        <div className="relative group">
+          {session.user.image ? (
+            <img
+              src={session.user.image}
+              alt={session.user.name || 'User'}
+              className="w-8 h-8 rounded-full border border-border cursor-pointer"
+            />
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold cursor-pointer">
+              {session.user.name?.charAt(0) || 'U'}
+            </div>
+          )}
+          {/* Dropdown menu */}
+          <div className="absolute right-0 top-full mt-1 w-48 py-1 bg-surface border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+            <div className="px-3 py-2 border-b border-border">
+              <p className="text-sm font-medium text-text-primary truncate">{session.user.name}</p>
+              <p className="text-xs text-text-muted truncate">{session.user.email}</p>
+            </div>
+            <button
+              onClick={() => signOut()}
+              className="w-full px-3 py-2 text-left text-sm text-text-muted hover:text-text-primary hover:bg-surface-light transition-colors"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <button
+      onClick={() => signIn('google')}
+      className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-text-primary bg-primary hover:bg-primary-dark rounded-md transition-colors"
+    >
+      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+      </svg>
+      Sign In
+    </button>
+  );
+}
 
 // Hamburger menu button for mobile
 function HamburgerButton() {
@@ -86,6 +149,9 @@ export default function Header() {
             </svg>
             Connect
           </button>
+
+          {/* Auth Button */}
+          <AuthButton />
         </div>
       </div>
 
