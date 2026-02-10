@@ -147,87 +147,87 @@ const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: n
       {/* Token Name - Bold white */}
       <td className="px-2 py-[10px] min-w-[220px]">
         <Link href={`/token/${token.address}`} className="flex items-center gap-2 group">
-          <span className="text-[14px] font-bold text-white group-hover:text-[#58a6ff] transition-colors">
+          <span className="text-[15px] font-bold text-white group-hover:text-[#58a6ff] transition-colors">
             {token.symbol}
           </span>
-          <span className="text-[13px] text-[#8b949e]">/SOL</span>
-          <span className="text-[13px] text-[#6e7681]">{token.name}</span>
+          <span className="text-[14px] text-[#8b949e] font-medium">/SOL</span>
+          <span className="text-[14px] text-[#6e7681]">{token.name}</span>
         </Link>
       </td>
       
       {/* Price */}
       <td className="px-3 py-[10px] text-right">
-        <span className="text-[13px] text-[#c9d1d9] font-medium tabular-nums">
+        <span className="text-[14px] text-white font-semibold tabular-nums">
           {formatPrice(token.priceUsd)}
         </span>
       </td>
       
       {/* Age */}
       <td className="px-3 py-[10px] text-center">
-        <span className="text-[13px] text-[#8b949e] tabular-nums">
+        <span className="text-[14px] text-[#a0a0a0] font-medium tabular-nums">
           {formatAge(token.pairCreatedAt)}
         </span>
       </td>
       
       {/* Txns */}
       <td className="px-3 py-[10px] text-right">
-        <span className="text-[13px] text-[#c9d1d9] tabular-nums">
+        <span className="text-[14px] text-white font-semibold tabular-nums">
           {formatNum(token.txns24h.total)}
         </span>
       </td>
       
       {/* Volume */}
       <td className="px-3 py-[10px] text-right">
-        <span className="text-[13px] text-[#c9d1d9] tabular-nums">
+        <span className="text-[14px] text-white font-semibold tabular-nums">
           {formatCompact(token.volume24h)}
         </span>
       </td>
       
       {/* Makers - using txns as placeholder */}
       <td className="px-3 py-[10px] text-right hidden xl:table-cell">
-        <span className="text-[13px] text-[#8b949e] tabular-nums">
+        <span className="text-[14px] text-[#a0a0a0] font-medium tabular-nums">
           {formatNum(Math.floor(token.txns24h.total / 10))}
         </span>
       </td>
       
       {/* 5M */}
       <td className="px-3 py-[10px] text-right hidden lg:table-cell">
-        <span className={`text-[13px] font-medium tabular-nums ${token.priceChange5m >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'}`}>
+        <span className={`text-[14px] font-semibold tabular-nums ${token.priceChange5m >= 0 ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
           {token.priceChange5m?.toFixed(2)}%
         </span>
       </td>
       
       {/* 1H */}
       <td className="px-3 py-[10px] text-right hidden md:table-cell">
-        <span className={`text-[13px] font-medium tabular-nums ${token.priceChange1h >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'}`}>
+        <span className={`text-[14px] font-semibold tabular-nums ${token.priceChange1h >= 0 ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
           {token.priceChange1h?.toFixed(2)}%
         </span>
       </td>
       
       {/* 6H */}
       <td className="px-3 py-[10px] text-right hidden lg:table-cell">
-        <span className={`text-[13px] font-medium tabular-nums ${token.priceChange6h >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'}`}>
+        <span className={`text-[14px] font-semibold tabular-nums ${token.priceChange6h >= 0 ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
           {token.priceChange6h?.toFixed(2)}%
         </span>
       </td>
       
       {/* 24H */}
       <td className="px-3 py-[10px] text-right">
-        <span className={`text-[13px] font-medium tabular-nums ${token.priceChange24h >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'}`}>
+        <span className={`text-[14px] font-semibold tabular-nums ${token.priceChange24h >= 0 ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
           {token.priceChange24h?.toFixed(2)}%
         </span>
       </td>
       
       {/* Liquidity */}
       <td className="px-3 py-[10px] text-right hidden md:table-cell">
-        <span className="text-[13px] text-[#3fb950] tabular-nums">
+        <span className="text-[14px] text-[#00d395] font-semibold tabular-nums">
           {formatCompact(token.liquidity)}
         </span>
       </td>
       
       {/* Market Cap */}
       <td className="px-3 pr-4 py-[10px] text-right">
-        <span className="text-[13px] text-[#c9d1d9] tabular-nums">
+        <span className="text-[14px] text-white font-semibold tabular-nums">
           {formatCompact(token.marketCap)}
         </span>
       </td>
