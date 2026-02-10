@@ -9,55 +9,63 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Core backgrounds - Pure black premium
-        background: '#000000',
-        surface: '#050505',
-        'surface-light': '#0a0a0a',
-        'surface-hover': '#0f0f0f',
-        'surface-elevated': '#111111',
+        // Core backgrounds - Dark with better contrast
+        background: '#0c0c0e',
+        surface: '#121214',
+        'surface-light': '#18181b',
+        'surface-hover': '#1e1e22',
+        'surface-elevated': '#242428',
         
-        // Borders - Subtle, refined
-        border: '#151515',
-        'border-light': '#1a1a1a',
-        'border-subtle': '#0d0d0d',
-        'border-glow': 'rgba(255, 255, 255, 0.06)',
+        // Borders - More visible
+        border: '#27272a',
+        'border-light': '#303036',
+        'border-subtle': '#1c1c20',
+        'border-glow': 'rgba(255, 255, 255, 0.12)',
         
-        // Text hierarchy - High contrast whites
+        // Text hierarchy - Bright and crisp
         'text-primary': '#ffffff',
-        'text-secondary': '#a0a0a0',
-        'text-muted': '#606060',
-        'text-dimmed': '#383838',
+        'text-secondary': '#b4b4b8',
+        'text-muted': '#8c8c94',
+        'text-dimmed': '#52525a',
         
-        // Accent - Faint warm orange glow
-        accent: '#ff6b35',
-        'accent-hover': '#ff8255',
-        'accent-muted': '#cc5529',
-        'accent-glow': 'rgba(255, 107, 53, 0.15)',
+        // Accent - Vibrant electric orange
+        accent: '#ff7849',
+        'accent-hover': '#ff9264',
+        'accent-muted': '#e5693f',
+        'accent-glow': 'rgba(255, 120, 73, 0.25)',
         
-        // Secondary accent - Pure white for CTAs
+        // Secondary accent - Bright white
         'accent-white': '#ffffff',
-        'accent-white-hover': '#f0f0f0',
+        'accent-white-hover': '#f4f4f5',
         
-        // Semantic colors - Refined
-        positive: '#00d47e',
-        'positive-muted': '#00b569',
-        'positive-bg': 'rgba(0, 212, 126, 0.08)',
-        'positive-glow': 'rgba(0, 212, 126, 0.2)',
+        // Semantic colors - Vibrant neon
+        positive: '#00e88c',
+        'positive-muted': '#00cc7a',
+        'positive-bg': 'rgba(0, 232, 140, 0.12)',
+        'positive-glow': 'rgba(0, 232, 140, 0.35)',
         
-        negative: '#ff4757',
-        'negative-muted': '#e8414f',
-        'negative-bg': 'rgba(255, 71, 87, 0.08)',
-        'negative-glow': 'rgba(255, 71, 87, 0.2)',
+        negative: '#ff5a6a',
+        'negative-muted': '#f04858',
+        'negative-bg': 'rgba(255, 90, 106, 0.12)',
+        'negative-glow': 'rgba(255, 90, 106, 0.35)',
         
-        warning: '#ffa726',
-        'warning-muted': '#fb8c00',
+        warning: '#ffb940',
+        'warning-muted': '#ffa420',
         
-        // Premium gradient colors
+        // Vibrant gradient colors
         gradient: {
-          orange: '#ff6b35',
-          peach: '#ff8a5c',
-          warm: '#ffb088',
-          cream: '#ffd4c2',
+          orange: '#ff7849',
+          peach: '#ff9a70',
+          warm: '#ffc4a8',
+          cream: '#ffe4d4',
+        },
+        
+        // Additional bright colors
+        electric: {
+          blue: '#3b82f6',
+          purple: '#a855f7',
+          cyan: '#06b6d4',
+          pink: '#ec4899',
         },
       },
       fontFamily: {
@@ -121,15 +129,18 @@ const config: Config = {
         },
       },
       boxShadow: {
-        'glow': '0 0 20px -5px rgba(255, 255, 255, 0.1)',
-        'glow-orange': '0 0 30px -5px rgba(255, 107, 53, 0.25)',
-        'glow-white': '0 0 20px -5px rgba(255, 255, 255, 0.15)',
-        'glow-green': '0 0 20px -5px rgba(0, 212, 126, 0.3)',
-        'glow-red': '0 0 20px -5px rgba(255, 71, 87, 0.3)',
-        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.5)',
-        'elevated': '0 8px 32px -8px rgba(0, 0, 0, 0.8)',
-        'premium': '0 4px 24px -4px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03)',
-        'btn-glow': '0 0 16px -2px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+        'glow': '0 0 24px -4px rgba(255, 255, 255, 0.18)',
+        'glow-orange': '0 0 40px -6px rgba(255, 120, 73, 0.45)',
+        'glow-white': '0 0 28px -4px rgba(255, 255, 255, 0.25)',
+        'glow-green': '0 0 32px -4px rgba(0, 232, 140, 0.45)',
+        'glow-red': '0 0 32px -4px rgba(255, 90, 106, 0.45)',
+        'subtle': '0 2px 4px 0 rgba(0, 0, 0, 0.4)',
+        'elevated': '0 12px 40px -10px rgba(0, 0, 0, 0.7)',
+        'premium': '0 6px 32px -6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06)',
+        'btn-glow': '0 0 24px -2px rgba(255, 255, 255, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+        'card-glow': '0 0 48px -12px rgba(255, 120, 73, 0.2)',
+        'neon-green': '0 0 20px rgba(0, 232, 140, 0.5), 0 0 40px rgba(0, 232, 140, 0.3)',
+        'neon-red': '0 0 20px rgba(255, 90, 106, 0.5), 0 0 40px rgba(255, 90, 106, 0.3)',
       },
       borderRadius: {
         'sm': '4px',
