@@ -1,28 +1,24 @@
 'use client';
 
-import Link from 'next/link';
-
-// Solana badge - gradient purple/green
-function SolanaBadge() {
+// Solana logo - official gradient
+function SolanaLogo() {
   return (
-    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#9945FF] via-[#14F195] to-[#00FFA3] flex items-center justify-center flex-shrink-0">
-      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="white">
-        <path d="M4 17.5L8 13.5H20L16 17.5H4Z" />
-        <path d="M4 6.5L8 10.5H20L16 6.5H4Z" />
-        <path d="M4 12L8 8H20L16 12H4Z" />
-      </svg>
-    </div>
+    <img 
+      src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png"
+      alt="Solana"
+      className="w-5 h-5 rounded-full"
+    />
   );
 }
 
-// Raydium/Swap badge - teal
-function SwapBadge() {
+// PumpSwap logo
+function PumpSwapLogo() {
   return (
-    <div className="w-5 h-5 rounded-full bg-[#3ee6c4] flex items-center justify-center flex-shrink-0">
-      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="#0e1118">
-        <path d="M7 16V4m0 0L3 8m4-4l4 4m6 4v12m0 0l4-4m-4 4l-4-4" stroke="#0e1118" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-      </svg>
-    </div>
+    <img 
+      src="https://dd.dexscreener.com/ds-data/dexes/pumpswap.png"
+      alt="PumpSwap"
+      className="w-5 h-5 rounded-full"
+    />
   );
 }
 
@@ -33,8 +29,7 @@ const tokens = [
     symbol: 'Goyim',
     pair: 'SOL',
     name: 'Goyim',
-    logo: null, // Will use placeholder
-    logoColor: '#e91e8c', // Pink
+    logo: 'https://dd.dexscreener.com/ds-data/tokens/solana/9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump.png',
     price: '$0.004372',
     age: '8d',
     txns: '49,709',
@@ -90,17 +85,18 @@ export default function TokenTable() {
                   {/* Rank */}
                   <span className="text-[13px] text-[#6a6a6a] font-medium w-6">#{token.rank}</span>
                   
-                  {/* Badges */}
-                  <SolanaBadge />
-                  <SwapBadge />
+                  {/* Solana logo */}
+                  <SolanaLogo />
+                  
+                  {/* PumpSwap logo */}
+                  <PumpSwapLogo />
                   
                   {/* Token logo */}
-                  <div 
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-[14px] font-bold text-white"
-                    style={{ backgroundColor: token.logoColor }}
-                  >
-                    {token.symbol.charAt(0)}
-                  </div>
+                  <img 
+                    src={token.logo}
+                    alt={token.symbol}
+                    className="w-8 h-8 rounded-lg object-cover"
+                  />
                   
                   {/* Token name */}
                   <div className="flex items-center gap-1.5">
