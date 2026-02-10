@@ -26,7 +26,7 @@ export default function FilterBar() {
       {/* Last 24 hours dropdown */}
       <div className="relative">
         <button
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#1a1a1a] border border-border-light text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-hover transition-all"
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#2a2e36] border border-border-light text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-hover transition-all"
           onClick={() => setShowTimeDropdown(!showTimeDropdown)}
         >
           <ClockIcon />
@@ -49,7 +49,7 @@ export default function FilterBar() {
       </div>
 
       {/* Trending with time toggles */}
-      <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#1a1a1a] border border-border-light">
+      <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#2a2e36] border border-border-light">
         <button
           className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium transition-all ${
             currentView === 'trending' 
@@ -86,7 +86,7 @@ export default function FilterBar() {
         className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-all ${
           currentView === 'top'
             ? 'bg-white text-black border-white'
-            : 'bg-[#1a1a1a] border-border-light text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+            : 'bg-[#2a2e36] border-border-light text-text-secondary hover:text-text-primary hover:bg-surface-hover'
         }`}
         onClick={() => handleViewChange('top')}
       >
@@ -99,7 +99,7 @@ export default function FilterBar() {
         className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-all ${
           currentView === 'gainers'
             ? 'bg-white text-black border-white'
-            : 'bg-[#1a1a1a] border-border-light text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+            : 'bg-[#2a2e36] border-border-light text-text-secondary hover:text-text-primary hover:bg-surface-hover'
         }`}
         onClick={() => handleViewChange('gainers')}
       >
@@ -112,7 +112,7 @@ export default function FilterBar() {
         className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-all ${
           currentView === 'new'
             ? 'bg-white text-black border-white'
-            : 'bg-[#1a1a1a] border-border-light text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+            : 'bg-[#2a2e36] border-border-light text-text-secondary hover:text-text-primary hover:bg-surface-hover'
         }`}
         onClick={() => handleViewChange('new')}
       >
@@ -126,7 +126,7 @@ export default function FilterBar() {
       {/* Rank by dropdown */}
       <div className="relative">
         <button
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#1a1a1a] border border-border-light text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-hover transition-all"
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#2a2e36] border border-border-light text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-hover transition-all"
           onClick={() => setShowRankDropdown(!showRankDropdown)}
         >
           <span>Rank by: Trending {timeFilter}</span>
@@ -148,7 +148,7 @@ export default function FilterBar() {
       </div>
 
       {/* Filters */}
-      <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#1a1a1a] border border-border-light text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-hover transition-all ml-auto">
+      <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#2a2e36] border border-border-light text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-hover transition-all ml-auto">
         <FilterIcon />
         <span>Filters</span>
       </button>

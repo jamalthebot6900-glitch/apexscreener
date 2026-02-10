@@ -96,7 +96,7 @@ function PillButton({ children, active, onClick, icon, dropdown, className }: Pi
         "border",
         active 
           ? "bg-[#3b82f6] text-white border-[#3b82f6]" 
-          : "bg-[#1a1a1a] border-[#2a2a2a] text-white/80 hover:bg-[#222] hover:border-[#333] hover:text-white",
+          : "bg-[#2a2e36] border-[#363a42] text-white/80 hover:bg-[#2c3038] hover:border-[#444850] hover:text-white",
         className
       )}
     >
@@ -117,7 +117,7 @@ function IconButton({ children, active, onClick }: { children: React.ReactNode; 
         "border",
         active 
           ? "bg-[#3b82f6] text-white border-[#3b82f6]" 
-          : "bg-[#1a1a1a] border-[#2a2a2a] text-white/70 hover:bg-[#222] hover:border-[#333] hover:text-white"
+          : "bg-[#2a2e36] border-[#363a42] text-white/70 hover:bg-[#2c3038] hover:border-[#444850] hover:text-white"
       )}
     >
       {children}
@@ -147,15 +147,15 @@ export default function QuickFilters() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   return (
-    <div className="flex items-center gap-1.5 px-3 py-2 bg-black border-b border-[#1a1a1a] overflow-x-auto scrollbar-hide">
+    <div className="flex items-center gap-1.5 px-3 py-2 bg-surface border-b border-[#2a2e36] overflow-x-auto scrollbar-hide">
       {/* Time Range Dropdown */}
       <PillButton icon={<ClockIcon />} dropdown active>
         Last 24 hours
       </PillButton>
 
       {/* Trending with Time Options */}
-      <div className="h-7 flex items-center bg-[#1a1a1a] border border-[#2a2a2a] rounded overflow-hidden">
-        <div className="flex items-center gap-1 px-2.5 text-[11px] font-semibold text-white/80 border-r border-[#2a2a2a]">
+      <div className="h-7 flex items-center bg-[#2a2e36] border border-[#363a42] rounded overflow-hidden">
+        <div className="flex items-center gap-1 px-2.5 text-[11px] font-semibold text-white/80 border-r border-[#363a42]">
           <TrendingIcon />
           <span>Trending</span>
         </div>

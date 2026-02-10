@@ -204,7 +204,7 @@ const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: n
 
   return (
     <tr className={cn(
-      "border-b border-[#1a1a1a] hover:bg-[#111] transition-all group/row",
+      "border-b border-border hover:bg-surface-hover transition-all group/row",
       isHot && "bg-orange-500/[0.03]"
     )}>
       {/* Rank */}
@@ -377,7 +377,7 @@ export default function TokenTable({ tokens }: TokenTableProps) {
     <div className="overflow-x-auto scrollbar-thin">
       <table className="w-full min-w-[900px]">
         <thead>
-          <tr className="border-b border-[#1a1a1a] bg-black">
+          <tr className="border-b border-border bg-surface">
             <th className="px-2 py-2 text-[10px] font-bold text-white/50 uppercase tracking-wide text-center w-8">TOKEN</th>
             <th className="px-2 py-2 text-[10px] font-bold text-white/50 uppercase tracking-wide text-left min-w-[180px]"></th>
             <HeaderCell label="Price" className="text-right" />

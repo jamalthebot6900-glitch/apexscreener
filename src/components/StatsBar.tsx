@@ -37,20 +37,20 @@ function AnimatedNumber({ value, formatter }: { value: number; formatter: (v: nu
 function StatCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div 
-      className="flex-1 flex flex-col items-center justify-center gap-2 py-5 bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] rounded-2xl relative overflow-hidden"
+      className="flex-1 flex flex-col items-center justify-center gap-2 py-5 bg-gradient-to-b from-white/[0.08] to-white/[0.03] border border-white/[0.12] rounded-2xl relative overflow-hidden"
       style={{
         boxShadow: `
-          0 0 40px -10px rgba(255, 255, 255, 0.07),
-          0 10px 30px -10px rgba(0, 0, 0, 0.5),
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.2)
+          0 0 40px -10px rgba(255, 255, 255, 0.1),
+          0 10px 30px -10px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.15)
         `
       }}
     >
       {/* Subtle top highlight for 3D effect */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
       
-      <span className="text-xs font-medium text-white/40 uppercase tracking-widest">{label}</span>
+      <span className="text-xs font-medium text-white/50 uppercase tracking-widest">{label}</span>
       <span className="text-2xl font-semibold text-white tabular-nums tracking-tight">
         {children}
       </span>
@@ -73,7 +73,7 @@ export default function StatsBar({ volume24h = 0, txns24h = 0 }: StatsBarProps) 
   };
 
   return (
-    <div className="flex gap-4 px-4 py-4 bg-black">
+    <div className="flex gap-4 px-4 py-4 bg-surface">
       {/* 24hr Volume */}
       <StatCard label="24hr Volume">
         <AnimatedNumber value={volume24h} formatter={formatVolume} />

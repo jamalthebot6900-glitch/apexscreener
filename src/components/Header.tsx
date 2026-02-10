@@ -37,7 +37,7 @@ function AuthButton() {
             </div>
           )}
           {/* Dropdown menu */}
-          <div className="absolute right-0 top-full mt-2 w-52 py-1.5 bg-black border border-white/10 rounded-lg shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+          <div className="absolute right-0 top-full mt-2 w-52 py-1.5 bg-surface border border-white/10 rounded-lg shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
             <div className="px-4 py-3 border-b border-white/5">
               <p className="text-sm font-medium text-white truncate">{session.user.name}</p>
               <p className="text-xs text-white/40 truncate mt-0.5">{session.user.email}</p>
@@ -87,7 +87,7 @@ function HamburgerButton() {
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 h-16 bg-black border-b border-white/[0.06]">
+    <header className="sticky top-0 z-50 h-16 bg-surface border-b border-white/[0.06]">
       <div className="h-full max-w-[1800px] mx-auto px-6 lg:px-8 flex items-center justify-between">
         
         {/* Left - Logo & Brand */}
@@ -139,7 +139,7 @@ export default function Header() {
       </div>
 
       {/* Mobile Search Bar */}
-      <div className="sm:hidden px-4 pb-3 bg-black border-b border-white/[0.06]">
+      <div className="sm:hidden px-4 pb-3 bg-surface border-b border-white/[0.06]">
         <SearchBar />
       </div>
     </header>
