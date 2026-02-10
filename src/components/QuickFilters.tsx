@@ -93,7 +93,7 @@ function FilterButton({
       className={cn(
         "h-8 flex items-center gap-1.5 px-3 rounded-lg text-[13px] font-semibold transition-all whitespace-nowrap",
         active 
-          ? "bg-[#1a2d3d] text-white border border-[#2a4a5a]" 
+          ? "bg-[#4752c4] text-white border border-[#5865f2]" 
           : "bg-[#18181c] text-[#888] border border-[#2a2a30] hover:bg-[#222228] hover:text-white hover:border-[#3a3a42]",
         className
       )}
@@ -123,8 +123,8 @@ function TimePill({ label, active, onClick }: { label: string; active?: boolean;
       className={cn(
         "h-6 px-2.5 rounded text-[13px] font-semibold transition-all",
         active 
-          ? "bg-[#2a4a5a] text-white" 
-          : "text-[#6a8a9a] hover:text-white"
+          ? "bg-[#5865f2] text-white" 
+          : "text-white/60 hover:text-white"
       )}
     >
       {label}
@@ -143,12 +143,12 @@ export default function QuickFilters() {
       </FilterButton>
 
       {/* Trending with time options */}
-      <div className="h-8 flex items-center bg-[#1a2d3d] border border-[#2a4a5a] rounded-lg overflow-hidden">
+      <div className="h-8 flex items-center bg-[#4752c4] border border-[#5865f2] rounded-lg overflow-hidden">
         <div className="flex items-center gap-1.5 px-3 text-[13px] font-semibold text-white">
           <FireIcon />
           <span>Trending</span>
         </div>
-        <div className="flex items-center gap-1 px-2 border-l border-[#2a4a5a]">
+        <div className="flex items-center gap-1 px-2 border-l border-[#5865f2]/50">
           {['5M', '1H', '6H', '24H'].map((t) => (
             <TimePill 
               key={t} 
