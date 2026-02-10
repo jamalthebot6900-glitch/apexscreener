@@ -177,7 +177,7 @@ function PercentCell({ value, bold = false }: { value: number; bold?: boolean })
   
   return (
     <span className={cn(
-      'tabular-nums font-mono text-[11px]',
+      'tabular-nums text-[13px]',
       bold ? 'font-semibold' : 'font-medium',
       isPositive && 'text-positive',
       isNegative && 'text-negative',
@@ -204,101 +204,101 @@ const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: n
 
   return (
     <tr className={cn(
-      "border-b border-border hover:bg-surface-hover transition-all group/row",
+      "border-b border-border/50 hover:bg-surface-hover transition-colors group/row",
       isHot && "bg-orange-500/[0.03]"
     )}>
       {/* Rank */}
-      <td className="px-2 py-1.5 w-8 text-center">
+      <td className="px-3 py-2.5 w-10 text-center">
         <span className={cn(
-          "text-[11px] tabular-nums font-mono",
-          rank <= 3 ? "text-white font-bold" : "text-white/40"
+          "text-[13px] tabular-nums",
+          rank <= 3 ? "text-white font-semibold" : "text-white/40"
         )}>
           #{rank}
         </span>
       </td>
       
       {/* Token Info */}
-      <td className="px-2 py-1.5 min-w-[180px]">
-        <Link href={`/token/${token.address}`} className="flex items-center gap-2 group/link">
+      <td className="px-2 py-2.5 min-w-[200px]">
+        <Link href={`/token/${token.address}`} className="flex items-center gap-2.5 group/link">
           <TokenIcon token={token} />
-          <div className="flex items-center gap-1.5 min-w-0">
-            <span className="text-[12px] font-bold text-white group-hover/link:text-blue-400 truncate">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-[13px] font-bold text-white group-hover/link:text-blue-400 truncate">
               {token.symbol}
             </span>
-            <span className="text-[10px] text-white/40">/SOL</span>
-            <span className="text-[10px] text-white/30 truncate max-w-[80px]">{token.name}</span>
+            <span className="text-[11px] text-white/40">/SOL</span>
+            <span className="text-[11px] text-white/30 truncate max-w-[100px]">{token.name}</span>
             {isHot && (
-              <span className="text-[9px] px-1 rounded bg-orange-500/20 text-orange-400 font-bold">🔥</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-400 font-bold">🔥</span>
             )}
           </div>
         </Link>
       </td>
       
       {/* Price */}
-      <td className="px-2 py-1.5 text-right">
-        <span className="text-[11px] text-white font-semibold tabular-nums font-mono">
+      <td className="px-3 py-2.5 text-right">
+        <span className="text-[13px] text-white font-medium tabular-nums">
           {formatPriceDisplay(token.priceUsd)}
         </span>
       </td>
       
       {/* Sparkline */}
       <td className="px-2 py-2.5 hidden xl:table-cell">
-        <div className="flex justify-end">
-          <Sparkline data={sparklineData} width={64} height={22} />
+        <div className="flex justify-center">
+          <Sparkline data={sparklineData} width={70} height={24} />
         </div>
       </td>
       
       {/* Age */}
-      <td className="px-2 py-1.5 text-right hidden sm:table-cell">
-        <span className="text-[11px] text-white/50 tabular-nums font-mono">
+      <td className="px-3 py-2.5 text-center hidden sm:table-cell">
+        <span className="text-[13px] text-white/60 tabular-nums">
           {formatAge(token.pairCreatedAt)}
         </span>
       </td>
       
       {/* Txns */}
-      <td className="px-2 py-1.5 text-right hidden md:table-cell">
-        <span className="text-[11px] text-white/60 tabular-nums font-mono">
+      <td className="px-3 py-2.5 text-right hidden md:table-cell">
+        <span className="text-[13px] text-white/70 tabular-nums">
           {formatCompact(token.txns24h.total, 0)}
         </span>
       </td>
       
       {/* Volume */}
-      <td className="px-2 py-1.5 text-right">
-        <span className="text-[11px] text-white font-semibold tabular-nums font-mono">
+      <td className="px-3 py-2.5 text-right">
+        <span className="text-[13px] text-white font-medium tabular-nums">
           ${formatCompact(token.volume24h)}
         </span>
       </td>
       
       {/* 5M */}
-      <td className="px-2 py-1.5 text-right hidden lg:table-cell">
+      <td className="px-3 py-2.5 text-right hidden lg:table-cell">
         <PercentCell value={token.priceChange5m} />
       </td>
       
       {/* 1H */}
-      <td className="px-2 py-1.5 text-right hidden md:table-cell">
+      <td className="px-3 py-2.5 text-right hidden md:table-cell">
         <PercentCell value={token.priceChange1h} />
       </td>
       
       {/* 6H */}
-      <td className="px-2 py-1.5 text-right hidden lg:table-cell">
+      <td className="px-3 py-2.5 text-right hidden lg:table-cell">
         <PercentCell value={token.priceChange6h} />
       </td>
       
       {/* 24H */}
-      <td className="px-2 py-1.5 text-right">
+      <td className="px-3 py-2.5 text-right">
         <PercentCell value={token.priceChange24h} bold />
       </td>
       
       {/* Liquidity */}
-      <td className="px-2 py-1.5 text-right hidden md:table-cell">
-        <span className="text-[11px] text-white/60 tabular-nums font-mono">
+      <td className="px-3 py-2.5 text-right hidden md:table-cell">
+        <span className="text-[13px] text-white/70 tabular-nums">
           ${formatCompact(token.liquidity)}
         </span>
       </td>
       
       {/* Market Cap */}
-      <td className="px-2 py-1.5 text-right hidden lg:table-cell">
-        <span className="text-[11px] text-white font-semibold tabular-nums font-mono">
+      <td className="px-3 py-2.5 text-right hidden lg:table-cell">
+        <span className="text-[13px] text-white font-medium tabular-nums">
           ${formatCompact(token.marketCap)}
         </span>
       </td>
@@ -359,8 +359,8 @@ export default function TokenTable({ tokens }: TokenTableProps) {
     return (
       <th
         className={cn(
-          "px-2 py-2 text-[10px] font-bold text-white/50 uppercase tracking-wide whitespace-nowrap text-right",
-          sortable && "cursor-pointer group/header select-none hover:text-white/70 transition-colors",
+          "px-3 py-2.5 text-[11px] font-semibold text-white/60 uppercase tracking-wider whitespace-nowrap text-right",
+          sortable && "cursor-pointer group/header select-none hover:text-white/80 transition-colors",
           className
         )}
         onClick={sortable ? () => handleSort(field) : undefined}
@@ -377,11 +377,12 @@ export default function TokenTable({ tokens }: TokenTableProps) {
     <div className="overflow-x-auto scrollbar-thin">
       <table className="w-full min-w-[900px]">
         <thead>
-          <tr className="border-b border-border bg-surface">
-            <th className="px-2 py-2 text-[10px] font-bold text-white/50 uppercase tracking-wide text-center w-8">TOKEN</th>
-            <th className="px-2 py-2 text-[10px] font-bold text-white/50 uppercase tracking-wide text-left min-w-[180px]"></th>
+          <tr className="border-b border-border bg-surface-light">
+            <th className="px-3 py-2.5 text-[11px] font-semibold text-white/60 uppercase tracking-wider text-center w-10">TOKEN</th>
+            <th className="px-2 py-2.5 text-[11px] font-semibold text-white/60 uppercase tracking-wider text-left min-w-[200px]"></th>
             <HeaderCell label="Price" className="text-right" />
-            <th className="px-2 py-2 text-[10px] font-bold text-white/50 uppercase tracking-wide text-right hidden sm:table-cell">Age</th>
+            <th className="px-2 py-2.5 text-[11px] font-semibold text-white/60 uppercase tracking-wider text-center hidden xl:table-cell w-[86px]"></th>
+            <th className="px-3 py-2.5 text-[11px] font-semibold text-white/60 uppercase tracking-wider text-center hidden sm:table-cell">Age</th>
             <HeaderCell field="txns24h" label="Txns" className="hidden md:table-cell" />
             <HeaderCell field="volume24h" label="Volume" />
             <HeaderCell field="priceChange5m" label="5m" className="hidden lg:table-cell" />
