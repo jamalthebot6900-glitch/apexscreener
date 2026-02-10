@@ -9,18 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Core backgrounds - Brighter like DexScreener
-        background: '#1a1d24',
-        surface: '#21252e',
-        'surface-light': '#292e38',
-        'surface-hover': '#323844',
-        'surface-elevated': '#3a4150',
+        // Core backgrounds - EXACT DexScreener colors
+        background: '#0d0e12',
+        surface: '#11131a',
+        'surface-light': '#161921',
+        'surface-hover': '#1a1d26',
+        'surface-elevated': '#1e2129',
         
-        // Borders - Clearly visible
-        border: '#3a4150',
-        'border-light': '#4a5260',
-        'border-subtle': '#2d323c',
-        'border-glow': 'rgba(255, 255, 255, 0.18)',
+        // Borders - DexScreener style
+        border: '#1e2129',
+        'border-light': '#282d38',
+        'border-subtle': '#161921',
+        'border-glow': 'rgba(255, 255, 255, 0.08)',
         
         // Text hierarchy - Crisp whites
         'text-primary': '#ffffff',
@@ -28,11 +28,11 @@ const config: Config = {
         'text-muted': '#9898a0',
         'text-dimmed': '#5c5c66',
         
-        // Accent - Vibrant electric orange
-        accent: '#ff7849',
-        'accent-hover': '#ff9264',
-        'accent-muted': '#e5693f',
-        'accent-glow': 'rgba(255, 120, 73, 0.25)',
+        // Accent - DexScreener green/teal
+        accent: '#10b981',
+        'accent-hover': '#34d399',
+        'accent-muted': '#059669',
+        'accent-glow': 'rgba(16, 185, 129, 0.25)',
         
         // Secondary accent - Bright white
         'accent-white': '#ffffff',

@@ -37,16 +37,15 @@ function AnimatedNumber({ value, formatter }: { value: number; formatter: (v: nu
 function StatCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div 
-      className="flex-1 flex flex-col items-center justify-center gap-1 py-3 bg-[#1e222d] border border-[#2a3040] rounded-xl relative"
+      className="flex-1 flex flex-col items-center justify-center gap-1 py-3 bg-[#161921] border border-[#282d38] rounded-xl relative"
       style={{
         boxShadow: `
-          0 0 20px -5px rgba(100, 120, 180, 0.15),
-          0 4px 12px -4px rgba(0, 0, 0, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.05)
+          0 0 15px -5px rgba(16, 185, 129, 0.08),
+          0 4px 12px -4px rgba(0, 0, 0, 0.5)
         `
       }}
     >
-      <span className="text-[11px] font-semibold text-white/60 uppercase tracking-wider">{label}</span>
+      <span className="text-[11px] font-semibold text-white/50 uppercase tracking-wider">{label}</span>
       <span className="text-xl font-bold text-white tabular-nums">
         {children}
       </span>
@@ -69,7 +68,7 @@ export default function StatsBar({ volume24h = 0, txns24h = 0 }: StatsBarProps) 
   };
 
   return (
-    <div className="flex gap-3 px-3 py-2 bg-[#0d1117]">
+    <div className="flex gap-3 px-3 py-2 bg-[#0d0e12]">
       {/* 24hr Volume */}
       <StatCard label="24hr Volume">
         <AnimatedNumber value={volume24h} formatter={formatVolume} />
