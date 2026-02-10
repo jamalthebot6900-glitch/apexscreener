@@ -86,21 +86,21 @@ interface PillButtonProps {
   className?: string;
 }
 
-// Uniform height pill button - white accent when active
+// Uniform height button - dark blue accent when active (DexScreener style)
 function PillButton({ children, active, onClick, icon, dropdown, className }: PillButtonProps) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "h-9 flex items-center gap-1.5 px-4 rounded-full text-xs font-medium transition-all whitespace-nowrap",
+        "h-9 flex items-center gap-1.5 px-4 rounded-lg text-xs font-medium transition-all whitespace-nowrap",
         "border",
         active 
-          ? "bg-white text-black border-white" 
+          ? "bg-[#3b82f6] text-white border-[#3b82f6]" 
           : "bg-white/[0.05] border-white/[0.1] text-white/70 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white",
         className
       )}
     >
-      {icon && <span className={active ? "text-black" : "text-white/60"}>{icon}</span>}
+      {icon && <span className={active ? "text-white" : "text-white/60"}>{icon}</span>}
       {children}
       {dropdown && <ChevronDownIcon />}
     </button>
@@ -113,10 +113,10 @@ function IconButton({ children, active, onClick }: { children: React.ReactNode; 
     <button
       onClick={onClick}
       className={cn(
-        "h-9 w-9 flex items-center justify-center rounded-full transition-all",
+        "h-9 w-9 flex items-center justify-center rounded-lg transition-all",
         "border",
         active 
-          ? "bg-white text-black border-white" 
+          ? "bg-[#3b82f6] text-white border-[#3b82f6]" 
           : "bg-white/[0.05] border-white/[0.1] text-white/60 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white"
       )}
     >
@@ -133,7 +133,7 @@ function TimeButton({ label, active, onClick }: { label: string; active?: boolea
       className={cn(
         "h-7 px-2.5 rounded-md text-[11px] font-semibold transition-all",
         active 
-          ? "bg-white text-black" 
+          ? "bg-[#3b82f6] text-white" 
           : "text-white/50 hover:text-white hover:bg-white/10"
       )}
     >
@@ -154,7 +154,7 @@ export default function QuickFilters() {
       </PillButton>
 
       {/* Trending with Time Options */}
-      <div className="h-9 flex items-center bg-white/[0.05] border border-white/[0.1] rounded-full overflow-hidden">
+      <div className="h-9 flex items-center bg-white/[0.05] border border-white/[0.1] rounded-lg overflow-hidden">
         <div className="flex items-center gap-1.5 px-4 text-xs font-medium text-white/70 border-r border-white/[0.1]">
           <TrendingIcon />
           <span>Trending</span>
