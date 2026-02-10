@@ -4,17 +4,17 @@
 
 /* ===== DESIGN TOKENS ===== */
 :root {
-  --background: #0c0c0e;
+  --background: #191b1f;
   --foreground: #ffffff;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-mono: 'SF Mono', ui-monospace, 'Cascadia Mono', Menlo, Monaco, monospace;
   
   /* Vibrant glow colors */
-  --glow-orange: rgba(255, 120, 73, 0.28);
-  --glow-white: rgba(255, 255, 255, 0.15);
-  --glow-green: rgba(0, 232, 140, 0.28);
-  --glow-red: rgba(255, 90, 106, 0.28);
+  --glow-orange: rgba(255, 120, 73, 0.32);
+  --glow-white: rgba(255, 255, 255, 0.18);
+  --glow-green: rgba(0, 232, 140, 0.32);
+  --glow-red: rgba(255, 90, 106, 0.32);
 }
 
 /* ===== BASE STYLES ===== */
@@ -138,7 +138,7 @@ h2, .h2 {
 
 /* ===== SKELETON ===== */
 .skeleton {
-  background: linear-gradient(90deg, #18181b 0%, #27272a 50%, #18181b 100%);
+  background: linear-gradient(90deg, #252830 0%, #363a42 50%, #252830 100%);
   background-size: 400% 100%;
   animation: shimmer 2s infinite linear;
 }
