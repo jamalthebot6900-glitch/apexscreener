@@ -91,10 +91,10 @@ function FilterButton({
     <button
       onClick={onClick}
       className={cn(
-        "h-8 flex items-center gap-1.5 px-3 rounded-md text-[13px] font-semibold transition-all whitespace-nowrap",
+        "h-7 flex items-center gap-1.5 px-2.5 rounded text-[12px] font-semibold transition-all whitespace-nowrap",
         active 
-          ? "bg-[#1e3a4c] text-white" 
-          : "bg-[#1a1a1e] text-[#a0a0a0] hover:bg-[#222226] hover:text-white",
+          ? "bg-[#1e3a4c] text-white border border-[#2a5a70]" 
+          : "bg-[#18181c] text-[#888] border border-[#2a2a30] hover:bg-[#222228] hover:text-white hover:border-[#3a3a42]",
         className
       )}
     >
@@ -108,7 +108,7 @@ function FilterButton({
 // Small icon button with dropdown
 function IconDropdown({ icon, color }: { icon: React.ReactNode; color?: string }) {
   return (
-    <button className="h-8 flex items-center gap-0.5 px-2 rounded-md bg-[#1a1a1e] text-[#a0a0a0] hover:bg-[#222226] hover:text-white transition-all">
+    <button className="h-7 flex items-center gap-0.5 px-2 rounded bg-[#18181c] border border-[#2a2a30] text-[#888] hover:bg-[#222228] hover:text-white hover:border-[#3a3a42] transition-all">
       <span className={color}>{icon}</span>
       <ChevronDownIcon />
     </button>
@@ -121,7 +121,7 @@ function TimePill({ label, active, onClick }: { label: string; active?: boolean;
     <button
       onClick={onClick}
       className={cn(
-        "h-6 px-2 rounded text-[12px] font-bold transition-all",
+        "h-5 px-1.5 rounded text-[11px] font-bold transition-all",
         active 
           ? "bg-[#2d5a6e] text-white" 
           : "text-[#8a9aa4] hover:text-white"
@@ -136,15 +136,15 @@ export default function QuickFilters() {
   const [trendingTime, setTrendingTime] = useState('6H');
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2 bg-[#0d0d0f] border-b border-[#1a1a1e] overflow-x-auto scrollbar-hide">
+    <div className="flex items-center gap-1.5 px-4 py-1.5 bg-[#0b0b0d] border-b border-[#1a1a1e] overflow-x-auto scrollbar-hide">
       {/* Last 24 hours - active teal */}
       <FilterButton icon={<ClockIcon />} dropdown active>
         Last 24 hours
       </FilterButton>
 
       {/* Trending with time options */}
-      <div className="h-8 flex items-center bg-[#1e3a4c] rounded-md overflow-hidden">
-        <div className="flex items-center gap-1.5 px-3 text-[13px] font-semibold text-white">
+      <div className="h-7 flex items-center bg-[#1e3a4c] border border-[#2a5a70] rounded overflow-hidden">
+        <div className="flex items-center gap-1.5 px-2.5 text-[12px] font-semibold text-white">
           <FireIcon />
           <span>Trending</span>
         </div>
@@ -190,7 +190,7 @@ export default function QuickFilters() {
         Filters
       </FilterButton>
 
-      <button className="h-8 w-8 flex items-center justify-center rounded-md bg-[#1a1a1e] text-[#a0a0a0] hover:bg-[#222226] hover:text-white transition-all">
+      <button className="h-7 w-7 flex items-center justify-center rounded bg-[#18181c] border border-[#2a2a30] text-[#888] hover:bg-[#222228] hover:text-white hover:border-[#3a3a42] transition-all">
         <SettingsIcon />
       </button>
     </div>

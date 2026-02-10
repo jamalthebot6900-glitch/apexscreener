@@ -36,19 +36,19 @@ export default function StatsBar({ volume24h = 0, txns24h = 0 }: StatsBarProps) 
   };
 
   return (
-    <div className="flex gap-3 px-4 py-2 bg-[#0d0d0f]">
+    <div className="flex gap-2 px-4 py-1.5 bg-[#0b0b0d]">
       {/* 24H Volume */}
-      <div className="flex-1 flex items-center justify-center gap-2 py-2 bg-[#16161a] border border-[#2a2a2e] rounded-md">
-        <span className="text-[12px] text-[#6b6b6b] uppercase tracking-wide">24H Volume:</span>
-        <span className="text-[14px] font-semibold text-white">
+      <div className="flex-1 flex items-center justify-center gap-2 py-1.5 bg-[#111114] border border-[#222228] rounded">
+        <span className="text-[11px] text-[#5a5a5a] uppercase tracking-wide">24H Volume:</span>
+        <span className="text-[13px] font-bold text-white">
           <AnimatedNumber value={volume24h} formatter={formatVolume} />
         </span>
       </div>
 
       {/* 24H Txns */}
-      <div className="flex-1 flex items-center justify-center gap-2 py-2 bg-[#16161a] border border-[#2a2a2e] rounded-md">
-        <span className="text-[12px] text-[#6b6b6b] uppercase tracking-wide">24H Txns:</span>
-        <span className="text-[14px] font-semibold text-white">
+      <div className="flex-1 flex items-center justify-center gap-2 py-1.5 bg-[#111114] border border-[#222228] rounded">
+        <span className="text-[11px] text-[#5a5a5a] uppercase tracking-wide">24H Txns:</span>
+        <span className="text-[13px] font-bold text-white">
           <AnimatedNumber value={txns24h} formatter={formatTxns} />
         </span>
       </div>

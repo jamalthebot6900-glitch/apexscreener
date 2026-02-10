@@ -113,7 +113,7 @@ export default function Sidebar() {
         <nav className="py-4">
           {/* Main Navigation */}
           <div className="px-3">
-            <p className="px-3 py-2 text-[10px] uppercase tracking-widest text-text-dimmed font-semibold">
+            <p className="px-3 py-2 text-[11px] uppercase tracking-widest text-[#666] font-bold">
               Screener
             </p>
             
@@ -126,21 +126,21 @@ export default function Sidebar() {
                     key={item.id}
                     onClick={() => handleNavClick(item.id as ViewType)}
                     className={cn(
-                      'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all',
+                      'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold transition-all',
                       isActive
-                        ? 'bg-white/[0.06] text-text-primary shadow-sm'
-                        : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.03]'
+                        ? 'bg-[#1e222d] text-white border border-[#2a2a30]'
+                        : 'text-[#888] hover:text-white hover:bg-[#18181c]'
                     )}
                   >
                     <span className={cn(
                       'flex-shrink-0 transition-colors',
-                      isActive ? 'text-text-primary' : 'text-text-dimmed'
+                      isActive ? 'text-white' : 'text-[#666]'
                     )}>
                       {item.icon}
                     </span>
                     <span className="flex-1 text-left truncate">{item.label}</span>
                     {item.badge !== undefined && item.badge > 0 && (
-                      <span className="px-2 py-0.5 rounded-md text-[10px] font-medium tabular-nums bg-white/[0.06] text-text-muted">
+                      <span className="px-2 py-0.5 rounded-md text-[11px] font-bold tabular-nums bg-[#2a2a30] text-white">
                         {item.badge}
                       </span>
                     )}
@@ -155,7 +155,7 @@ export default function Sidebar() {
 
           {/* Tools */}
           <div className="px-3">
-            <p className="px-3 py-2 text-[10px] uppercase tracking-widest text-text-dimmed font-semibold">
+            <p className="px-3 py-2 text-[11px] uppercase tracking-widest text-[#666] font-bold">
               Tools
             </p>
             
@@ -165,16 +165,16 @@ export default function Sidebar() {
                   key={item.id}
                   disabled={item.disabled}
                   className={cn(
-                    'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all',
+                    'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold transition-all',
                     item.disabled
-                      ? 'text-text-dimmed cursor-not-allowed opacity-60'
-                      : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.03]'
+                      ? 'text-[#555] cursor-not-allowed'
+                      : 'text-[#888] hover:text-white hover:bg-[#18181c]'
                   )}
                 >
-                  <span className="text-text-dimmed flex-shrink-0">{item.icon}</span>
+                  <span className="text-[#555] flex-shrink-0">{item.icon}</span>
                   <span className="flex-1 text-left">{item.label}</span>
                   {item.disabled && (
-                    <span className="text-[9px] text-text-dimmed bg-white/[0.04] px-1.5 py-0.5 rounded">Soon</span>
+                    <span className="text-[10px] text-[#666] bg-[#2a2a30] px-1.5 py-0.5 rounded font-bold">Soon</span>
                   )}
                 </button>
               ))}
@@ -186,30 +186,30 @@ export default function Sidebar() {
 
           {/* Chains */}
           <div className="px-3">
-            <p className="px-3 py-2 text-[10px] uppercase tracking-widest text-text-dimmed font-semibold">
+            <p className="px-3 py-2 text-[11px] uppercase tracking-widest text-[#666] font-bold">
               Networks
             </p>
             
             <div className="space-y-0.5">
               {/* Solana - Active */}
-              <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium bg-white/[0.06] text-text-primary">
+              <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold bg-[#1e222d] text-white border border-[#2a2a30]">
                 <SolanaLogo />
                 <span>Solana</span>
-                <span className="ml-auto w-2 h-2 rounded-full bg-positive shadow-glow-green" />
+                <span className="ml-auto w-2 h-2 rounded-full bg-[#00d395] shadow-[0_0_8px_#00d395]" />
               </div>
               
               {/* Ethereum */}
-              <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-text-dimmed cursor-not-allowed opacity-60">
+              <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold text-[#555] cursor-not-allowed">
                 <EthereumLogo />
                 <span>Ethereum</span>
-                <span className="ml-auto text-[9px] bg-white/[0.04] px-1.5 py-0.5 rounded">Soon</span>
+                <span className="ml-auto text-[10px] bg-[#2a2a30] text-[#666] px-1.5 py-0.5 rounded font-bold">Soon</span>
               </div>
               
               {/* Base */}
-              <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-text-dimmed cursor-not-allowed opacity-60">
+              <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold text-[#555] cursor-not-allowed">
                 <BaseLogo />
                 <span>Base</span>
-                <span className="ml-auto text-[9px] bg-white/[0.04] px-1.5 py-0.5 rounded">Soon</span>
+                <span className="ml-auto text-[10px] bg-[#2a2a30] text-[#666] px-1.5 py-0.5 rounded font-bold">Soon</span>
               </div>
             </div>
           </div>
@@ -219,7 +219,7 @@ export default function Sidebar() {
 
           {/* External Links */}
           <div className="px-3">
-            <p className="px-3 py-2 text-[10px] uppercase tracking-widest text-text-dimmed font-semibold">
+            <p className="px-3 py-2 text-[11px] uppercase tracking-widest text-[#666] font-bold">
               Resources
             </p>
             
@@ -228,7 +228,7 @@ export default function Sidebar() {
                 href="https://dexscreener.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-text-muted hover:text-text-secondary hover:bg-white/[0.03] transition-all"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold text-[#888] hover:text-white hover:bg-[#18181c] transition-all"
               >
                 <ExternalIcon />
                 <span>DexScreener</span>
@@ -238,7 +238,7 @@ export default function Sidebar() {
                 href="https://birdeye.so"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-text-muted hover:text-text-secondary hover:bg-white/[0.03] transition-all"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold text-[#888] hover:text-white hover:bg-[#18181c] transition-all"
               >
                 <ExternalIcon />
                 <span>Birdeye</span>
