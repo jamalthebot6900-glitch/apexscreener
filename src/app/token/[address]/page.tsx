@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { PairData } from '@/types';
-import { fetchTokenDetails } from '@/lib/api';
+import { fetchPairDetails } from '@/lib/api';
 import { formatPrice, formatNumber, formatPercent, formatAddress, timeAgo, cn } from '@/lib/utils';
 
 // Solana logo
@@ -72,7 +72,7 @@ export default function TokenPage() {
 
   const fetchData = useCallback(async () => {
     try {
-      const data = await fetchTokenDetails(address);
+      const data = await fetchPairDetails(address);
       if (data) {
         setToken(data);
       } else {
