@@ -96,7 +96,7 @@ function PillButton({ children, active, onClick, icon, dropdown, className }: Pi
         "border",
         active 
           ? "bg-[#238636] text-white border-[#238636]" 
-          : "bg-[#12151b] border-[#1c1f26] text-[#c9d1d9] hover:bg-[#171a21] hover:border-[#24282f]",
+          : "bg-[#1e222d] border-[#2A2E39] text-[#c9d1d9] hover:bg-[#2A2E39] hover:border-[#363a45]",
         className
       )}
     >
@@ -117,7 +117,7 @@ function IconButton({ children, active, onClick }: { children: React.ReactNode; 
         "border",
         active 
           ? "bg-[#238636] text-white border-[#238636]" 
-          : "bg-[#12151b] border-[#1c1f26] text-[#8b949e] hover:bg-[#171a21] hover:border-[#24282f] hover:text-[#c9d1d9]"
+          : "bg-[#1e222d] border-[#2A2E39] text-[#8b949e] hover:bg-[#2A2E39] hover:border-[#363a45] hover:text-[#c9d1d9]"
       )}
     >
       {children}
@@ -147,7 +147,7 @@ export default function QuickFilters() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   return (
-    <div className="flex items-center gap-2 px-3 py-2 bg-[#0a0b0d] border-b border-[#1c1f26] overflow-x-auto scrollbar-hide">
+    <div className="flex items-center gap-2 px-3 py-2 bg-[#131722] border-b border-[#2A2E39] overflow-x-auto scrollbar-hide">
       {/* Time Range Dropdown */}
       <PillButton icon={<ClockIcon />} dropdown active>
         Last 24 hours
