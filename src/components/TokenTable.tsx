@@ -1,85 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Token, SortField, SortDirection } from '@/types';
-import { useState, useMemo, useEffect, memo } from 'react';
-import { useApp } from '@/context/AppContext';
 
-interface TokenTableProps {
-  tokens: Token[];
-}
-
-const SORT_STORAGE_KEY = 'apexscreener_sort_preference';
-
-// Format age from timestamp - DexScreener style
-function formatAge(timestamp: number): string {
-  if (!timestamp) return '-';
-  const now = Date.now();
-  const diff = now - timestamp;
-  
-  const minutes = Math.floor(diff / 60000);
-  const hours = Math.floor(diff / 3600000);
-  const days = Math.floor(diff / 86400000);
-  const months = Math.floor(days / 30);
-  const years = Math.floor(days / 365);
-  
-  if (minutes < 60) return `${minutes}m`;
-  if (hours < 24) return `${hours}h`;
-  if (days < 30) return `${days}d`;
-  if (months < 12) return `${months}mo`;
-  return `${years}y`;
-}
-
-// Format price with subscript zeros like DexScreener
-function formatPrice(price: number): string {
-  if (!price || price === 0) return '$0';
-  
-  if (price >= 1) {
-    return '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-  
-  const priceStr = price.toFixed(10);
-  const match = priceStr.match(/^0\.(0*)([1-9]\d*)/);
-  
-  if (match) {
-    const zeros = match[1].length;
-    const significantDigits = match[2].slice(0, 4);
-    
-    if (zeros >= 4) {
-      return `$0.0${subscript(zeros)}${significantDigits}`;
-    }
-  }
-  
-  if (price < 0.01) {
-    return '$' + price.toFixed(6);
-  }
-  return '$' + price.toFixed(4);
-}
-
-function subscript(num: number): string {
-  const subscripts: Record<string, string> = {
-    '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄',
-    '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉'
-  };
-  return String(num).split('').map(d => subscripts[d] || d).join('');
-}
-
-// Format compact number
-function formatCompact(value: number): string {
-  if (value >= 1_000_000_000) return '$' + (value / 1_000_000_000).toFixed(1) + 'B';
-  if (value >= 1_000_000) return '$' + (value / 1_000_000).toFixed(2) + 'M';
-  if (value >= 1_000) return '$' + (value / 1_000).toFixed(0) + 'K';
-  return '$' + value.toFixed(0);
-}
-
-// Format number without dollar sign
-function formatNum(value: number): string {
-  if (value >= 1_000_000) return (value / 1_000_000).toFixed(2) + 'M';
-  if (value >= 1_000) return (value / 1_000).toFixed(1) + 'K';
-  return value.toLocaleString('en-US', { maximumFractionDigits: 0 });
-}
-
-// Solana chain badge - visible
+// Solana badge - gradient purple/green
 function SolanaBadge() {
   return (
     <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#9945FF] via-[#14F195] to-[#00FFA3] flex items-center justify-center flex-shrink-0">
@@ -92,229 +15,165 @@ function SolanaBadge() {
   );
 }
 
-// Pump.fun badge
-function PumpFunBadge() {
+// Raydium/Swap badge - teal
+function SwapBadge() {
   return (
-    <div className="w-5 h-5 rounded-full bg-[#00D18C] flex items-center justify-center flex-shrink-0">
-      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="black">
-        <circle cx="12" cy="12" r="4" />
-        <ellipse cx="12" cy="12" rx="8" ry="3" stroke="black" strokeWidth="1.5" fill="none" />
+    <div className="w-5 h-5 rounded-full bg-[#3ee6c4] flex items-center justify-center flex-shrink-0">
+      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="#0e1118">
+        <path d="M7 16V4m0 0L3 8m4-4l4 4m6 4v12m0 0l4-4m-4 4l-4-4" stroke="#0e1118" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
       </svg>
     </div>
   );
 }
 
-// Raydium badge
-function RaydiumBadge() {
-  return (
-    <div className="w-5 h-5 rounded-full bg-[#5AC4BE] flex items-center justify-center flex-shrink-0">
-      <span className="text-[9px] font-bold text-black">R</span>
-    </div>
-  );
-}
+// Static token data - Token #1: Goyim
+const tokens = [
+  {
+    rank: 1,
+    symbol: 'Goyim',
+    pair: 'SOL',
+    name: 'Goyim',
+    logo: null, // Will use placeholder
+    logoColor: '#e91e8c', // Pink
+    price: '$0.004372',
+    age: '8d',
+    txns: '49,709',
+    volume: '$3.4M',
+    makers: '10,862',
+    change5m: { value: '5.22%', positive: true },
+    change1h: { value: '-7.23%', positive: false },
+    change6h: { value: '70.63%', positive: true },
+    change24h: { value: '188%', positive: true },
+    liquidity: '$271K',
+    mcap: '$4.3M',
+  },
+];
 
-// Token row exactly like DexScreener
-const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: number }) {
-  // Determine platform (pump.fun vs raydium) - using a simple heuristic
-  const isPumpFun = token.liquidity < 100000 || token.pairCreatedAt > Date.now() - 7 * 24 * 60 * 60 * 1000;
-  
-  return (
-    <tr className="bg-[#131518] border-b border-[#28282d] hover:bg-[#1a1d21] transition-colors">
-      {/* Rank */}
-      <td className="pl-4 pr-2 py-[10px] text-[13px] text-[#6e7681] font-medium">
-        #{rank}
-      </td>
-      
-      {/* Badges - Solana + Platform */}
-      <td className="px-1 py-[10px]">
-        <div className="flex items-center gap-1">
-          <SolanaBadge />
-          {isPumpFun ? <PumpFunBadge /> : <RaydiumBadge />}
-        </div>
-      </td>
-      
-      {/* Token Logo - Larger square */}
-      <td className="px-2 py-[10px]">
-        {token.logo ? (
-          <img src={token.logo} alt="" className="w-8 h-8 rounded-lg bg-white/10 object-cover" />
-        ) : (
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-[12px] font-bold text-white">
-            {token.symbol.charAt(0)}
-          </div>
-        )}
-      </td>
-      
-      {/* Token Name - Bold white */}
-      <td className="px-2 py-[10px] min-w-[220px]">
-        <Link href={`/token/${token.address}`} className="flex items-center gap-2 group">
-          <span className="text-[15px] font-bold text-white group-hover:text-[#58a6ff] transition-colors">
-            {token.symbol}
-          </span>
-          <span className="text-[14px] text-[#8b949e] font-medium">/SOL</span>
-          <span className="text-[14px] text-[#6e7681]">{token.name}</span>
-        </Link>
-      </td>
-      
-      {/* Price */}
-      <td className="px-3 py-[10px] text-right">
-        <span className="text-[14px] text-white font-semibold tabular-nums">
-          {formatPrice(token.priceUsd)}
-        </span>
-      </td>
-      
-      {/* Age */}
-      <td className="px-3 py-[10px] text-center">
-        <span className="text-[14px] text-[#a0a0a0] font-medium tabular-nums">
-          {formatAge(token.pairCreatedAt)}
-        </span>
-      </td>
-      
-      {/* Txns */}
-      <td className="px-3 py-[10px] text-right">
-        <span className="text-[14px] text-white font-semibold tabular-nums">
-          {formatNum(token.txns24h.total)}
-        </span>
-      </td>
-      
-      {/* Volume */}
-      <td className="px-3 py-[10px] text-right">
-        <span className="text-[14px] text-white font-semibold tabular-nums">
-          {formatCompact(token.volume24h)}
-        </span>
-      </td>
-      
-      {/* Makers - using txns as placeholder */}
-      <td className="px-3 py-[10px] text-right hidden xl:table-cell">
-        <span className="text-[14px] text-[#a0a0a0] font-medium tabular-nums">
-          {formatNum(Math.floor(token.txns24h.total / 10))}
-        </span>
-      </td>
-      
-      {/* 5M */}
-      <td className="px-3 py-[10px] text-right hidden lg:table-cell">
-        <span className={`text-[14px] font-semibold tabular-nums ${token.priceChange5m >= 0 ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
-          {token.priceChange5m?.toFixed(2)}%
-        </span>
-      </td>
-      
-      {/* 1H */}
-      <td className="px-3 py-[10px] text-right hidden md:table-cell">
-        <span className={`text-[14px] font-semibold tabular-nums ${token.priceChange1h >= 0 ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
-          {token.priceChange1h?.toFixed(2)}%
-        </span>
-      </td>
-      
-      {/* 6H */}
-      <td className="px-3 py-[10px] text-right hidden lg:table-cell">
-        <span className={`text-[14px] font-semibold tabular-nums ${token.priceChange6h >= 0 ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
-          {token.priceChange6h?.toFixed(2)}%
-        </span>
-      </td>
-      
-      {/* 24H */}
-      <td className="px-3 py-[10px] text-right">
-        <span className={`text-[14px] font-semibold tabular-nums ${token.priceChange24h >= 0 ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
-          {token.priceChange24h?.toFixed(2)}%
-        </span>
-      </td>
-      
-      {/* Liquidity */}
-      <td className="px-3 py-[10px] text-right hidden md:table-cell">
-        <span className="text-[14px] text-[#00d395] font-semibold tabular-nums">
-          {formatCompact(token.liquidity)}
-        </span>
-      </td>
-      
-      {/* Market Cap */}
-      <td className="px-3 pr-4 py-[10px] text-right">
-        <span className="text-[14px] text-white font-semibold tabular-nums">
-          {formatCompact(token.marketCap)}
-        </span>
-      </td>
-    </tr>
-  );
-});
-
-export default function TokenTable({ tokens }: TokenTableProps) {
-  const [sortField, setSortField] = useState<SortField>('volume24h');
-  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
-
-  useEffect(() => {
-    const stored = localStorage.getItem(SORT_STORAGE_KEY);
-    if (stored) {
-      try {
-        const { field, direction } = JSON.parse(stored);
-        if (field) setSortField(field);
-        if (direction) setSortDirection(direction);
-      } catch (e) {}
-    }
-  }, []);
-
-  const handleSort = (field: SortField) => {
-    let newDirection: SortDirection = 'desc';
-    if (sortField === field) {
-      newDirection = sortDirection === 'desc' ? 'asc' : 'desc';
-    }
-    setSortField(field);
-    setSortDirection(newDirection);
-    localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify({ field, direction: newDirection }));
-  };
-
-  const sortedTokens = useMemo(() => {
-    return [...tokens].sort((a, b) => {
-      let aVal: number, bVal: number;
-      switch (sortField) {
-        case 'txns24h': aVal = a.txns24h.total; bVal = b.txns24h.total; break;
-        default: aVal = (a[sortField] as number) ?? 0; bVal = (b[sortField] as number) ?? 0;
-      }
-      return sortDirection === 'desc' ? bVal - aVal : aVal - bVal;
-    });
-  }, [tokens, sortField, sortDirection]);
-
-  const HeaderCell = ({ field, label, className = '' }: { field?: SortField; label: string; className?: string }) => {
-    const active = field && sortField === field;
-    return (
-      <th
-        className={`px-3 py-2 text-[12px] font-bold text-[#9ca3af] uppercase tracking-wide whitespace-nowrap ${field ? 'cursor-pointer hover:text-white' : ''} ${className}`}
-        onClick={field ? () => handleSort(field) : undefined}
-      >
-        <div className={`flex items-center gap-1 ${className.includes('text-left') ? '' : 'justify-end'}`}>
-          <span className={active ? 'text-white' : ''}>{label}</span>
-          {field && (
-            <svg className={`w-3 h-3 transition-transform ${active ? 'text-white' : 'text-[#6e7681]/50'} ${active && sortDirection === 'asc' ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          )}
-        </div>
-      </th>
-    );
-  };
-
+export default function TokenTable() {
   return (
     <div className="overflow-x-auto bg-[#0d0d0f]">
-      <table className="w-full min-w-[1000px]">
+      <table className="w-full min-w-[1200px]">
+        {/* Header */}
         <thead>
-          <tr className="bg-[#18181c] border-b border-[#2a2a30]">
-            <th className="pl-4 pr-2 py-2 text-[12px] font-bold text-[#9ca3af] uppercase tracking-wide text-left w-12"></th>
-            <th className="px-1 py-2 w-10"></th>
-            <th className="px-1 py-2 w-10"></th>
-            <th className="px-2 py-2 text-[12px] font-bold text-[#9ca3af] uppercase tracking-wide text-left min-w-[200px]">TOKEN</th>
-            <HeaderCell label="Price" />
-            <HeaderCell label="Age" className="text-center" />
-            <HeaderCell field="txns24h" label="Txns" />
-            <HeaderCell field="volume24h" label="Volume" />
-            <HeaderCell label="Makers" className="hidden xl:table-cell" />
-            <HeaderCell field="priceChange5m" label="5m" className="hidden lg:table-cell" />
-            <HeaderCell field="priceChange1h" label="1h" className="hidden md:table-cell" />
-            <HeaderCell field="priceChange6h" label="6h" className="hidden lg:table-cell" />
-            <HeaderCell field="priceChange24h" label="24h" />
-            <HeaderCell field="liquidity" label="Liquidity" className="hidden md:table-cell" />
-            <HeaderCell field="marketCap" label="MCap" />
+          <tr className="bg-[#16161a] border-b border-[#2a2a2e]">
+            <th className="pl-4 pr-2 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-left w-[350px]">
+              TOKEN
+            </th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-right">
+              <span className="inline-flex items-center gap-1">
+                PRICE
+                <svg className="w-3 h-3 opacity-50" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                </svg>
+              </span>
+            </th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-center">AGE</th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-right">TXNS</th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-right">VOLUME</th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-right">MAKERS</th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-right">5M</th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-right">1H</th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-right">6H</th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-right">24H</th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-right">LIQUIDITY</th>
+            <th className="px-4 py-3 text-[12px] font-bold text-[#8a8a8a] uppercase tracking-wide text-right pr-4">MCAP</th>
           </tr>
         </thead>
+        
+        {/* Body */}
         <tbody>
-          {sortedTokens.map((token, index) => (
-            <TokenRow key={token.pairAddress || token.address} token={token} rank={index + 1} />
+          {tokens.map((token) => (
+            <tr key={token.rank} className="bg-[#111114] border-b border-[#1e1e22] hover:bg-[#16161a] transition-colors">
+              {/* Token info */}
+              <td className="pl-4 pr-2 py-3">
+                <div className="flex items-center gap-2">
+                  {/* Rank */}
+                  <span className="text-[13px] text-[#6a6a6a] font-medium w-6">#{token.rank}</span>
+                  
+                  {/* Badges */}
+                  <SolanaBadge />
+                  <SwapBadge />
+                  
+                  {/* Token logo */}
+                  <div 
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-[14px] font-bold text-white"
+                    style={{ backgroundColor: token.logoColor }}
+                  >
+                    {token.symbol.charAt(0)}
+                  </div>
+                  
+                  {/* Token name */}
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[14px] font-bold text-white">{token.symbol}</span>
+                    <span className="text-[13px] text-[#6a6a6a]">/{token.pair}</span>
+                    <span className="text-[13px] text-[#5a5a5a]">{token.name}</span>
+                  </div>
+                </div>
+              </td>
+              
+              {/* Price */}
+              <td className="px-4 py-3 text-right">
+                <span className="text-[14px] font-semibold text-white">{token.price}</span>
+              </td>
+              
+              {/* Age */}
+              <td className="px-4 py-3 text-center">
+                <span className="text-[14px] text-[#8a8a8a]">{token.age}</span>
+              </td>
+              
+              {/* Txns */}
+              <td className="px-4 py-3 text-right">
+                <span className="text-[14px] text-white">{token.txns}</span>
+              </td>
+              
+              {/* Volume */}
+              <td className="px-4 py-3 text-right">
+                <span className="text-[14px] font-semibold text-white">{token.volume}</span>
+              </td>
+              
+              {/* Makers */}
+              <td className="px-4 py-3 text-right">
+                <span className="text-[14px] text-[#8a8a8a]">{token.makers}</span>
+              </td>
+              
+              {/* 5M */}
+              <td className="px-4 py-3 text-right">
+                <span className={`text-[14px] font-semibold ${token.change5m.positive ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
+                  {token.change5m.value}
+                </span>
+              </td>
+              
+              {/* 1H */}
+              <td className="px-4 py-3 text-right">
+                <span className={`text-[14px] font-semibold ${token.change1h.positive ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
+                  {token.change1h.value}
+                </span>
+              </td>
+              
+              {/* 6H */}
+              <td className="px-4 py-3 text-right">
+                <span className={`text-[14px] font-semibold ${token.change6h.positive ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
+                  {token.change6h.value}
+                </span>
+              </td>
+              
+              {/* 24H */}
+              <td className="px-4 py-3 text-right">
+                <span className={`text-[14px] font-semibold ${token.change24h.positive ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
+                  {token.change24h.value}
+                </span>
+              </td>
+              
+              {/* Liquidity */}
+              <td className="px-4 py-3 text-right">
+                <span className="text-[14px] font-semibold text-[#00d395]">{token.liquidity}</span>
+              </td>
+              
+              {/* MCap */}
+              <td className="px-4 py-3 text-right pr-4">
+                <span className="text-[14px] font-semibold text-white">{token.mcap}</span>
+              </td>
+            </tr>
           ))}
         </tbody>
       </table>
