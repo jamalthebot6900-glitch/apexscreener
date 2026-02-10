@@ -22,7 +22,7 @@ function PumpSwapLogo() {
   );
 }
 
-// Static token data - Token #1: Goyim
+// Static token data
 const tokens = [
   {
     rank: 1,
@@ -41,6 +41,24 @@ const tokens = [
     change24h: { value: '188%', positive: true },
     liquidity: '$271K',
     mcap: '$4.3M',
+  },
+  {
+    rank: 2,
+    symbol: 'GIRAFFES',
+    pair: 'SOL',
+    name: 'The Giraffes',
+    logo: 'https://dd.dexscreener.com/ds-data/tokens/solana/FMCvk1CFHrBBRJT8TBa8DPxAeVWD25w12P1Jj3Tvpump.png',
+    price: '$0.001925',
+    age: '3h',
+    txns: '44,952',
+    volume: '$3.0M',
+    makers: '6,200',
+    change5m: { value: '1.54%', positive: true },
+    change1h: { value: '17.76%', positive: true },
+    change6h: { value: '5,143%', positive: true },
+    change24h: { value: '5,143%', positive: true },
+    liquidity: '$119K',
+    mcap: '$1.9M',
   },
 ];
 
