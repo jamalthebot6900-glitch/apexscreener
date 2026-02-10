@@ -3,16 +3,16 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
-// Icons
+// Icons - small 14px
 const ClockIcon = () => (
   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
   </svg>
 );
 
-const TrendingIcon = () => (
-  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
+const FireIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 23c-3.866 0-7-3.134-7-7 0-2.551 1.238-4.78 2.975-6.478A15.91 15.91 0 0 0 10.5 5.5c0-1.807-.595-3.47-1.6-4.81a.5.5 0 0 1 .54-.763c2.476.546 4.56 2.058 5.894 4.073.752-1.034 1.166-2.316 1.166-3.71 0-.165-.006-.329-.017-.492a.5.5 0 0 1 .788-.435C19.83 1.596 22 4.712 22 8.5c0 1.632-.395 3.17-1.093 4.524A6.974 6.974 0 0 1 19 16c0 3.866-3.134 7-7 7z"/>
   </svg>
 );
 
@@ -24,31 +24,13 @@ const ChartIcon = () => (
 
 const ArrowUpIcon = () => (
   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.28m5.94 2.28-2.28 5.941" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
   </svg>
 );
 
 const SparkleIcon = () => (
-  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
-  </svg>
-);
-
-const GraduatedIcon = () => (
-  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-  </svg>
-);
-
-const FilterIcon = () => (
-  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-  </svg>
-);
-
-const ChevronDownIcon = () => (
-  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 1l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 1z"/>
   </svg>
 );
 
@@ -59,14 +41,26 @@ const UserIcon = () => (
 );
 
 const BoltIcon = () => (
-  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
   </svg>
 );
 
-const FireIcon = () => (
+const TrophyIcon = () => (
   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.048 8.287 8.287 0 0 0 9 9.6a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 0 1 3 3h-15a3 3 0 0 1 3-3m9 0v-4.5A3.375 3.375 0 0 0 13.125 11h-.25A3.375 3.375 0 0 0 9.5 14.25v4.5m6-10.125V6a2.25 2.25 0 0 0-2.25-2.25h-3A2.25 2.25 0 0 0 8 6v2.125" />
+  </svg>
+);
+
+const FilterIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+  </svg>
+);
+
+const ChevronDownIcon = () => (
+  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
   </svg>
 );
 
@@ -77,64 +71,60 @@ const SettingsIcon = () => (
   </svg>
 );
 
-interface PillButtonProps {
-  children: React.ReactNode;
-  active?: boolean;
-  onClick?: () => void;
+// Button - 32px height, 13px font, 6px radius
+function FilterButton({ 
+  children, 
+  active, 
+  onClick, 
+  icon, 
+  dropdown,
+  className 
+}: { 
+  children?: React.ReactNode; 
+  active?: boolean; 
+  onClick?: () => void; 
   icon?: React.ReactNode;
   dropdown?: boolean;
   className?: string;
-}
-
-// Compact rectangular button - DexScreener green accent when active
-function PillButton({ children, active, onClick, icon, dropdown, className }: PillButtonProps) {
+}) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "h-8 flex items-center gap-1.5 px-4 rounded-lg text-[13px] font-semibold transition-all whitespace-nowrap",
-        "border",
+        "h-8 flex items-center gap-1.5 px-3 rounded-md text-[13px] font-semibold transition-all whitespace-nowrap",
         active 
-          ? "bg-[#1a3a4a] text-white border-[#1a3a4a]" 
-          : "bg-[#1d1d22] border-[#28282d] text-[#c9d1d9] hover:bg-[#28282d] hover:border-[#343439]",
+          ? "bg-[#1e3a4c] text-white" 
+          : "bg-[#1a1a1e] text-[#a0a0a0] hover:bg-[#222226] hover:text-white",
         className
       )}
     >
-      {icon && <span className={active ? "text-white" : "text-[#8b949e]"}>{icon}</span>}
+      {icon}
       {children}
       {dropdown && <ChevronDownIcon />}
     </button>
   );
 }
 
-// Small icon-only button
-function IconButton({ children, active, onClick }: { children: React.ReactNode; active?: boolean; onClick?: () => void }) {
+// Small icon button with dropdown
+function IconDropdown({ icon, color }: { icon: React.ReactNode; color?: string }) {
   return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "h-8 w-8 flex items-center justify-center rounded-lg transition-all",
-        "border",
-        active 
-          ? "bg-[#1a3a4a] text-white border-[#1a3a4a]" 
-          : "bg-[#1d1d22] border-[#28282d] text-[#8b949e] hover:bg-[#28282d] hover:border-[#343439] hover:text-[#c9d1d9]"
-      )}
-    >
-      {children}
+    <button className="h-8 flex items-center gap-0.5 px-2 rounded-md bg-[#1a1a1e] text-[#a0a0a0] hover:bg-[#222226] hover:text-white transition-all">
+      <span className={color}>{icon}</span>
+      <ChevronDownIcon />
     </button>
   );
 }
 
-// Time toggle button inside trending group
-function TimeButton({ label, active, onClick }: { label: string; active?: boolean; onClick?: () => void }) {
+// Time pill inside trending
+function TimePill({ label, active, onClick }: { label: string; active?: boolean; onClick?: () => void }) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "h-6 px-2.5 rounded text-[12px] font-bold transition-all",
+        "h-6 px-2 rounded text-[12px] font-bold transition-all",
         active 
-          ? "bg-white/20 text-white" 
-          : "text-white/70 hover:text-white hover:bg-white/10"
+          ? "bg-[#2d5a6e] text-white" 
+          : "text-[#8a9aa4] hover:text-white"
       )}
     >
       {label}
@@ -143,93 +133,66 @@ function TimeButton({ label, active, onClick }: { label: string; active?: boolea
 }
 
 export default function QuickFilters() {
-  const [trendingTime, setTrendingTime] = useState('6h');
-  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [trendingTime, setTrendingTime] = useState('6H');
 
   return (
-    <div className="flex items-center gap-2 px-3 py-2 bg-[#111116] border-b border-[#28282d] overflow-x-auto scrollbar-hide">
-      {/* Time Range Dropdown */}
-      <PillButton icon={<ClockIcon />} dropdown active>
+    <div className="flex items-center gap-2 px-4 py-2 bg-[#0d0d0f] border-b border-[#1a1a1e] overflow-x-auto scrollbar-hide">
+      {/* Last 24 hours - active teal */}
+      <FilterButton icon={<ClockIcon />} dropdown active>
         Last 24 hours
-      </PillButton>
+      </FilterButton>
 
-      {/* Trending with Time Options */}
-      <div className="h-8 flex items-center bg-[#1a3a4a] rounded-lg overflow-hidden">
-        <div className="flex items-center gap-1.5 px-4 text-[13px] font-semibold text-white border-r border-white/20">
+      {/* Trending with time options */}
+      <div className="h-8 flex items-center bg-[#1e3a4c] rounded-md overflow-hidden">
+        <div className="flex items-center gap-1.5 px-3 text-[13px] font-semibold text-white">
           <FireIcon />
           <span>Trending</span>
         </div>
-        <div className="flex items-center gap-0.5 px-2">
+        <div className="flex items-center gap-0.5 px-1 border-l border-[#2d5a6e]">
           {['5M', '1H', '6H', '24H'].map((t) => (
-            <TimeButton 
+            <TimePill 
               key={t} 
               label={t} 
-              active={trendingTime === t.toLowerCase()}
-              onClick={() => setTrendingTime(t.toLowerCase())}
+              active={trendingTime === t}
+              onClick={() => setTrendingTime(t)}
             />
           ))}
         </div>
       </div>
 
-      {/* Quick Filters */}
-      <PillButton 
-        icon={<ChartIcon />}
-        active={activeFilter === 'top'}
-        onClick={() => setActiveFilter(activeFilter === 'top' ? null : 'top')}
-      >
+      {/* Other filters - grey */}
+      <FilterButton icon={<ChartIcon />}>
         Top
-      </PillButton>
+      </FilterButton>
 
-      <PillButton 
-        icon={<ArrowUpIcon />}
-        active={activeFilter === 'gainers'}
-        onClick={() => setActiveFilter(activeFilter === 'gainers' ? null : 'gainers')}
-      >
+      <FilterButton icon={<ArrowUpIcon />}>
         Gainers
-      </PillButton>
+      </FilterButton>
 
-      <PillButton 
-        icon={<SparkleIcon />}
-        active={activeFilter === 'new'}
-        onClick={() => setActiveFilter(activeFilter === 'new' ? null : 'new')}
-      >
+      <FilterButton icon={<SparkleIcon />}>
         New Pairs
-      </PillButton>
+      </FilterButton>
 
-      <PillButton 
-        icon={<GraduatedIcon />}
-        active={activeFilter === 'graduated'}
-        onClick={() => setActiveFilter(activeFilter === 'graduated' ? null : 'graduated')}
-      >
-        Recently Graduated
-      </PillButton>
-
-      {/* Icon Buttons */}
-      <IconButton>
-        <UserIcon />
-      </IconButton>
-      <IconButton>
-        <BoltIcon />
-      </IconButton>
-      <IconButton>
-        <FireIcon />
-      </IconButton>
+      {/* Icon dropdowns */}
+      <IconDropdown icon={<UserIcon />} color="text-[#f0b90b]" />
+      <IconDropdown icon={<BoltIcon />} color="text-[#f0b90b]" />
+      <IconDropdown icon={<TrophyIcon />} color="text-[#f0b90b]" />
 
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Right Side - Rank & Filters */}
-      <PillButton icon={<ChartIcon />} dropdown>
-        Rank by: Trending 6H
-      </PillButton>
+      {/* Right side */}
+      <FilterButton icon={<TrophyIcon />} dropdown>
+        Rank by: <span className="text-white ml-1">Trending 6H</span>
+      </FilterButton>
 
-      <PillButton icon={<FilterIcon />}>
+      <FilterButton icon={<FilterIcon />}>
         Filters
-      </PillButton>
+      </FilterButton>
 
-      <IconButton>
+      <button className="h-8 w-8 flex items-center justify-center rounded-md bg-[#1a1a1e] text-[#a0a0a0] hover:bg-[#222226] hover:text-white transition-all">
         <SettingsIcon />
-      </IconButton>
+      </button>
     </div>
   );
 }

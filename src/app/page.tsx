@@ -100,8 +100,7 @@ export default function HomePage() {
       {/* Stats Bar */}
       <StatsBar 
         volume24h={totalVolume} 
-        txns24h={totalTxns} 
-        marketCap={totalMarketCap}
+        txns24h={totalTxns}
       />
 
       {/* Quick Filters */}
