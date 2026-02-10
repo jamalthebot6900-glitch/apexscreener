@@ -86,21 +86,21 @@ interface PillButtonProps {
   className?: string;
 }
 
-// Uniform height button - dark blue accent when active (DexScreener style)
+// Compact rectangular button - dark blue accent when active (DexScreener style)
 function PillButton({ children, active, onClick, icon, dropdown, className }: PillButtonProps) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "h-9 flex items-center gap-1.5 px-4 rounded-lg text-xs font-medium transition-all whitespace-nowrap",
+        "h-7 flex items-center gap-1 px-3 rounded text-[11px] font-semibold transition-all whitespace-nowrap",
         "border",
         active 
           ? "bg-[#3b82f6] text-white border-[#3b82f6]" 
-          : "bg-white/[0.05] border-white/[0.1] text-white/70 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white",
+          : "bg-[#1a1a1a] border-[#2a2a2a] text-white/80 hover:bg-[#222] hover:border-[#333] hover:text-white",
         className
       )}
     >
-      {icon && <span className={active ? "text-white" : "text-white/60"}>{icon}</span>}
+      {icon && <span className={active ? "text-white" : "text-white/70"}>{icon}</span>}
       {children}
       {dropdown && <ChevronDownIcon />}
     </button>
@@ -113,11 +113,11 @@ function IconButton({ children, active, onClick }: { children: React.ReactNode; 
     <button
       onClick={onClick}
       className={cn(
-        "h-9 w-9 flex items-center justify-center rounded-lg transition-all",
+        "h-7 w-7 flex items-center justify-center rounded transition-all",
         "border",
         active 
           ? "bg-[#3b82f6] text-white border-[#3b82f6]" 
-          : "bg-white/[0.05] border-white/[0.1] text-white/60 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white"
+          : "bg-[#1a1a1a] border-[#2a2a2a] text-white/70 hover:bg-[#222] hover:border-[#333] hover:text-white"
       )}
     >
       {children}
@@ -131,7 +131,7 @@ function TimeButton({ label, active, onClick }: { label: string; active?: boolea
     <button
       onClick={onClick}
       className={cn(
-        "h-7 px-2.5 rounded-md text-[11px] font-semibold transition-all",
+        "h-5 px-2 rounded text-[10px] font-bold transition-all",
         active 
           ? "bg-[#3b82f6] text-white" 
           : "text-white/50 hover:text-white hover:bg-white/10"
@@ -147,19 +147,19 @@ export default function QuickFilters() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   return (
-    <div className="flex items-center gap-2 px-4 py-3 bg-black border-b border-white/[0.06] overflow-x-auto scrollbar-hide">
+    <div className="flex items-center gap-1.5 px-3 py-2 bg-black border-b border-[#1a1a1a] overflow-x-auto scrollbar-hide">
       {/* Time Range Dropdown */}
       <PillButton icon={<ClockIcon />} dropdown active>
         Last 24 hours
       </PillButton>
 
       {/* Trending with Time Options */}
-      <div className="h-9 flex items-center bg-white/[0.05] border border-white/[0.1] rounded-lg overflow-hidden">
-        <div className="flex items-center gap-1.5 px-4 text-xs font-medium text-white/70 border-r border-white/[0.1]">
+      <div className="h-7 flex items-center bg-[#1a1a1a] border border-[#2a2a2a] rounded overflow-hidden">
+        <div className="flex items-center gap-1 px-2.5 text-[11px] font-semibold text-white/80 border-r border-[#2a2a2a]">
           <TrendingIcon />
           <span>Trending</span>
         </div>
-        <div className="flex items-center gap-0.5 px-2">
+        <div className="flex items-center gap-0.5 px-1.5">
           {['5M', '1H', '6H', '24H'].map((t) => (
             <TimeButton 
               key={t} 

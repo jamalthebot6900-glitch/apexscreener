@@ -65,14 +65,14 @@ function formatPriceDisplay(price: number): string {
   return '$' + price.toLocaleString('en-US', { maximumFractionDigits: 2 });
 }
 
-// Token placeholder with gradient
+// Token placeholder with gradient - compact size
 function TokenPlaceholder({ symbol }: { symbol: string }) {
   const hash = symbol.split('').reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
   const hue = Math.abs(hash) % 360;
   
   return (
     <div 
-      className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold"
+      className="w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold"
       style={{ 
         background: `linear-gradient(135deg, hsl(${hue}, 40%, 20%), hsl(${hue}, 50%, 10%))`,
         color: `hsl(${hue}, 60%, 60%)`
@@ -83,7 +83,7 @@ function TokenPlaceholder({ symbol }: { symbol: string }) {
   );
 }
 
-// Token icon with Solana badge
+// Token icon with Solana badge - compact size
 const TokenIcon = memo(function TokenIcon({ token }: { token: Token }) {
   const [imgError, setImgError] = useState(false);
   
@@ -93,7 +93,7 @@ const TokenIcon = memo(function TokenIcon({ token }: { token: Token }) {
         <img
           src={token.logo}
           alt={token.symbol}
-          className="w-8 h-8 rounded-full bg-surface-light border border-white/[0.05]"
+          className="w-6 h-6 rounded-full bg-surface-light"
           onError={() => setImgError(true)}
           loading="lazy"
         />
@@ -107,7 +107,7 @@ const TokenIcon = memo(function TokenIcon({ token }: { token: Token }) {
   );
 });
 
-// Watchlist Star
+// Watchlist Star - compact
 const WatchlistButton = memo(function WatchlistButton({ address }: { address: string }) {
   const { isInWatchlist, toggleWatchlist } = useApp();
   const isWatched = isInWatchlist(address);
@@ -120,14 +120,14 @@ const WatchlistButton = memo(function WatchlistButton({ address }: { address: st
         toggleWatchlist(address);
       }}
       className={cn(
-        'p-1.5 rounded-md transition-all',
+        'p-0.5 transition-all',
         isWatched
-          ? 'text-amber-400 hover:text-amber-300'
-          : 'text-text-dimmed hover:text-amber-400 hover:bg-white/[0.03]'
+          ? 'text-amber-400'
+          : 'text-white/20 hover:text-amber-400'
       )}
     >
       <svg
-        className="w-4 h-4"
+        className="w-3 h-3"
         fill={isWatched ? 'currentColor' : 'none'}
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -188,7 +188,7 @@ function PercentCell({ value, bold = false }: { value: number; bold?: boolean })
   );
 }
 
-// Token row
+// Token row - compact DexScreener style
 const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: number }) {
   const isHot = token.priceChange24h > 100;
   
@@ -204,49 +204,39 @@ const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: n
 
   return (
     <tr className={cn(
-      "border-b border-white/[0.03] hover:bg-white/[0.02] transition-all group/row",
-      isHot && "bg-accent/[0.02]"
+      "border-b border-[#1a1a1a] hover:bg-[#111] transition-all group/row",
+      isHot && "bg-orange-500/[0.03]"
     )}>
-      {/* Star */}
-      <td className="px-2 py-2.5 w-10 sticky left-0 bg-background z-10">
-        <WatchlistButton address={token.address} />
-      </td>
-
       {/* Rank */}
-      <td className="px-2 py-2.5 w-12">
+      <td className="px-2 py-1.5 w-8 text-center">
         <span className={cn(
           "text-[11px] tabular-nums font-mono",
-          rank <= 3 ? "text-text-primary font-semibold" : "text-text-dimmed"
+          rank <= 3 ? "text-white font-bold" : "text-white/40"
         )}>
-          {rank}
+          #{rank}
         </span>
       </td>
       
       {/* Token Info */}
-      <td className="px-2 py-2.5 min-w-[200px]">
-        <Link href={`/token/${token.address}`} className="flex items-center gap-3 group/link">
+      <td className="px-2 py-1.5 min-w-[180px]">
+        <Link href={`/token/${token.address}`} className="flex items-center gap-2 group/link">
           <TokenIcon token={token} />
-          <div className="flex flex-col min-w-0 gap-0.5">
-            <div className="flex items-center gap-2">
-              <span className="text-[13px] font-semibold text-text-primary group-hover/link:text-white truncate max-w-[100px]">
-                {token.symbol}
-              </span>
-              <span className="text-[11px] text-text-dimmed font-medium">/SOL</span>
-              {isHot && (
-                <span className="text-[9px] px-1.5 py-0.5 rounded bg-accent/10 text-accent font-semibold">🔥</span>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] text-text-muted truncate max-w-[80px]">{token.name}</span>
-              <DexBadge dexId={token.dexId} />
-            </div>
+          <div className="flex items-center gap-1.5 min-w-0">
+            <span className="text-[12px] font-bold text-white group-hover/link:text-blue-400 truncate">
+              {token.symbol}
+            </span>
+            <span className="text-[10px] text-white/40">/SOL</span>
+            <span className="text-[10px] text-white/30 truncate max-w-[80px]">{token.name}</span>
+            {isHot && (
+              <span className="text-[9px] px-1 rounded bg-orange-500/20 text-orange-400 font-bold">🔥</span>
+            )}
           </div>
         </Link>
       </td>
       
       {/* Price */}
-      <td className="px-3 py-2.5 text-right">
-        <span className="text-[12px] text-text-primary font-medium tabular-nums font-mono">
+      <td className="px-2 py-1.5 text-right">
+        <span className="text-[11px] text-white font-semibold tabular-nums font-mono">
           {formatPriceDisplay(token.priceUsd)}
         </span>
       </td>
@@ -259,56 +249,56 @@ const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: n
       </td>
       
       {/* Age */}
-      <td className="px-2 py-2.5 text-right hidden sm:table-cell">
-        <span className="text-[11px] text-text-muted tabular-nums font-mono">
+      <td className="px-2 py-1.5 text-right hidden sm:table-cell">
+        <span className="text-[11px] text-white/50 tabular-nums font-mono">
           {formatAge(token.pairCreatedAt)}
         </span>
       </td>
       
       {/* Txns */}
-      <td className="px-2 py-2.5 text-right hidden md:table-cell">
-        <span className="text-[11px] text-text-muted tabular-nums font-mono">
+      <td className="px-2 py-1.5 text-right hidden md:table-cell">
+        <span className="text-[11px] text-white/60 tabular-nums font-mono">
           {formatCompact(token.txns24h.total, 0)}
         </span>
       </td>
       
       {/* Volume */}
-      <td className="px-3 py-2.5 text-right">
-        <span className="text-[12px] text-text-primary font-medium tabular-nums font-mono">
+      <td className="px-2 py-1.5 text-right">
+        <span className="text-[11px] text-white font-semibold tabular-nums font-mono">
           ${formatCompact(token.volume24h)}
         </span>
       </td>
       
       {/* 5M */}
-      <td className="px-2 py-2.5 text-right hidden lg:table-cell">
+      <td className="px-2 py-1.5 text-right hidden lg:table-cell">
         <PercentCell value={token.priceChange5m} />
       </td>
       
       {/* 1H */}
-      <td className="px-2 py-2.5 text-right hidden md:table-cell">
+      <td className="px-2 py-1.5 text-right hidden md:table-cell">
         <PercentCell value={token.priceChange1h} />
       </td>
       
       {/* 6H */}
-      <td className="px-2 py-2.5 text-right hidden lg:table-cell">
+      <td className="px-2 py-1.5 text-right hidden lg:table-cell">
         <PercentCell value={token.priceChange6h} />
       </td>
       
       {/* 24H */}
-      <td className="px-2 py-2.5 text-right">
+      <td className="px-2 py-1.5 text-right">
         <PercentCell value={token.priceChange24h} bold />
       </td>
       
       {/* Liquidity */}
-      <td className="px-2 py-2.5 text-right hidden md:table-cell">
-        <span className="text-[11px] text-text-muted tabular-nums font-mono">
+      <td className="px-2 py-1.5 text-right hidden md:table-cell">
+        <span className="text-[11px] text-white/60 tabular-nums font-mono">
           ${formatCompact(token.liquidity)}
         </span>
       </td>
       
       {/* Market Cap */}
-      <td className="px-3 py-2.5 text-right hidden lg:table-cell">
-        <span className="text-[12px] text-text-primary font-medium tabular-nums font-mono">
+      <td className="px-2 py-1.5 text-right hidden lg:table-cell">
+        <span className="text-[11px] text-white font-semibold tabular-nums font-mono">
           ${formatCompact(token.marketCap)}
         </span>
       </td>
@@ -369,14 +359,14 @@ export default function TokenTable({ tokens }: TokenTableProps) {
     return (
       <th
         className={cn(
-          "px-2 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-wider whitespace-nowrap text-right",
-          sortable && "cursor-pointer group/header select-none hover:text-text-secondary transition-colors",
+          "px-2 py-2 text-[10px] font-bold text-white/50 uppercase tracking-wide whitespace-nowrap text-right",
+          sortable && "cursor-pointer group/header select-none hover:text-white/70 transition-colors",
           className
         )}
         onClick={sortable ? () => handleSort(field) : undefined}
       >
         <div className="flex items-center justify-end gap-1">
-          <span className={cn(sortField === field && "text-text-primary")}>{label}</span>
+          <span className={cn(sortField === field && "text-white")}>{label}</span>
           {sortable && <SortIndicator active={sortField === field} direction={sortDirection} />}
         </div>
       </th>
@@ -387,20 +377,18 @@ export default function TokenTable({ tokens }: TokenTableProps) {
     <div className="overflow-x-auto scrollbar-thin">
       <table className="w-full min-w-[900px]">
         <thead>
-          <tr className="border-b border-white/[0.06] bg-surface/50">
-            <th className="px-2 py-3 w-10 sticky left-0 bg-surface/95 backdrop-blur-sm z-20"></th>
-            <th className="px-2 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-left w-12">#</th>
-            <th className="px-2 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-left min-w-[200px]">Token</th>
+          <tr className="border-b border-[#1a1a1a] bg-black">
+            <th className="px-2 py-2 text-[10px] font-bold text-white/50 uppercase tracking-wide text-center w-8">TOKEN</th>
+            <th className="px-2 py-2 text-[10px] font-bold text-white/50 uppercase tracking-wide text-left min-w-[180px]"></th>
             <HeaderCell label="Price" className="text-right" />
-            <th className="px-2 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-right hidden xl:table-cell w-20">Chart</th>
-            <th className="px-2 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-wider text-right hidden sm:table-cell">Age</th>
+            <th className="px-2 py-2 text-[10px] font-bold text-white/50 uppercase tracking-wide text-right hidden sm:table-cell">Age</th>
             <HeaderCell field="txns24h" label="Txns" className="hidden md:table-cell" />
-            <HeaderCell field="volume24h" label="Vol" />
+            <HeaderCell field="volume24h" label="Volume" />
             <HeaderCell field="priceChange5m" label="5m" className="hidden lg:table-cell" />
             <HeaderCell field="priceChange1h" label="1h" className="hidden md:table-cell" />
             <HeaderCell field="priceChange6h" label="6h" className="hidden lg:table-cell" />
             <HeaderCell field="priceChange24h" label="24h" />
-            <HeaderCell field="liquidity" label="Liq" className="hidden md:table-cell" />
+            <HeaderCell field="liquidity" label="Liquidity" className="hidden md:table-cell" />
             <HeaderCell field="marketCap" label="MCap" className="hidden lg:table-cell" />
           </tr>
         </thead>
