@@ -103,7 +103,7 @@ export default function TokenPage() {
       </div>
 
       {/* Right Side - Token Info Panel */}
-      <div className="w-[300px] border-l border-[#1e1e22] bg-[#131316] overflow-y-auto">
+      <div className="w-[380px] border-l border-[#1e1e22] bg-[#131316] overflow-y-auto">
         
         {/* Header: SYMBOL / SOL + badges */}
         <div className="px-4 py-3 border-b border-[#1e1e22]">
@@ -134,7 +134,7 @@ export default function TokenPage() {
         {/* Large Banner */}
         <div className="relative">
           {token.info?.header ? (
-            <div className="h-[180px] overflow-hidden">
+            <div className="h-[220px] overflow-hidden">
               <img 
                 src={token.info.header} 
                 alt={token.baseToken.name}
@@ -142,15 +142,15 @@ export default function TokenPage() {
               />
             </div>
           ) : token.info?.imageUrl ? (
-            <div className="h-[180px] overflow-hidden bg-[#1a1a1e] flex items-center justify-center">
+            <div className="h-[220px] overflow-hidden bg-[#1a1a1e] flex items-center justify-center">
               <img 
                 src={token.info.imageUrl} 
                 alt={token.baseToken.name}
-                className="w-32 h-32 rounded-xl object-cover"
+                className="w-36 h-36 rounded-xl object-cover"
               />
             </div>
           ) : (
-            <div className="h-[180px] bg-gradient-to-br from-[#1e1e22] via-[#252528] to-[#2a2a2e]" />
+            <div className="h-[220px] bg-gradient-to-br from-[#1e1e22] via-[#252528] to-[#2a2a2e]" />
           )}
         </div>
 
