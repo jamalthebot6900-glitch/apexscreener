@@ -95,7 +95,7 @@ function PillButton({ children, active, onClick, icon, dropdown, className }: Pi
         "h-8 flex items-center gap-1.5 px-4 rounded-lg text-[13px] font-semibold transition-all whitespace-nowrap",
         "border",
         active 
-          ? "bg-[#238636] text-white border-[#238636]" 
+          ? "bg-[#1a3a4a] text-white border-[#1a3a4a]" 
           : "bg-[#1d1d22] border-[#28282d] text-[#c9d1d9] hover:bg-[#28282d] hover:border-[#343439]",
         className
       )}
@@ -116,7 +116,7 @@ function IconButton({ children, active, onClick }: { children: React.ReactNode; 
         "h-8 w-8 flex items-center justify-center rounded-lg transition-all",
         "border",
         active 
-          ? "bg-[#238636] text-white border-[#238636]" 
+          ? "bg-[#1a3a4a] text-white border-[#1a3a4a]" 
           : "bg-[#1d1d22] border-[#28282d] text-[#8b949e] hover:bg-[#28282d] hover:border-[#343439] hover:text-[#c9d1d9]"
       )}
     >
@@ -154,7 +154,7 @@ export default function QuickFilters() {
       </PillButton>
 
       {/* Trending with Time Options */}
-      <div className="h-8 flex items-center bg-[#238636] rounded-lg overflow-hidden">
+      <div className="h-8 flex items-center bg-[#1a3a4a] rounded-lg overflow-hidden">
         <div className="flex items-center gap-1.5 px-4 text-[13px] font-semibold text-white border-r border-white/20">
           <FireIcon />
           <span>Trending</span>
