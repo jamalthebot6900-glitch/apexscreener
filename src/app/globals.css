@@ -503,7 +503,7 @@ input:focus, select:focus, textarea:focus {
   text-shadow: 0 0 6px rgba(255, 90, 106, 0.3);
 }
 
-/* ===== KOTH SHIMMER ANIMATION ===== */
+/* ===== KOTH ANIMATIONS ===== */
 @keyframes shimmer {
   0% {
     transform: translateX(-100%);
@@ -513,7 +513,20 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
+@keyframes koth-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
 .animate-shimmer {
-  animation: shimmer 3s infinite;
+  animation: shimmer 2.5s infinite;
+}
+
+.animate-koth-pulse {
+  animation: koth-pulse 2s ease-in-out infinite;
 }
 
