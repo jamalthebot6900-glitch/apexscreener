@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 // Solana logo - official gradient
 function SolanaLogo() {
   return (
@@ -29,6 +31,7 @@ const tokens = [
     symbol: 'Goyim',
     pair: 'SOL',
     name: 'Goyim',
+    pairAddress: 'ASCSDmpkbXDNRiPRKGAPiLU4Kukc6P8vgNBtNhGw3Hnf',
     logo: 'https://dd.dexscreener.com/ds-data/tokens/solana/9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump.png',
     price: '$0.004372',
     age: '8d',
@@ -47,6 +50,7 @@ const tokens = [
     symbol: 'GIRAFFES',
     pair: 'SOL',
     name: 'The Giraffes',
+    pairAddress: '2ZeRYWYPW8kUE4excbfWEWEQL2ia1TzDEn6x9j2Uu6yo',
     logo: 'https://cdn.dexscreener.com/cms/images/oEITILHKIYrx6M45?width=800&height=800&quality=90',
     price: '$0.001925',
     age: '3h',
@@ -330,7 +334,11 @@ export default function TokenTable() {
         {/* Body */}
         <tbody>
           {tokens.map((token) => (
-            <tr key={token.rank} className="bg-[#111114] border-b border-[#1e1e22] hover:bg-[#16161a] transition-colors">
+            <tr 
+              key={token.rank} 
+              className="bg-[#111114] border-b border-[#1e1e22] hover:bg-[#16161a] transition-colors cursor-pointer"
+              onClick={() => token.pairAddress && (window.location.href = `/token/${token.pairAddress}`)}
+            >
               {/* Token info */}
               <td className="pl-3 pr-2 py-2">
                 <div className="flex items-center gap-1.5">
