@@ -119,7 +119,7 @@ const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: n
   const isPumpFun = token.liquidity < 100000 || token.pairCreatedAt > Date.now() - 7 * 24 * 60 * 60 * 1000;
   
   return (
-    <tr className="border-b border-[#2A2E39] hover:bg-[#1e222d] transition-colors">
+    <tr className="border-b border-[#28282d] hover:bg-[#1d1d22] transition-colors">
       {/* Rank */}
       <td className="pl-4 pr-2 py-[10px] text-[13px] text-[#6e7681] font-medium">
         #{rank}
@@ -291,10 +291,10 @@ export default function TokenTable({ tokens }: TokenTableProps) {
   };
 
   return (
-    <div className="overflow-x-auto bg-[#131722]">
+    <div className="overflow-x-auto bg-[#111116]">
       <table className="w-full min-w-[1000px]">
         <thead>
-          <tr className="border-b border-[#2A2E39]">
+          <tr className="border-b border-[#28282d]">
             <th className="pl-4 pr-2 py-2.5 text-[11px] font-medium text-[#6e7681] uppercase tracking-wider text-left w-12"></th>
             <th className="px-1 py-2.5 w-10"></th>
             <th className="px-1 py-2.5 w-10"></th>
