@@ -4,7 +4,7 @@
 
 /* ===== DESIGN TOKENS ===== */
 :root {
-  --background: #0d0e12;
+  --background: #0a0b0d;
   --foreground: #ffffff;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;

@@ -92,15 +92,15 @@ function PillButton({ children, active, onClick, icon, dropdown, className }: Pi
     <button
       onClick={onClick}
       className={cn(
-        "h-8 flex items-center gap-1.5 px-4 rounded-lg text-[13px] font-bold transition-all whitespace-nowrap tracking-tight",
+        "h-8 flex items-center gap-1.5 px-4 rounded-lg text-[13px] font-semibold transition-all whitespace-nowrap",
         "border",
         active 
-          ? "bg-[#10b981] text-white border-[#10b981]" 
-          : "bg-[#161921] border-[#282d38] text-white/90 hover:bg-[#1a1d26] hover:border-[#363d4a]",
+          ? "bg-[#238636] text-white border-[#238636]" 
+          : "bg-[#12151b] border-[#1c1f26] text-[#c9d1d9] hover:bg-[#171a21] hover:border-[#24282f]",
         className
       )}
     >
-      {icon && <span className={active ? "text-white" : "text-white/70"}>{icon}</span>}
+      {icon && <span className={active ? "text-white" : "text-[#8b949e]"}>{icon}</span>}
       {children}
       {dropdown && <ChevronDownIcon />}
     </button>
@@ -116,8 +116,8 @@ function IconButton({ children, active, onClick }: { children: React.ReactNode; 
         "h-8 w-8 flex items-center justify-center rounded-lg transition-all",
         "border",
         active 
-          ? "bg-[#10b981] text-white border-[#10b981]" 
-          : "bg-[#161921] border-[#282d38] text-white/70 hover:bg-[#1a1d26] hover:border-[#363d4a] hover:text-white"
+          ? "bg-[#238636] text-white border-[#238636]" 
+          : "bg-[#12151b] border-[#1c1f26] text-[#8b949e] hover:bg-[#171a21] hover:border-[#24282f] hover:text-[#c9d1d9]"
       )}
     >
       {children}
@@ -147,15 +147,15 @@ export default function QuickFilters() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   return (
-    <div className="flex items-center gap-2 px-3 py-2 bg-[#0d0e12] border-b border-[#1e2129] overflow-x-auto scrollbar-hide">
+    <div className="flex items-center gap-2 px-3 py-2 bg-[#0a0b0d] border-b border-[#1c1f26] overflow-x-auto scrollbar-hide">
       {/* Time Range Dropdown */}
       <PillButton icon={<ClockIcon />} dropdown active>
         Last 24 hours
       </PillButton>
 
       {/* Trending with Time Options */}
-      <div className="h-8 flex items-center bg-[#10b981] rounded-lg overflow-hidden">
-        <div className="flex items-center gap-1.5 px-4 text-[13px] font-bold text-white border-r border-white/20">
+      <div className="h-8 flex items-center bg-[#238636] rounded-lg overflow-hidden">
+        <div className="flex items-center gap-1.5 px-4 text-[13px] font-semibold text-white border-r border-white/20">
           <FireIcon />
           <span>Trending</span>
         </div>

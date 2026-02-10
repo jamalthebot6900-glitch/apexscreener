@@ -9,18 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Core backgrounds - EXACT DexScreener colors
-        background: '#0d0e12',
-        surface: '#11131a',
-        'surface-light': '#161921',
-        'surface-hover': '#1a1d26',
-        'surface-elevated': '#1e2129',
+        // Core backgrounds - EXACT DexScreener colors (darker)
+        background: '#0a0b0d',
+        surface: '#0e1015',
+        'surface-light': '#12151b',
+        'surface-hover': '#171a21',
+        'surface-elevated': '#1c1f26',
         
-        // Borders - DexScreener style
-        border: '#1e2129',
-        'border-light': '#282d38',
-        'border-subtle': '#161921',
-        'border-glow': 'rgba(255, 255, 255, 0.08)',
+        // Borders - DexScreener style (very subtle)
+        border: '#1c1f26',
+        'border-light': '#24282f',
+        'border-subtle': '#14171d',
+        'border-glow': 'rgba(255, 255, 255, 0.05)',
         
         // Text hierarchy - Crisp whites
         'text-primary': '#ffffff',
