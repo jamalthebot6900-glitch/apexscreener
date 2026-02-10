@@ -503,3 +503,17 @@ input:focus, select:focus, textarea:focus {
   text-shadow: 0 0 6px rgba(255, 90, 106, 0.3);
 }
 
+/* ===== KOTH SHIMMER ANIMATION ===== */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite;
+}
+
