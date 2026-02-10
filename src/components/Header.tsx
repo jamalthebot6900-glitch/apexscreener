@@ -94,13 +94,13 @@ export default function Header() {
         <div className="flex items-center gap-6">
           <HamburgerButton />
           
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-3 group">
             <img 
               src="/apex-logo.png" 
               alt="Apexscreener" 
-              className="h-8 w-auto opacity-90 group-hover:opacity-100 transition-opacity" 
+              className="h-10 w-auto opacity-90 group-hover:opacity-100 transition-opacity" 
             />
-            <span className="text-lg font-semibold text-white tracking-tight">
+            <span className="text-2xl font-bold text-white tracking-tight">
               Apexscreener
             </span>
           </Link>
