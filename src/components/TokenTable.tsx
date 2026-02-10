@@ -95,7 +95,7 @@ export default function TokenTable() {
                   <img 
                     src={token.logo}
                     alt={token.symbol}
-                    className="w-8 h-8 rounded-lg object-cover"
+                    className="w-8 h-8 rounded-sm object-cover"
                   />
                   
                   {/* Token name */}
