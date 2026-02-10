@@ -9,24 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Core backgrounds - DexScreener-style charcoal (NOT black)
-        background: '#191b1f',
-        surface: '#1e2024',
-        'surface-light': '#252830',
-        'surface-hover': '#2c3038',
-        'surface-elevated': '#343840',
+        // Core backgrounds - DexScreener style with good contrast
+        background: '#11131a',
+        surface: '#171a21',
+        'surface-light': '#1e222b',
+        'surface-hover': '#262b36',
+        'surface-elevated': '#2e3440',
         
-        // Borders - Clearly visible
-        border: '#363a42',
-        'border-light': '#444850',
-        'border-subtle': '#2a2e36',
+        // Borders - More visible like DexScreener
+        border: '#2d323c',
+        'border-light': '#3d4350',
+        'border-subtle': '#232830',
         'border-glow': 'rgba(255, 255, 255, 0.15)',
         
-        // Text hierarchy - High contrast
+        // Text hierarchy - Crisp whites
         'text-primary': '#ffffff',
-        'text-secondary': '#c8c8cc',
+        'text-secondary': '#d1d1d6',
         'text-muted': '#9898a0',
-        'text-dimmed': '#666670',
+        'text-dimmed': '#5c5c66',
         
         // Accent - Vibrant electric orange
         accent: '#ff7849',
