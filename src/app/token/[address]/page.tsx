@@ -100,10 +100,50 @@ export default function TokenPage() {
       {/* Right Side - Token Info Panel */}
       <div className="w-[320px] border-l border-[#1e1e22] bg-[#0f0f11] overflow-y-auto">
         
-        {/* Banner with overlaid token info */}
+        {/* Token Header - ABOVE banner */}
+        <div className="flex items-center gap-3 p-3 border-b border-[#1e1e22]">
+          {token.info?.imageUrl ? (
+            <img 
+              src={token.info.imageUrl} 
+              alt={token.baseToken.symbol}
+              className="w-12 h-12 rounded-lg object-cover"
+            />
+          ) : (
+            <div className="w-12 h-12 rounded-lg bg-[#2a2a2e] flex items-center justify-center text-lg font-bold text-white">
+              {token.baseToken.symbol.charAt(0)}
+            </div>
+          )}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <h1 className="text-[15px] font-bold text-white truncate">{token.baseToken.symbol}</h1>
+              <span className="text-[13px] text-[#6a6a6a] font-medium">/ SOL</span>
+              <span className="text-[9px] text-[#00d395] bg-[#00d395]/15 px-1.5 py-0.5 rounded font-bold">
+                #1
+              </span>
+              {/* KOTH Crown */}
+              <div className="flex items-center gap-0.5 ml-auto">
+                <span className="text-xs">👑</span>
+              </div>
+            </div>
+            <div className="text-[12px] text-[#8a8a8a] truncate mt-0.5">{token.baseToken.name}</div>
+            {/* Chain info */}
+            <div className="flex items-center gap-1 mt-1">
+              <img src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png" alt="Solana" className="w-3.5 h-3.5 rounded-full" />
+              <span className="text-[10px] text-white">Solana</span>
+              <span className="text-[10px] text-[#3a3a3a]">›</span>
+              <img src="https://dd.dexscreener.com/ds-data/dexes/pumpswap.png" alt="PumpSwap" className="w-3.5 h-3.5 rounded-full" />
+              <span className="text-[10px] text-white">PumpSwap</span>
+              <span className="text-[10px] text-[#6a6a6a]">via</span>
+              <img src="https://dd.dexscreener.com/ds-data/dexes/pumpfun.png" alt="Pump.fun" className="w-3.5 h-3.5 rounded-full" />
+              <span className="text-[10px] text-white">Pump.fun</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Banner - LARGE */}
         <div className="relative">
           {token.info?.header ? (
-            <div className="aspect-[3/1] overflow-hidden bg-[#1a1a1e]">
+            <div className="h-[160px] overflow-hidden">
               <img 
                 src={token.info.header} 
                 alt={token.baseToken.name}
@@ -111,53 +151,8 @@ export default function TokenPage() {
               />
             </div>
           ) : (
-            <div className="aspect-[3/1] bg-gradient-to-br from-[#1e1e22] to-[#2a2a2e]" />
+            <div className="h-[160px] bg-gradient-to-br from-[#1e1e22] via-[#252528] to-[#2a2a2e]" />
           )}
-          
-          {/* Token info overlaid on banner */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-3 pt-8">
-            <div className="flex items-end gap-3">
-              {token.info?.imageUrl ? (
-                <img 
-                  src={token.info.imageUrl} 
-                  alt={token.baseToken.symbol}
-                  className="w-14 h-14 rounded-lg object-cover border-2 border-[#2a2a2e] shadow-lg"
-                />
-              ) : (
-                <div className="w-14 h-14 rounded-lg bg-[#2a2a2e] border-2 border-[#2a2a2e] flex items-center justify-center text-xl font-bold text-white">
-                  {token.baseToken.symbol.charAt(0)}
-                </div>
-              )}
-              <div className="flex-1 min-w-0">
-                <h1 className="text-[16px] font-bold text-white leading-tight truncate">{token.baseToken.name}</h1>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="text-[13px] font-bold text-white">{token.baseToken.symbol}</span>
-                  <span className="text-[12px] text-[#8a8a8a]">/ SOL</span>
-                  <span className="text-[9px] text-[#00d395] bg-[#00d395]/15 px-1.5 py-0.5 rounded font-bold">
-                    #1
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* KOTH Crown Badge */}
-          <div className="absolute top-2 right-2 flex items-center gap-1 bg-black/60 backdrop-blur-sm px-1.5 py-0.5 rounded border border-[#D4AF37]/30">
-            <span className="text-xs">👑</span>
-            <span className="text-[9px] font-bold text-[#FFD700] uppercase">KOTH</span>
-          </div>
-        </div>
-
-        {/* Chain info */}
-        <div className="flex items-center gap-1.5 px-3 py-2 border-b border-[#1e1e22]">
-          <img src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png" alt="Solana" className="w-4 h-4 rounded-full" />
-          <span className="text-[11px] text-white font-medium">Solana</span>
-          <span className="text-[#3a3a3a]">›</span>
-          <img src="https://dd.dexscreener.com/ds-data/dexes/pumpswap.png" alt="PumpSwap" className="w-4 h-4 rounded-full" />
-          <span className="text-[11px] text-white font-medium">PumpSwap</span>
-          <span className="text-[11px] text-[#6a6a6a]">via</span>
-          <img src="https://dd.dexscreener.com/ds-data/dexes/pumpfun.png" alt="Pump.fun" className="w-4 h-4 rounded-full" />
-          <span className="text-[11px] text-white font-medium">Pump.fun</span>
         </div>
 
         {/* Social Links - directly under banner */}
@@ -195,6 +190,9 @@ export default function TokenPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </a>
+          )}
+          {!twitterUrl && !telegramUrl && (
+            <div className="px-3 py-2.5 text-[12px] text-[#6a6a6a]">No socials available</div>
           )}
         </div>
 
