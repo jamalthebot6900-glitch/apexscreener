@@ -79,11 +79,11 @@ function formatNum(value: number): string {
   return value.toLocaleString('en-US', { maximumFractionDigits: 0 });
 }
 
-// Solana chain badge
+// Solana chain badge - visible
 function SolanaBadge() {
   return (
-    <div className="w-4 h-4 rounded-full bg-gradient-to-br from-[#9945FF] via-[#14F195] to-[#00FFA3] flex items-center justify-center">
-      <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="white">
+    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#9945FF] via-[#14F195] to-[#00FFA3] flex items-center justify-center flex-shrink-0">
+      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="white">
         <path d="M4 17.5L8 13.5H20L16 17.5H4Z" />
         <path d="M4 6.5L8 10.5H20L16 6.5H4Z" />
         <path d="M4 12L8 8H20L16 12H4Z" />
@@ -92,63 +92,66 @@ function SolanaBadge() {
   );
 }
 
-// DEX badge (Raydium style)
-function DexBadge() {
+// Pump.fun badge
+function PumpFunBadge() {
   return (
-    <div className="w-4 h-4 rounded-full bg-[#5AC4BE] flex items-center justify-center">
-      <span className="text-[8px] font-bold text-black">R</span>
+    <div className="w-5 h-5 rounded-full bg-[#00D18C] flex items-center justify-center flex-shrink-0">
+      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="black">
+        <circle cx="12" cy="12" r="4" />
+        <ellipse cx="12" cy="12" rx="8" ry="3" stroke="black" strokeWidth="1.5" fill="none" />
+      </svg>
     </div>
   );
 }
 
-// Boost badge like DexScreener
-function BoostBadge({ amount }: { amount: number }) {
+// Raydium badge
+function RaydiumBadge() {
   return (
-    <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-[#00e676]/20 text-[#00e676] text-[11px] font-bold">
-      ⚡{amount}
-    </span>
+    <div className="w-5 h-5 rounded-full bg-[#5AC4BE] flex items-center justify-center flex-shrink-0">
+      <span className="text-[9px] font-bold text-black">R</span>
+    </div>
   );
 }
 
 // Token row exactly like DexScreener
 const TokenRow = memo(function TokenRow({ token, rank }: { token: Token; rank: number }) {
-  const boost = token.priceChange24h > 50 ? Math.floor(token.priceChange24h) : null;
+  // Determine platform (pump.fun vs raydium) - using a simple heuristic
+  const isPumpFun = token.liquidity < 100000 || token.pairCreatedAt > Date.now() - 7 * 24 * 60 * 60 * 1000;
   
   return (
     <tr className="border-b border-white/[0.05] hover:bg-white/[0.02] transition-colors">
       {/* Rank */}
-      <td className="pl-4 pr-2 py-[10px] text-[13px] text-white/40 font-medium">
+      <td className="pl-4 pr-2 py-[10px] text-[14px] text-white/40 font-medium">
         #{rank}
       </td>
       
-      {/* Badges */}
+      {/* Badges - Solana + Platform */}
       <td className="px-1 py-[10px]">
         <div className="flex items-center gap-1">
           <SolanaBadge />
-          <DexBadge />
+          {isPumpFun ? <PumpFunBadge /> : <RaydiumBadge />}
         </div>
       </td>
       
-      {/* Token Logo */}
-      <td className="px-1 py-[10px]">
+      {/* Token Logo - Larger square */}
+      <td className="px-2 py-[10px]">
         {token.logo ? (
-          <img src={token.logo} alt="" className="w-7 h-7 rounded-full bg-white/10" />
+          <img src={token.logo} alt="" className="w-8 h-8 rounded-lg bg-white/10 object-cover" />
         ) : (
-          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-[10px] font-bold text-white">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-[12px] font-bold text-white">
             {token.symbol.charAt(0)}
           </div>
         )}
       </td>
       
-      {/* Token Name */}
-      <td className="px-2 py-[10px] min-w-[200px]">
+      {/* Token Name - Bold white */}
+      <td className="px-2 py-[10px] min-w-[220px]">
         <Link href={`/token/${token.address}`} className="flex items-center gap-2 group">
-          <span className="text-[14px] font-bold text-white group-hover:text-[#00e676] transition-colors">
+          <span className="text-[15px] font-bold text-white group-hover:text-[#00e676] transition-colors">
             {token.symbol}
           </span>
-          <span className="text-[13px] text-white/40">/SOL</span>
-          <span className="text-[13px] text-white/40">{token.name}</span>
-          {boost && <BoostBadge amount={boost} />}
+          <span className="text-[14px] text-white/50 font-medium">/SOL</span>
+          <span className="text-[14px] text-white/40">{token.name}</span>
         </Link>
       </td>
       
