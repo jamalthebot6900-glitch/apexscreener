@@ -4,7 +4,7 @@
 
 /* ===== DESIGN TOKENS ===== */
 :root {
-  --background: #11131a;
+  --background: #1a1d24;
   --foreground: #ffffff;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
@@ -138,7 +138,7 @@ h2, .h2 {
 
 /* ===== SKELETON ===== */
 .skeleton {
-  background: linear-gradient(90deg, #1e222b 0%, #2d323c 50%, #1e222b 100%);
+  background: linear-gradient(90deg, #292e38 0%, #3a4150 50%, #292e38 100%);
   background-size: 400% 100%;
   animation: shimmer 2s infinite linear;
 }
