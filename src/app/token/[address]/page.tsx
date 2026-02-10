@@ -99,20 +99,20 @@ export default function TokenPage() {
       </div>
 
       {/* Right Side - Token Info Panel */}
-      <div className="w-[340px] border-l border-[#1e1e22] bg-[#111114] overflow-y-auto">
+      <div className="w-[360px] border-l border-[#1e1e22] bg-[#111114] overflow-y-auto">
         
-        {/* Banner Image - LARGER */}
+        {/* Banner Image - 1500x500 aspect ratio (3:1) */}
         <div className="relative">
           {token.info?.header ? (
-            <div className="h-[140px] overflow-hidden">
+            <div className="aspect-[3/1] overflow-hidden bg-[#1a1a1e]">
               <img 
                 src={token.info.header} 
                 alt={token.baseToken.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
             </div>
           ) : (
-            <div className="h-[140px] bg-gradient-to-br from-[#1e1e22] to-[#2a2a2e]" />
+            <div className="aspect-[3/1] bg-gradient-to-br from-[#1e1e22] to-[#2a2a2e]" />
           )}
           
           {/* KOTH Crown Badge */}
@@ -139,11 +139,11 @@ export default function TokenPage() {
 
         {/* Token Name & Symbol */}
         <div className="pt-12 px-4 pb-2">
-          <h1 className="text-[20px] font-bold text-white tracking-tight">{token.baseToken.name}</h1>
-          <div className="flex items-center gap-2 mt-1">
-            <span className="text-[15px] font-bold text-white">{token.baseToken.symbol}</span>
-            <span className="text-[14px] text-[#6a6a6a] font-medium">/ SOL</span>
-            <span className="text-[11px] text-[#00d395] bg-[#00d395]/10 px-1.5 py-0.5 rounded font-bold">
+          <h1 className="text-[22px] font-extrabold text-white leading-tight">{token.baseToken.name}</h1>
+          <div className="flex items-center gap-2.5 mt-1.5">
+            <span className="text-[16px] font-extrabold text-white tracking-wide">{token.baseToken.symbol}</span>
+            <span className="text-[14px] text-[#8a8a8a] font-semibold">/ SOL</span>
+            <span className="text-[10px] text-[#00d395] bg-[#00d395]/15 px-2 py-0.5 rounded font-bold tracking-wide">
               #1
             </span>
           </div>
