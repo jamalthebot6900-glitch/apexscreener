@@ -7,6 +7,58 @@ import { PairData } from '@/types';
 import { fetchPairDetails } from '@/lib/api';
 import { formatNumber, formatPercent } from '@/lib/utils';
 
+// Copy to clipboard helper
+function CopyButton({ text, label }: { text: string; label?: string }) {
+  const [copied, setCopied] = useState(false);
+  
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  
+  return (
+    <button 
+      onClick={handleCopy}
+      className="flex items-center gap-1.5 px-2 py-1 text-[11px] text-[#888] hover:text-white bg-[#1a1a1f] hover:bg-[#252528] rounded transition-colors"
+      title={`Copy ${label || 'address'}`}
+    >
+      {copied ? (
+        <>
+          <svg className="w-3 h-3 text-[#22c55e]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          <span className="text-[#22c55e]">Copied!</span>
+        </>
+      ) : (
+        <>
+          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          <span className="font-mono">{text.slice(0, 4)}...{text.slice(-4)}</span>
+        </>
+      )}
+    </button>
+  );
+}
+
+// External link button
+function ExternalLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-[#888] hover:text-white bg-[#1a1a1f] hover:bg-[#252528] rounded-lg transition-colors"
+      title={label}
+    >
+      {icon}
+      <span>{label}</span>
+    </a>
+  );
+}
+
 export default function TokenPage() {
   const params = useParams();
   const address = params.address as string;
@@ -97,9 +149,52 @@ export default function TokenPage() {
       <div className="w-[380px] bg-[#0a0a0b] border-l border-[#1a1a1a] overflow-y-auto">
         
         {/* Header */}
-        <div className="flex items-center gap-3 p-4 border-b border-[#1a1a1a]">
-          <img src={token.info?.imageUrl || ''} alt="" className="w-10 h-10 rounded-full bg-[#222]" />
-          <span className="text-lg font-semibold text-white">{token.baseToken.name}</span>
+        <div className="p-4 border-b border-[#1a1a1a]">
+          <div className="flex items-center gap-3 mb-3">
+            <Link href="/" className="p-1.5 text-[#666] hover:text-white hover:bg-[#1a1a1f] rounded-lg transition-colors">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </Link>
+            <img src={token.info?.imageUrl || ''} alt="" className="w-10 h-10 rounded-full bg-[#222]" />
+            <div className="flex-1">
+              <span className="text-lg font-semibold text-white">{token.baseToken.name}</span>
+              <div className="flex items-center gap-2 mt-1">
+                <CopyButton text={token.baseToken.address} label="Token CA" />
+              </div>
+            </div>
+          </div>
+          
+          {/* External Links */}
+          <div className="flex flex-wrap gap-2">
+            <ExternalLink 
+              href={`https://solscan.io/token/${token.baseToken.address}`}
+              icon={<svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>}
+              label="Solscan"
+            />
+            <ExternalLink 
+              href={`https://birdeye.so/token/${token.baseToken.address}?chain=solana`}
+              icon={<svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>}
+              label="Birdeye"
+            />
+            <ExternalLink 
+              href={`https://dexscreener.com/solana/${token.pairAddress}`}
+              icon={<svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>}
+              label="DexScreener"
+            />
+            <ExternalLink 
+              href={`https://rugcheck.xyz/tokens/${token.baseToken.address}`}
+              icon={<svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>}
+              label="RugCheck"
+            />
+            {twitterUrl && (
+              <ExternalLink 
+                href={twitterUrl}
+                icon={<span className="text-[12px] font-bold">𝕏</span>}
+                label="Twitter"
+              />
+            )}
+          </div>
         </div>
 
         {/* Ticker */}

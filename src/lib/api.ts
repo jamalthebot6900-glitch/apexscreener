@@ -1,6 +1,79 @@
 import { Token, PairData, OHLCData } from '@/types';
 
 const DEX_SCREENER_BASE = 'https://api.dexscreener.com/latest/dex';
+const DEX_SCREENER_BOOSTS = 'https://api.dexscreener.com/token-boosts/top/v1';
+const DEX_SCREENER_PROFILES = 'https://api.dexscreener.com/token-profiles/latest/v1';
+
+// Boosted token from the boosts API
+interface BoostedToken {
+  url: string;
+  chainId: string;
+  tokenAddress: string;
+  description?: string;
+  icon?: string;
+  header?: string;
+  links?: { type?: string; url: string; label?: string }[];
+  totalAmount: number;
+}
+
+// Fetch top boosted tokens (tokens actively being promoted)
+export async function fetchBoostedTokens(): Promise<Token[]> {
+  try {
+    const res = await fetch(DEX_SCREENER_BOOSTS, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to fetch boosted tokens');
+    
+    const boostedTokens: BoostedToken[] = await res.json();
+    
+    // Filter to Solana only and get top 30
+    const solanaTokens = boostedTokens
+      .filter(t => t.chainId === 'solana')
+      .slice(0, 30);
+    
+    if (solanaTokens.length === 0) return [];
+    
+    // Fetch full token data for each boosted token
+    const tokenAddresses = solanaTokens.map(t => t.tokenAddress);
+    const tokensWithData = await Promise.all(
+      tokenAddresses.map(addr => fetchTokenByAddress(addr))
+    );
+    
+    // Merge boost data with token data
+    return tokensWithData
+      .filter((t): t is Token => t !== null)
+      .map((token, idx) => ({
+        ...token,
+        boosts: solanaTokens[idx]?.totalAmount || 0,
+      }));
+  } catch (error) {
+    console.error('Error fetching boosted tokens:', error);
+    return [];
+  }
+}
+
+// Fetch latest token profiles (newly listed with profiles)
+export async function fetchLatestProfiles(): Promise<Token[]> {
+  try {
+    const res = await fetch(`${DEX_SCREENER_PROFILES}?chainId=solana`, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to fetch latest profiles');
+    
+    const profiles = await res.json();
+    const tokenAddresses = profiles
+      .filter((p: any) => p.chainId === 'solana')
+      .slice(0, 20)
+      .map((p: any) => p.tokenAddress);
+    
+    if (tokenAddresses.length === 0) return [];
+    
+    const tokens = await Promise.all(
+      tokenAddresses.map((addr: string) => fetchTokenByAddress(addr))
+    );
+    
+    return tokens.filter((t): t is Token => t !== null);
+  } catch (error) {
+    console.error('Error fetching latest profiles:', error);
+    return [];
+  }
+}
 
 // Fetch token data by contract address
 export async function fetchTokenByAddress(address: string): Promise<Token | null> {
