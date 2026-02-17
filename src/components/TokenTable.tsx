@@ -229,6 +229,92 @@ function AlertButton({ token, hasAlerts, onClick }: {
   );
 }
 
+// Share dropdown button
+function ShareButton({ token }: { token: Token }) {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const tokenUrl = `https://dexscreener.com/solana/${token.pairAddress || token.address}`;
+  const tweetText = `Check out $${token.symbol} on Solana!\n\nPrice: $${token.priceUsd < 0.01 ? token.priceUsd.toExponential(2) : token.priceUsd.toFixed(4)}\n24h: ${(token.priceChange24h || 0) >= 0 ? '+' : ''}${(token.priceChange24h || 0).toFixed(2)}%\n\n${tokenUrl}`;
+
+  const handleCopyLink = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    await navigator.clipboard.writeText(tokenUrl);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+      setShowDropdown(false);
+    }, 1500);
+  };
+
+  const handleTweet = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+    window.open(twitterUrl, '_blank', 'width=550,height=420');
+    setShowDropdown(false);
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowDropdown(!showDropdown);
+        }}
+        className="p-1 rounded text-[#444] hover:text-[#888] transition-colors"
+        title="Share"
+      >
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+        </svg>
+      </button>
+
+      {showDropdown && (
+        <>
+          <div 
+            className="fixed inset-0 z-40"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDropdown(false);
+            }}
+          />
+          <div className="absolute left-0 top-full mt-1 bg-[#1a1a1f] border border-[#333] rounded-lg shadow-xl z-50 overflow-hidden min-w-[140px]">
+            <button
+              onClick={handleTweet}
+              className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[#ccc] hover:bg-[#252528] transition-colors"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              <span>Tweet</span>
+            </button>
+            <button
+              onClick={handleCopyLink}
+              className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[#ccc] hover:bg-[#252528] transition-colors"
+            >
+              {copied ? (
+                <>
+                  <svg className="w-4 h-4 text-[#00d395]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-[#00d395]">Copied!</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                  <span>Copy Link</span>
+                </>
+              )}
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 // Calculate rug risk signals
 function getRugSignals(token: Token): { isRisky: boolean; reason: string } {
   const signals: string[] = [];
@@ -844,6 +930,7 @@ export default function TokenTable() {
                       onClick={() => openAlertModal(token)}
                     />
                     <QuickTradeButton address={token.address} />
+                    <ShareButton token={token} />
                     <span className="text-[12px] text-[#555] font-medium w-5">#{index + 1}</span>
                     <SolanaLogo />
                     <DexLogo dex={token.dexId} />
