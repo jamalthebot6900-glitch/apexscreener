@@ -504,6 +504,7 @@ export default function TokenTable() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [refreshCountdown, setRefreshCountdown] = useState(30);
   const [sortField, setSortField] = useState<SortField>('volume24h');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [showFilters, setShowFilters] = useState(false);
@@ -681,10 +682,21 @@ export default function TokenTable() {
     fetchTokens();
   }, [fetchTokens]);
 
-  // Auto-refresh every 30 seconds
+  // Auto-refresh every 30 seconds with countdown
   useEffect(() => {
-    const interval = setInterval(fetchTokens, 30000);
-    return () => clearInterval(interval);
+    setRefreshCountdown(30);
+    
+    const countdownInterval = setInterval(() => {
+      setRefreshCountdown(prev => {
+        if (prev <= 1) {
+          fetchTokens();
+          return 30;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    
+    return () => clearInterval(countdownInterval);
   }, [fetchTokens]);
 
   // Keyboard shortcuts for quick preset switching
@@ -774,9 +786,25 @@ export default function TokenTable() {
         </div>
         
         {lastUpdated && (
-          <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 bg-[#00d395] rounded-full animate-pulse" />
-            {filteredTokens.length} tokens • Updated {lastUpdated.toLocaleTimeString()}
+          <span className="flex items-center gap-2">
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-[#00d395] rounded-full animate-pulse" />
+              <span className="text-[#888]">{filteredTokens.length} tokens</span>
+            </span>
+            <span className="text-[#555]">•</span>
+            <button 
+              onClick={() => {
+                fetchTokens();
+                setRefreshCountdown(30);
+              }}
+              className="flex items-center gap-1 text-[#666] hover:text-[#00d395] transition-colors"
+              title="Click to refresh now (or press R)"
+            >
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span className="font-mono text-[11px]">{refreshCountdown}s</span>
+            </button>
           </span>
         )}
       </div>
