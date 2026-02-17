@@ -48,12 +48,12 @@ Data is fetched from the [DexScreener API](https://docs.dexscreener.com/api/refe
 
 - [ ] Real OHLC data from Birdeye API
 - [ ] WebSocket for real-time price updates
-- [ ] Wallet connection (Phantom, Solflare)
-- [ ] Portfolio tracking
+- [x] Wallet connection (Phantom, Solflare)
+- [x] Portfolio tracking
 - [ ] Price alerts
-- [ ] Advanced filters (age, liquidity, volume)
+- [x] Advanced filters (age, liquidity, volume)
 - [ ] Token holder analysis
-- [ ] Rug pull detection
+- [x] Rug pull detection
 
 ## License
 
