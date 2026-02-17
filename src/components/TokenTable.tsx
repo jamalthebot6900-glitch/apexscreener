@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Token } from '@/types';
 import { useApp } from '@/context/AppContext';
+import AlertModal from './AlertModal';
 
 type SortField = 'volume24h' | 'priceUsd' | 'priceChange5m' | 'priceChange1h' | 'priceChange6h' | 'priceChange24h' | 'txns' | 'makers' | 'pairCreatedAt' | 'liquidity' | 'marketCap';
 type SortDir = 'asc' | 'desc';
@@ -197,6 +198,32 @@ function WatchlistStar({ token, isInWatchlist, onToggle }: {
     >
       <svg className="w-4 h-4" fill={isInWatchlist ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+      </svg>
+    </button>
+  );
+}
+
+// Alert bell button
+function AlertButton({ token, hasAlerts, onClick }: { 
+  token: Token; 
+  hasAlerts: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      className={`p-1 rounded transition-colors ${
+        hasAlerts 
+          ? 'text-[#f7931a] hover:text-[#ffaa33]' 
+          : 'text-[#444] hover:text-[#888]'
+      }`}
+      title="Set price alert"
+    >
+      <svg className="w-3.5 h-3.5" fill={hasAlerts ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
       </svg>
     </button>
   );
@@ -398,7 +425,16 @@ export default function TokenTable() {
   const [activePreset, setActivePreset] = useState<string>('All');
   
   // Watchlist
-  const { watchlist, isInWatchlist, toggleWatchlist, watchlistCount, setCurrentView } = useApp();
+  const { watchlist, isInWatchlist, toggleWatchlist, watchlistCount, setCurrentView, getAlertsForToken, addAlert, removeAlert, notificationsEnabled, enableNotifications, checkAlerts } = useApp();
+  
+  // Alert modal state
+  const [alertModalOpen, setAlertModalOpen] = useState(false);
+  const [alertModalToken, setAlertModalToken] = useState<Token | null>(null);
+  
+  const openAlertModal = useCallback((token: Token) => {
+    setAlertModalToken(token);
+    setAlertModalOpen(true);
+  }, []);
 
   // Apply a filter preset
   const applyPreset = useCallback((preset: typeof filterPresets[0]) => {
@@ -458,13 +494,20 @@ export default function TokenTable() {
       setTokens(solanaTokens);
       setLastUpdated(new Date());
       setError(null);
+      
+      // Check price alerts
+      const priceMap = new Map<string, number>();
+      solanaTokens.forEach((token: Token) => {
+        priceMap.set(token.address, token.priceUsd);
+      });
+      checkAlerts(priceMap);
     } catch (err) {
       console.error('Failed to fetch tokens:', err);
       setError('Failed to load tokens. Retrying...');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [checkAlerts]);
 
   // Filtered and sorted tokens
   const filteredTokens = useMemo(() => {
@@ -580,6 +623,11 @@ export default function TokenTable() {
       // P for portfolio
       if (e.key === 'p' || e.key === 'P') {
         setCurrentView('portfolio');
+      }
+      
+      // A for alerts
+      if (e.key === 'a' || e.key === 'A') {
+        setCurrentView('alerts');
       }
     };
 
@@ -790,6 +838,11 @@ export default function TokenTable() {
                       })}
                     />
                     <CopyCAButton address={token.address} />
+                    <AlertButton 
+                      token={token}
+                      hasAlerts={getAlertsForToken(token.address).filter(a => !a.triggered).length > 0}
+                      onClick={() => openAlertModal(token)}
+                    />
                     <QuickTradeButton address={token.address} />
                     <span className="text-[12px] text-[#555] font-medium w-5">#{index + 1}</span>
                     <SolanaLogo />
@@ -878,6 +931,23 @@ export default function TokenTable() {
           )}
         </tbody>
       </table>
+      
+      {/* Alert Modal */}
+      <AlertModal
+        isOpen={alertModalOpen}
+        onClose={() => setAlertModalOpen(false)}
+        token={alertModalToken ? {
+          address: alertModalToken.address,
+          symbol: alertModalToken.symbol,
+          name: alertModalToken.name,
+          priceUsd: alertModalToken.priceUsd,
+        } : null}
+        existingAlerts={alertModalToken ? getAlertsForToken(alertModalToken.address).filter(a => !a.triggered) : []}
+        onAddAlert={addAlert}
+        onRemoveAlert={removeAlert}
+        notificationsEnabled={notificationsEnabled}
+        onEnableNotifications={enableNotifications}
+      />
     </div>
   );
 }

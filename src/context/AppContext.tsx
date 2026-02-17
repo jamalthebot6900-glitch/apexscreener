@@ -3,8 +3,9 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { useWatchlist, WatchlistItem } from '@/hooks/useWatchlist';
 import { useFilters, FilterState } from '@/hooks/useFilters';
+import { useAlerts, PriceAlert } from '@/hooks/useAlerts';
 
-export type ViewType = 'all' | 'watchlist' | 'portfolio' | 'new' | 'graduated' | 'gainers' | 'losers';
+export type ViewType = 'all' | 'watchlist' | 'portfolio' | 'new' | 'graduated' | 'gainers' | 'losers' | 'alerts';
 
 interface AppContextType {
   // Sidebar state
@@ -27,6 +28,17 @@ interface AppContextType {
   updateFilter: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
   resetFilters: () => void;
   hasActiveFilters: boolean;
+  
+  // Alerts
+  alerts: PriceAlert[];
+  activeAlertsCount: number;
+  addAlert: (alert: Omit<PriceAlert, 'id' | 'createdAt'>) => PriceAlert;
+  removeAlert: (id: string) => void;
+  clearAlerts: () => void;
+  getAlertsForToken: (address: string) => PriceAlert[];
+  checkAlerts: (prices: Map<string, number>) => void;
+  notificationsEnabled: boolean;
+  enableNotifications: () => Promise<boolean>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -48,6 +60,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
     resetFilters,
     hasActiveFilters,
   } = useFilters();
+  
+  const {
+    alerts,
+    addAlert,
+    removeAlert,
+    clearAlerts,
+    getAlertsForToken,
+    checkAlerts,
+    notificationsEnabled,
+    enableNotifications,
+    count: activeAlertsCount,
+  } = useAlerts();
 
   const toggleSidebar = useCallback(() => {
     setSidebarOpen(prev => !prev);
@@ -69,6 +93,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
         updateFilter,
         resetFilters,
         hasActiveFilters,
+        alerts,
+        activeAlertsCount,
+        addAlert,
+        removeAlert,
+        clearAlerts,
+        getAlertsForToken,
+        checkAlerts,
+        notificationsEnabled,
+        enableNotifications,
       }}
     >
       {children}
