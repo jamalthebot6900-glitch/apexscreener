@@ -8,6 +8,7 @@ import { Suspense } from 'react';
 import { AppProvider } from '@/context/AppContext';
 import AuthSessionProvider from '@/providers/SessionProvider';
 import WalletProvider from '@/providers/WalletProvider';
+import KeyboardShortcuts from '@/components/KeyboardShortcuts';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -52,6 +53,7 @@ export default function RootLayout({
                   <Footer />
                 </main>
               </div>
+              <KeyboardShortcuts />
             </AppProvider>
           </WalletProvider>
         </AuthSessionProvider>

@@ -538,6 +538,30 @@ export default function TokenTable() {
     return () => clearInterval(interval);
   }, [fetchTokens]);
 
+  // Keyboard shortcuts for quick preset switching
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if typing in an input
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) {
+        return;
+      }
+      
+      // Number keys 1-6 for preset switching
+      const num = parseInt(e.key);
+      if (num >= 1 && num <= 6 && filterPresets[num - 1]) {
+        applyPreset(filterPresets[num - 1]);
+      }
+      
+      // R to refresh
+      if (e.key === 'r' || e.key === 'R') {
+        fetchTokens();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [applyPreset, fetchTokens]);
+
   return (
     <div className="overflow-x-auto bg-[#0d0d0f]">
       {/* Preset buttons */}
