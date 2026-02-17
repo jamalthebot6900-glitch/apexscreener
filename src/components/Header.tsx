@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
+import WalletButton from './WalletButton';
 
 // DEX options
 const dexTabs = [
@@ -87,6 +88,9 @@ export default function Header() {
 
         {/* Right section */}
         <div className="flex items-center gap-3 px-4 h-full border-l border-white/[0.04]">
+          {/* Wallet connect */}
+          <WalletButton />
+          
           {/* Mobile menu */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}

@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import { Suspense } from 'react';
 import { AppProvider } from '@/context/AppContext';
 import AuthSessionProvider from '@/providers/SessionProvider';
+import WalletProvider from '@/providers/WalletProvider';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -37,20 +38,22 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans bg-background text-text-primary min-h-screen flex flex-col antialiased">
         <AuthSessionProvider>
-          <AppProvider>
-            <Header />
-            <div className="flex flex-1">
-              <Suspense fallback={<div className="w-[200px] shrink-0 hidden lg:block" />}>
-                <Sidebar />
-              </Suspense>
-              <main className="flex-1 min-h-[calc(100vh-56px)] overflow-x-hidden w-full lg:w-auto flex flex-col">
-                <div className="flex-1">
-                  {children}
-                </div>
-                <Footer />
-              </main>
-            </div>
-          </AppProvider>
+          <WalletProvider>
+            <AppProvider>
+              <Header />
+              <div className="flex flex-1">
+                <Suspense fallback={<div className="w-[200px] shrink-0 hidden lg:block" />}>
+                  <Sidebar />
+                </Suspense>
+                <main className="flex-1 min-h-[calc(100vh-56px)] overflow-x-hidden w-full lg:w-auto flex flex-col">
+                  <div className="flex-1">
+                    {children}
+                  </div>
+                  <Footer />
+                </main>
+              </div>
+            </AppProvider>
+          </WalletProvider>
         </AuthSessionProvider>
       </body>
     </html>
