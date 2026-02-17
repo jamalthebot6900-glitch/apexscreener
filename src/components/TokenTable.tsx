@@ -574,6 +574,20 @@ export default function TokenTable() {
   // Alert modal state
   const [alertModalOpen, setAlertModalOpen] = useState(false);
   const [alertModalToken, setAlertModalToken] = useState<Token | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  
+  // Track scroll position for scroll-to-top button
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   
   const openAlertModal = useCallback((token: Token) => {
     setAlertModalToken(token);
@@ -1150,6 +1164,19 @@ export default function TokenTable() {
         notificationsEnabled={notificationsEnabled}
         onEnableNotifications={enableNotifications}
       />
+      
+      {/* Scroll to top button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-50 p-3 bg-[#9455ff] hover:bg-[#a066ff] text-white rounded-full shadow-lg shadow-[#9455ff]/30 transition-all hover:scale-110"
+          title="Scroll to top"
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }
