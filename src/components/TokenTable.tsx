@@ -568,8 +568,8 @@ export default function TokenTable() {
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [activePreset, setActivePreset] = useState<string>('All');
   
-  // Watchlist
-  const { watchlist, isInWatchlist, toggleWatchlist, watchlistCount, setCurrentView, getAlertsForToken, addAlert, removeAlert, notificationsEnabled, enableNotifications, checkAlerts } = useApp();
+  // Watchlist & Alerts
+  const { watchlist, isInWatchlist, toggleWatchlist, exportWatchlistCSV, clearWatchlist, watchlistCount, setCurrentView, getAlertsForToken, addAlert, removeAlert, notificationsEnabled, enableNotifications, checkAlerts } = useApp();
   
   // Alert modal state
   const [alertModalOpen, setAlertModalOpen] = useState(false);
@@ -814,6 +814,36 @@ export default function TokenTable() {
             )}
           </button>
         ))}
+        {/* Watchlist actions */}
+        {activePreset === 'Watchlist' && watchlistCount > 0 && (
+          <div className="flex items-center gap-1 ml-2">
+            <button
+              onClick={exportWatchlistCSV}
+              className="flex items-center gap-1 px-2 py-1 bg-[#1a1a1f] hover:bg-[#252528] text-[#888] hover:text-white rounded text-[10px] transition-colors"
+              title="Export watchlist to CSV"
+            >
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Export
+            </button>
+            <button
+              onClick={() => {
+                if (confirm('Clear entire watchlist?')) {
+                  clearWatchlist();
+                }
+              }}
+              className="flex items-center gap-1 px-2 py-1 bg-[#1a1a1f] hover:bg-[#ff6b6b]/20 text-[#888] hover:text-[#ff6b6b] rounded text-[10px] transition-colors"
+              title="Clear watchlist"
+            >
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              Clear
+            </button>
+          </div>
+        )}
+        
         {/* Keyboard hint */}
         <span className="ml-auto text-[10px] text-[#444] hidden sm:block">
           Press <kbd className="px-1 py-0.5 bg-[#1a1a1f] rounded border border-[#2a2a30]">?</kbd> for shortcuts

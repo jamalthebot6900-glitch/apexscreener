@@ -21,6 +21,8 @@ interface AppContextType {
   watchlist: WatchlistItem[];
   isInWatchlist: (address: string) => boolean;
   toggleWatchlist: (item: Omit<WatchlistItem, 'addedAt'>) => void;
+  exportWatchlistCSV: () => void;
+  clearWatchlist: () => void;
   watchlistCount: number;
   
   // Filters
@@ -54,6 +56,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     watchlist,
     isInWatchlist,
     toggleWatchlist,
+    exportToCSV: exportWatchlistCSV,
+    clearWatchlist,
     count: watchlistCount,
   } = useWatchlist();
   
@@ -94,6 +98,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         watchlist,
         isInWatchlist,
         toggleWatchlist,
+        exportWatchlistCSV,
+        clearWatchlist,
         watchlistCount,
         filters,
         updateFilter,

@@ -65,6 +65,37 @@ export function useWatchlist() {
     }
   }, [isInWatchlist, addToWatchlist, removeFromWatchlist]);
 
+  // Export watchlist to CSV
+  const exportToCSV = useCallback(() => {
+    if (watchlist.length === 0) return;
+    
+    const headers = ['Symbol', 'Name', 'Address', 'Added Date'];
+    const rows = watchlist.map(item => [
+      item.symbol,
+      item.name,
+      item.address,
+      new Date(item.addedAt).toISOString(),
+    ]);
+    
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `watchlist-${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }, [watchlist]);
+
+  // Clear entire watchlist
+  const clearWatchlist = useCallback(() => {
+    setWatchlist([]);
+  }, []);
+
   return {
     watchlist,
     isLoaded,
@@ -72,6 +103,8 @@ export function useWatchlist() {
     removeFromWatchlist,
     isInWatchlist,
     toggleWatchlist,
+    exportToCSV,
+    clearWatchlist,
     count: watchlist.length,
   };
 }
