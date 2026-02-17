@@ -156,6 +156,26 @@ function RugWarningBadge({ reason }: { reason: string }) {
   );
 }
 
+// Quick trade button (links to Jupiter)
+function QuickTradeButton({ address }: { address: string }) {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    window.open(`https://jup.ag/swap/SOL-${address}`, '_blank');
+  };
+  
+  return (
+    <button
+      onClick={handleClick}
+      className="p-1 rounded text-[#00d395] hover:text-[#00e5a5] hover:bg-[#00d395]/10 transition-all"
+      title="Buy on Jupiter"
+    >
+      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </button>
+  );
+}
+
 // Watchlist star button
 function WatchlistStar({ token, isInWatchlist, onToggle }: { 
   token: Token; 
@@ -760,6 +780,7 @@ export default function TokenTable() {
                       })}
                     />
                     <CopyCAButton address={token.address} />
+                    <QuickTradeButton address={token.address} />
                     <span className="text-[12px] text-[#555] font-medium w-5">#{index + 1}</span>
                     <SolanaLogo />
                     <DexLogo dex={token.dexId} />
