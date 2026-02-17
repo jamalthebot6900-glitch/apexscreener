@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Token } from '@/types';
 
-type SortField = 'volume24h' | 'priceUsd' | 'priceChange5m' | 'priceChange1h' | 'priceChange6h' | 'txns' | 'makers' | 'pairCreatedAt' | 'liquidity' | 'marketCap';
+type SortField = 'volume24h' | 'priceUsd' | 'priceChange5m' | 'priceChange1h' | 'priceChange6h' | 'priceChange24h' | 'txns' | 'makers' | 'pairCreatedAt' | 'liquidity' | 'marketCap';
 type SortDir = 'asc' | 'desc';
 
 interface Filters {
@@ -95,6 +95,51 @@ function TrendingBadge({ value }: { value: number }) {
       {value}
     </span>
   );
+}
+
+// Graduated badge (pump.fun -> raydium/pumpswap)
+function GraduatedBadge() {
+  return (
+    <span className="inline-flex items-center gap-0.5 px-1 py-0.5 rounded text-[10px] font-bold text-[#00d395] bg-[#00d395]/10" title="Graduated from Pump.fun">
+      🎓
+    </span>
+  );
+}
+
+// Rug warning badge
+function RugWarningBadge({ reason }: { reason: string }) {
+  return (
+    <span className="inline-flex items-center gap-0.5 px-1 py-0.5 rounded text-[10px] font-bold text-[#ff6b6b] bg-[#ff6b6b]/10" title={reason}>
+      ⚠️
+    </span>
+  );
+}
+
+// Calculate rug risk signals
+function getRugSignals(token: Token): { isRisky: boolean; reason: string } {
+  const signals: string[] = [];
+  
+  // Very low liquidity
+  if (token.liquidity < 1000) signals.push('Low liq');
+  
+  // Massive price drop
+  if ((token.priceChange24h || 0) < -80) signals.push('-80%+ dump');
+  
+  // Liquidity to market cap ratio (honeypot signal)
+  if (token.marketCap > 0 && token.liquidity / token.marketCap < 0.01) {
+    signals.push('Low liq/mcap');
+  }
+  
+  // Very new with high volume (possible pump and dump)
+  const ageHours = token.pairCreatedAt ? (Date.now() - token.pairCreatedAt) / 3600000 : 999;
+  if (ageHours < 1 && token.volume24h > 500000 && (token.priceChange1h || 0) < -30) {
+    signals.push('Rapid dump');
+  }
+  
+  return {
+    isRisky: signals.length > 0,
+    reason: signals.join(', ')
+  };
 }
 
 // Sort indicator
@@ -247,6 +292,8 @@ function SkeletonRow() {
       <td className="px-2 py-2"><div className="w-10 h-4 bg-[#1a1a1f] rounded ml-auto" /></td>
       <td className="px-2 py-2"><div className="w-12 h-4 bg-[#1a1a1f] rounded ml-auto" /></td>
       <td className="px-2 py-2"><div className="w-12 h-4 bg-[#1a1a1f] rounded ml-auto" /></td>
+      <td className="px-2 py-2"><div className="w-12 h-4 bg-[#1a1a1f] rounded ml-auto" /></td>
+      <td className="px-2 py-2"><div className="w-12 h-4 bg-[#1a1a1f] rounded ml-auto" /></td>
       <td className="px-2 py-2 pr-4"><div className="w-12 h-4 bg-[#1a1a1f] rounded ml-auto" /></td>
     </tr>
   );
@@ -366,6 +413,8 @@ export default function TokenTable() {
           aVal = a.priceChange1h || 0; bVal = b.priceChange1h || 0; break;
         case 'priceChange6h':
           aVal = a.priceChange6h || 0; bVal = b.priceChange6h || 0; break;
+        case 'priceChange24h':
+          aVal = a.priceChange24h || 0; bVal = b.priceChange24h || 0; break;
         case 'txns':
           aVal = a.txns24h?.total || 0; bVal = b.txns24h?.total || 0; break;
         case 'makers':
@@ -567,6 +616,12 @@ export default function TokenTable() {
             <SortableHeader field="priceChange6h" currentField={sortField} currentDir={sortDir} onSort={handleSort}>
               6H
             </SortableHeader>
+            <SortableHeader field="priceChange24h" currentField={sortField} currentDir={sortDir} onSort={handleSort}>
+              24H
+            </SortableHeader>
+            <SortableHeader field="marketCap" currentField={sortField} currentDir={sortDir} onSort={handleSort}>
+              MCAP
+            </SortableHeader>
           </tr>
         </thead>
         
@@ -576,7 +631,7 @@ export default function TokenTable() {
             Array.from({ length: 15 }).map((_, i) => <SkeletonRow key={i} />)
           ) : filteredTokens.length === 0 ? (
             <tr>
-              <td colSpan={9} className="text-center py-8 text-[#666]">
+              <td colSpan={11} className="text-center py-8 text-[#666]">
                 {hasActiveFilters ? 'No tokens match your filters' : 'No tokens found'}
               </td>
             </tr>
@@ -604,6 +659,13 @@ export default function TokenTable() {
                       <span className="text-[12px] text-[#555]">/SOL</span>
                       <span className="text-[12px] text-[#555] truncate max-w-[100px]">{token.name}</span>
                       {token.boosts && token.boosts > 0 && <TrendingBadge value={token.boosts} />}
+                      {(token.dexId === 'raydium' || token.dexId === 'pumpswap') && 
+                        token.pairCreatedAt && (Date.now() - token.pairCreatedAt) < 86400000 * 7 && 
+                        <GraduatedBadge />}
+                      {(() => {
+                        const { isRisky, reason } = getRugSignals(token);
+                        return isRisky ? <RugWarningBadge reason={reason} /> : null;
+                      })()}
                     </div>
                   </div>
                 </td>
@@ -648,10 +710,22 @@ export default function TokenTable() {
                 </td>
                 
                 {/* 6H */}
-                <td className="px-2 py-2 text-right pr-4">
+                <td className="px-2 py-2 text-right">
                   <span className={`text-[13px] font-semibold ${(token.priceChange6h || 0) >= 0 ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
                     {(token.priceChange6h || 0) >= 0 ? '+' : ''}{(token.priceChange6h || 0).toFixed(2)}%
                   </span>
+                </td>
+                
+                {/* 24H */}
+                <td className="px-2 py-2 text-right">
+                  <span className={`text-[13px] font-semibold ${(token.priceChange24h || 0) >= 0 ? 'text-[#00d395]' : 'text-[#ff6b6b]'}`}>
+                    {(token.priceChange24h || 0) >= 0 ? '+' : ''}{(token.priceChange24h || 0).toFixed(2)}%
+                  </span>
+                </td>
+                
+                {/* Market Cap */}
+                <td className="px-2 py-2 text-right pr-4">
+                  <span className="text-[13px] text-[#888]">{formatVolume(token.marketCap)}</span>
                 </td>
               </tr>
             ))
