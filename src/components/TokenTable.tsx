@@ -586,10 +586,11 @@ export default function TokenTable() {
     <div className="overflow-x-auto bg-[#0d0d0f]">
       {/* Preset buttons */}
       <div className="flex items-center gap-2 px-4 py-2 bg-[#0a0a0c] border-b border-white/[0.04] overflow-x-auto">
-        {filterPresets.map((preset) => (
+        {filterPresets.map((preset, index) => (
           <button
             key={preset.name}
             onClick={() => applyPreset(preset)}
+            title={`${preset.name} (Press ${index + 1})`}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-semibold whitespace-nowrap transition-all ${
               activePreset === preset.name
                 ? 'bg-[#9455ff] text-white shadow-lg shadow-[#9455ff]/25'
@@ -605,6 +606,10 @@ export default function TokenTable() {
             )}
           </button>
         ))}
+        {/* Keyboard hint */}
+        <span className="ml-auto text-[10px] text-[#444] hidden sm:block">
+          Press <kbd className="px-1 py-0.5 bg-[#1a1a1f] rounded border border-[#2a2a30]">?</kbd> for shortcuts
+        </span>
       </div>
 
       {/* Header bar */}
