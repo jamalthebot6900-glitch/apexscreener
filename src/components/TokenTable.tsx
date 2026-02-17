@@ -467,6 +467,63 @@ function formatAge(timestamp: number): string {
   return `${Math.floor(days / 30)}mo`;
 }
 
+// Age badge with color coding
+function AgeBadge({ timestamp }: { timestamp: number }) {
+  if (!timestamp) return <span className="text-[13px] text-[#555]">-</span>;
+  
+  const now = Date.now();
+  const diff = now - timestamp;
+  const mins = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+  
+  // Super new (< 10 mins)
+  if (mins < 10) {
+    return (
+      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-[#ff6b6b]/20 text-[#ff6b6b] rounded text-[11px] font-bold animate-pulse">
+        🔥 NEW
+      </span>
+    );
+  }
+  
+  // Very new (< 1 hour)
+  if (mins < 60) {
+    return (
+      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-[#f7931a]/20 text-[#f7931a] rounded text-[11px] font-bold">
+        ⚡ {mins}m
+      </span>
+    );
+  }
+  
+  // New (< 6 hours)
+  if (hours < 6) {
+    return (
+      <span className="inline-flex items-center px-1.5 py-0.5 bg-[#00d395]/15 text-[#00d395] rounded text-[11px] font-semibold">
+        {hours}h
+      </span>
+    );
+  }
+  
+  // Recent (< 24 hours)
+  if (hours < 24) {
+    return (
+      <span className="text-[13px] text-[#888]">{hours}h</span>
+    );
+  }
+  
+  // Days
+  if (days < 30) {
+    return (
+      <span className="text-[13px] text-[#666]">{days}d</span>
+    );
+  }
+  
+  // Months
+  return (
+    <span className="text-[13px] text-[#555]">{Math.floor(days / 30)}mo</span>
+  );
+}
+
 // Format number with commas
 function formatNumber(num: number): string {
   return num.toLocaleString();
@@ -991,7 +1048,7 @@ export default function TokenTable() {
                 
                 {/* Age */}
                 <td className="px-2 py-2 text-center">
-                  <span className="text-[13px] text-[#888]">{formatAge(token.pairCreatedAt)}</span>
+                  <AgeBadge timestamp={token.pairCreatedAt} />
                 </td>
                 
                 {/* Txns */}
