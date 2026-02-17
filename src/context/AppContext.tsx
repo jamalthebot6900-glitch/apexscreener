@@ -39,6 +39,9 @@ interface AppContextType {
   checkAlerts: (prices: Map<string, number>) => void;
   notificationsEnabled: boolean;
   enableNotifications: () => Promise<boolean>;
+  soundEnabled: boolean;
+  toggleSound: () => void;
+  testSound: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -70,6 +73,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     checkAlerts,
     notificationsEnabled,
     enableNotifications,
+    soundEnabled,
+    toggleSound,
+    testSound,
     count: activeAlertsCount,
   } = useAlerts();
 
@@ -102,6 +108,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         checkAlerts,
         notificationsEnabled,
         enableNotifications,
+        soundEnabled,
+        toggleSound,
+        testSound,
       }}
     >
       {children}

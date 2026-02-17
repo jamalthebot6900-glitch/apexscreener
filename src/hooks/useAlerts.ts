@@ -15,6 +15,45 @@ export interface PriceAlert {
 }
 
 const STORAGE_KEY = 'solscope-price-alerts';
+const SOUND_KEY = 'solscope-alert-sound';
+
+// Play alert sound
+function playAlertSound() {
+  try {
+    // Create a simple beep using Web Audio API
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = 880; // A5 note
+    oscillator.type = 'sine';
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.5);
+    
+    // Play a second beep
+    setTimeout(() => {
+      const osc2 = audioContext.createOscillator();
+      const gain2 = audioContext.createGain();
+      osc2.connect(gain2);
+      gain2.connect(audioContext.destination);
+      osc2.frequency.value = 1100; // Higher pitch
+      osc2.type = 'sine';
+      gain2.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      osc2.start(audioContext.currentTime);
+      osc2.stop(audioContext.currentTime + 0.3);
+    }, 200);
+  } catch (err) {
+    console.error('Failed to play alert sound:', err);
+  }
+}
 
 // Request notification permission
 async function requestNotificationPermission(): Promise<boolean> {
@@ -52,14 +91,21 @@ function showNotification(alert: PriceAlert, currentPrice: number) {
 export function useAlerts() {
   const [alerts, setAlerts] = useState<PriceAlert[]>([]);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
 
-  // Load alerts from localStorage
+  // Load alerts and preferences from localStorage
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         setAlerts(parsed);
+      }
+      
+      // Load sound preference
+      const soundPref = localStorage.getItem(SOUND_KEY);
+      if (soundPref !== null) {
+        setSoundEnabled(soundPref === 'true');
       }
     } catch (err) {
       console.error('Error loading alerts:', err);
@@ -108,6 +154,8 @@ export function useAlerts() {
 
   // Check alerts against current prices
   const checkAlerts = useCallback((prices: Map<string, number>) => {
+    let soundPlayed = false;
+    
     setAlerts(prev => {
       let hasChanges = false;
       const updated = prev.map(alert => {
@@ -123,6 +171,13 @@ export function useAlerts() {
         if (shouldTrigger) {
           hasChanges = true;
           showNotification(alert, currentPrice);
+          
+          // Play sound once for all triggered alerts
+          if (soundEnabled && !soundPlayed) {
+            playAlertSound();
+            soundPlayed = true;
+          }
+          
           return { ...alert, triggered: true, triggeredAt: Date.now() };
         }
         
@@ -131,7 +186,7 @@ export function useAlerts() {
       
       return hasChanges ? updated : prev;
     });
-  }, []);
+  }, [soundEnabled]);
 
   // Get alerts for specific token
   const getAlertsForToken = useCallback((address: string) => {
@@ -143,6 +198,24 @@ export function useAlerts() {
     const granted = await requestNotificationPermission();
     setNotificationsEnabled(granted);
     return granted;
+  }, []);
+
+  // Toggle sound
+  const toggleSound = useCallback(() => {
+    setSoundEnabled(prev => {
+      const newValue = !prev;
+      try {
+        localStorage.setItem(SOUND_KEY, String(newValue));
+      } catch (err) {
+        console.error('Error saving sound preference:', err);
+      }
+      return newValue;
+    });
+  }, []);
+
+  // Test sound
+  const testSound = useCallback(() => {
+    playAlertSound();
   }, []);
 
   return {
@@ -157,6 +230,9 @@ export function useAlerts() {
     getAlertsForToken,
     notificationsEnabled,
     enableNotifications,
+    soundEnabled,
+    toggleSound,
+    testSound,
     count: alerts.filter(a => !a.triggered).length,
   };
 }
