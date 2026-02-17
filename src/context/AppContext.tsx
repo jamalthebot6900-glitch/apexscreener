@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { useWatchlist } from '@/hooks/useWatchlist';
+import { useWatchlist, WatchlistItem } from '@/hooks/useWatchlist';
 import { useFilters, FilterState } from '@/hooks/useFilters';
 
 export type ViewType = 'all' | 'watchlist' | 'new' | 'graduated' | 'gainers' | 'losers';
@@ -17,9 +17,9 @@ interface AppContextType {
   setCurrentView: (view: ViewType) => void;
   
   // Watchlist
-  watchlist: string[];
+  watchlist: WatchlistItem[];
   isInWatchlist: (address: string) => boolean;
-  toggleWatchlist: (address: string) => void;
+  toggleWatchlist: (item: Omit<WatchlistItem, 'addedAt'>) => void;
   watchlistCount: number;
   
   // Filters

@@ -4,11 +4,18 @@ import { useState, useEffect, useCallback } from 'react';
 
 const WATCHLIST_KEY = 'apexscreener_watchlist';
 
+export interface WatchlistItem {
+  address: string;
+  symbol: string;
+  name: string;
+  addedAt: number;
+}
+
 export function useWatchlist() {
-  const [watchlist, setWatchlist] = useState<string[]>([]);
+  const [watchlist, setWatchlist] = useState<WatchlistItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load watchlist from localStorage on mount
+  // Load from localStorage on mount
   useEffect(() => {
     try {
       const stored = localStorage.getItem(WATCHLIST_KEY);
@@ -32,37 +39,39 @@ export function useWatchlist() {
     }
   }, [watchlist, isLoaded]);
 
-  const addToWatchlist = useCallback((address: string) => {
+  const addToWatchlist = useCallback((item: Omit<WatchlistItem, 'addedAt'>) => {
     setWatchlist(prev => {
-      if (prev.includes(address)) return prev;
-      return [...prev, address];
+      // Don't add if already exists
+      if (prev.some(w => w.address === item.address)) {
+        return prev;
+      }
+      return [...prev, { ...item, addedAt: Date.now() }];
     });
   }, []);
 
   const removeFromWatchlist = useCallback((address: string) => {
-    setWatchlist(prev => prev.filter(a => a !== address));
-  }, []);
-
-  const toggleWatchlist = useCallback((address: string) => {
-    setWatchlist(prev => {
-      if (prev.includes(address)) {
-        return prev.filter(a => a !== address);
-      }
-      return [...prev, address];
-    });
+    setWatchlist(prev => prev.filter(w => w.address !== address));
   }, []);
 
   const isInWatchlist = useCallback((address: string) => {
-    return watchlist.includes(address);
+    return watchlist.some(w => w.address === address);
   }, [watchlist]);
+
+  const toggleWatchlist = useCallback((item: Omit<WatchlistItem, 'addedAt'>) => {
+    if (isInWatchlist(item.address)) {
+      removeFromWatchlist(item.address);
+    } else {
+      addToWatchlist(item);
+    }
+  }, [isInWatchlist, addToWatchlist, removeFromWatchlist]);
 
   return {
     watchlist,
     isLoaded,
     addToWatchlist,
     removeFromWatchlist,
-    toggleWatchlist,
     isInWatchlist,
+    toggleWatchlist,
     count: watchlist.length,
   };
 }

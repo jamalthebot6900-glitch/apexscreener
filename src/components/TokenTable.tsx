@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Token } from '@/types';
+import { useApp } from '@/context/AppContext';
 
 type SortField = 'volume24h' | 'priceUsd' | 'priceChange5m' | 'priceChange1h' | 'priceChange6h' | 'priceChange24h' | 'txns' | 'makers' | 'pairCreatedAt' | 'liquidity' | 'marketCap';
 type SortDir = 'asc' | 'desc';
@@ -52,6 +53,12 @@ const filterPresets: { name: string; icon: string; filters: Filters; sort?: { fi
     name: 'Safe',
     icon: '🛡️',
     filters: { ...defaultFilters, minLiquidity: 50000, minVolume: 50000, hideRugged: true },
+    sort: { field: 'volume24h', dir: 'desc' },
+  },
+  {
+    name: 'Watchlist',
+    icon: '⭐',
+    filters: defaultFilters,
     sort: { field: 'volume24h', dir: 'desc' },
   },
 ];
@@ -112,6 +119,32 @@ function RugWarningBadge({ reason }: { reason: string }) {
     <span className="inline-flex items-center gap-0.5 px-1 py-0.5 rounded text-[10px] font-bold text-[#ff6b6b] bg-[#ff6b6b]/10" title={reason}>
       ⚠️
     </span>
+  );
+}
+
+// Watchlist star button
+function WatchlistStar({ token, isInWatchlist, onToggle }: { 
+  token: Token; 
+  isInWatchlist: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        onToggle();
+      }}
+      className={`p-1 rounded transition-colors ${
+        isInWatchlist 
+          ? 'text-[#f7931a] hover:text-[#ffaa33]' 
+          : 'text-[#444] hover:text-[#888]'
+      }`}
+      title={isInWatchlist ? 'Remove from watchlist' : 'Add to watchlist'}
+    >
+      <svg className="w-4 h-4" fill={isInWatchlist ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+      </svg>
+    </button>
   );
 }
 
@@ -309,6 +342,9 @@ export default function TokenTable() {
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [activePreset, setActivePreset] = useState<string>('All');
+  
+  // Watchlist
+  const { watchlist, isInWatchlist, toggleWatchlist, watchlistCount } = useApp();
 
   // Apply a filter preset
   const applyPreset = useCallback((preset: typeof filterPresets[0]) => {
@@ -380,6 +416,12 @@ export default function TokenTable() {
   const filteredTokens = useMemo(() => {
     let result = [...tokens];
     
+    // Watchlist filter - only show watchlisted tokens
+    if (activePreset === 'Watchlist') {
+      const watchlistAddresses = new Set(watchlist.map(w => w.address));
+      result = result.filter(t => watchlistAddresses.has(t.address));
+    }
+    
     // Apply filters
     if (filters.minLiquidity > 0) {
       result = result.filter(t => t.liquidity >= filters.minLiquidity);
@@ -433,7 +475,7 @@ export default function TokenTable() {
     });
     
     return result.slice(0, 50);
-  }, [tokens, filters, sortField, sortDir]);
+  }, [tokens, filters, sortField, sortDir, activePreset, watchlist]);
 
   // Handle sort
   const handleSort = useCallback((field: SortField) => {
@@ -478,6 +520,11 @@ export default function TokenTable() {
           >
             <span>{preset.icon}</span>
             <span>{preset.name}</span>
+            {preset.name === 'Watchlist' && watchlistCount > 0 && (
+              <span className="ml-0.5 px-1.5 py-0.5 text-[10px] bg-[#f7931a]/20 text-[#f7931a] rounded-full">
+                {watchlistCount}
+              </span>
+            )}
           </button>
         ))}
       </div>
@@ -645,6 +692,15 @@ export default function TokenTable() {
                 {/* Token info */}
                 <td className="pl-4 pr-2 py-2">
                   <div className="flex items-center gap-2">
+                    <WatchlistStar 
+                      token={token}
+                      isInWatchlist={isInWatchlist(token.address)}
+                      onToggle={() => toggleWatchlist({ 
+                        address: token.address, 
+                        symbol: token.symbol, 
+                        name: token.name 
+                      })}
+                    />
                     <span className="text-[12px] text-[#555] font-medium w-5">#{index + 1}</span>
                     <SolanaLogo />
                     <DexLogo dex={token.dexId} />
