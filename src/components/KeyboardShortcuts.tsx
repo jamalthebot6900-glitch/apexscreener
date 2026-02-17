@@ -18,6 +18,7 @@ const shortcuts: Shortcut[] = [
   { key: '4', description: 'Pumping view' },
   { key: '5', description: 'Safe tokens view' },
   { key: '6', description: 'Watchlist view' },
+  { key: 'P', description: 'Portfolio view' },
   { key: 'R', description: 'Refresh data' },
 ];
 

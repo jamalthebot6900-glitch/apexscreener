@@ -3,6 +3,8 @@
 import TokenTable from '@/components/TokenTable';
 import StatsBar from '@/components/StatsBar';
 import QuickFilters from '@/components/QuickFilters';
+import Portfolio from '@/components/Portfolio';
+import { useApp } from '@/context/AppContext';
 
 // Ad banner component
 function AdBanner() {
@@ -32,6 +34,35 @@ function AdBanner() {
 }
 
 export default function HomePage() {
+  const { currentView } = useApp();
+  
+  // Portfolio view
+  if (currentView === 'portfolio') {
+    return (
+      <div className="flex flex-col min-h-full">
+        {/* Stats Bar */}
+        <StatsBar />
+        
+        {/* Portfolio Header */}
+        <div className="px-4 py-3 border-b border-white/[0.04]">
+          <h1 className="text-white text-[18px] font-bold flex items-center gap-2">
+            <svg className="w-5 h-5 text-[#9455ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
+            </svg>
+            Portfolio
+          </h1>
+          <p className="text-[#888] text-[12px] mt-1">Track your Solana holdings</p>
+        </div>
+        
+        {/* Portfolio Content */}
+        <div className="flex-1 p-4">
+          <Portfolio />
+        </div>
+      </div>
+    );
+  }
+
+  // Default view (token screener)
   return (
     <div className="flex flex-col min-h-full">
       {/* Ad Banner */}

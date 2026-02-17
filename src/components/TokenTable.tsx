@@ -398,7 +398,7 @@ export default function TokenTable() {
   const [activePreset, setActivePreset] = useState<string>('All');
   
   // Watchlist
-  const { watchlist, isInWatchlist, toggleWatchlist, watchlistCount } = useApp();
+  const { watchlist, isInWatchlist, toggleWatchlist, watchlistCount, setCurrentView } = useApp();
 
   // Apply a filter preset
   const applyPreset = useCallback((preset: typeof filterPresets[0]) => {
@@ -576,11 +576,16 @@ export default function TokenTable() {
       if (e.key === 'r' || e.key === 'R') {
         fetchTokens();
       }
+      
+      // P for portfolio
+      if (e.key === 'p' || e.key === 'P') {
+        setCurrentView('portfolio');
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [applyPreset, fetchTokens]);
+  }, [applyPreset, fetchTokens, setCurrentView]);
 
   return (
     <div className="overflow-x-auto bg-[#0d0d0f]">

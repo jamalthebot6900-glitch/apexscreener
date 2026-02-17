@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 import { useWatchlist, WatchlistItem } from '@/hooks/useWatchlist';
 import { useFilters, FilterState } from '@/hooks/useFilters';
 
-export type ViewType = 'all' | 'watchlist' | 'new' | 'graduated' | 'gainers' | 'losers';
+export type ViewType = 'all' | 'watchlist' | 'portfolio' | 'new' | 'graduated' | 'gainers' | 'losers';
 
 interface AppContextType {
   // Sidebar state

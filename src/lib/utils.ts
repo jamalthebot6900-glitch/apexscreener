@@ -23,6 +23,13 @@ export function formatPrice(price: number): string {
   return '$' + formatNumber(price);
 }
 
+export function formatUsd(value: number): string {
+  if (value === 0) return '$0.00';
+  if (value < 0.01) return '<$0.01';
+  if (value < 1000) return '$' + value.toFixed(2);
+  return '$' + formatNumber(value, 2);
+}
+
 export function formatPercent(percent: number): string {
   const sign = percent >= 0 ? '+' : '';
   return sign + percent.toFixed(2) + '%';

@@ -237,7 +237,13 @@ export default function Sidebar() {
             </button>
 
             <button
-              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-semibold text-[#888] hover:text-white hover:bg-[#16161a] transition-all"
+              onClick={() => handleNavClick('portfolio')}
+              className={cn(
+                'w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-semibold transition-all',
+                currentView === 'portfolio'
+                  ? 'bg-[#1e222d] text-white'
+                  : 'text-[#888] hover:text-white hover:bg-[#16161a]'
+              )}
             >
               <WalletIcon />
               <span>Portfolio</span>
