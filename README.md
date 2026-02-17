@@ -50,7 +50,7 @@ Data is fetched from the [DexScreener API](https://docs.dexscreener.com/api/refe
 - [ ] WebSocket for real-time price updates
 - [x] Wallet connection (Phantom, Solflare)
 - [x] Portfolio tracking
-- [ ] Price alerts
+- [x] Price alerts
 - [x] Advanced filters (age, liquidity, volume)
 - [ ] Token holder analysis
 - [x] Rug pull detection
