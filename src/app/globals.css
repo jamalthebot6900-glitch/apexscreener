@@ -530,3 +530,151 @@ input:focus, select:focus, textarea:focus {
   animation: koth-pulse 2s ease-in-out infinite;
 }
 
+/* ===== APEX SCREENER BRAND STYLES ===== */
+
+/* Gradient text */
+.text-apex-gradient {
+  background: linear-gradient(135deg, #8B5CF6 0%, #D946EF 50%, #06B6D4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Apex accent colors */
+.apex-violet { color: #8B5CF6; }
+.apex-fuchsia { color: #D946EF; }
+.apex-cyan { color: #06B6D4; }
+
+/* Apex glow effects */
+.apex-glow-violet {
+  box-shadow: 0 0 20px -4px rgba(139, 92, 246, 0.5);
+}
+
+.apex-glow-fuchsia {
+  box-shadow: 0 0 20px -4px rgba(217, 70, 239, 0.5);
+}
+
+.apex-glow-cyan {
+  box-shadow: 0 0 20px -4px rgba(6, 182, 212, 0.5);
+}
+
+/* Glass morphism */
+.glass {
+  background: rgba(10, 10, 12, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-subtle {
+  background: rgba(10, 10, 12, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Apex gradient border */
+.apex-border-gradient {
+  position: relative;
+}
+
+.apex-border-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(217, 70, 239, 0.5), rgba(6, 182, 212, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Premium card hover effect */
+.card-hover-glow {
+  transition: all 0.3s ease;
+}
+
+.card-hover-glow:hover {
+  box-shadow: 
+    0 0 0 1px rgba(139, 92, 246, 0.3),
+    0 8px 32px -8px rgba(139, 92, 246, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Animated gradient background */
+.apex-gradient-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.apex-gradient-bg::before {
+  content: '';
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(139, 92, 246, 0.1),
+    rgba(217, 70, 239, 0.1),
+    rgba(6, 182, 212, 0.1),
+    rgba(139, 92, 246, 0.1)
+  );
+  animation: rotate 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Live indicator pulse */
+.live-dot {
+  position: relative;
+}
+
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: inherit;
+  border-radius: inherit;
+  animation: live-pulse 2s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes live-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(2); opacity: 0; }
+}
+
+/* Token row highlight on update */
+.price-flash-up {
+  animation: flash-up 0.6s ease-out;
+}
+
+.price-flash-down {
+  animation: flash-down 0.6s ease-out;
+}
+
+@keyframes flash-up {
+  0% { background-color: rgba(16, 185, 129, 0.3); }
+  100% { background-color: transparent; }
+}
+
+@keyframes flash-down {
+  0% { background-color: rgba(239, 68, 68, 0.3); }
+  100% { background-color: transparent; }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better focus states */
+.focus-ring:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.5);
+  outline-offset: 2px;
+}
+
